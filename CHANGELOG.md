@@ -20,3 +20,7 @@ recorded LLM traces, entirely offline.
   rate, Wilson score lower bound (95%) so thinly-sampled models cannot dominate,
   latency p50/p95/p99 via interpolation, mean cost/quality/tokens, and observed
   error-kind histograms.
+- **Pareto frontiers** (`internal/pareto`): multi-objective dominance analysis
+  over cost, p95 latency, quality, and reliability, reporting both the frontier
+  and, for each dominated model, exactly which models dominate it.
+- **Policy language & evaluator** (`internal/policy`): hard budget, latency,
