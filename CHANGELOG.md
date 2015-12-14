@@ -24,3 +24,7 @@ recorded LLM traces, entirely offline.
   over cost, p95 latency, quality, and reliability, reporting both the frontier
   and, for each dominated model, exactly which models dominate it.
 - **Policy language & evaluator** (`internal/policy`): hard budget, latency,
+  quality, reliability, and privacy constraints plus allow/deny and
+  privacy-safe model lists; normalized weighted preferences for ranking
+  survivors, with per-objective score components exposed for explainability.
+- **Routing simulation** (`internal/routing`): compiles a winner per task and
