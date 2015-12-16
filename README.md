@@ -46,3 +46,22 @@ runtime gamble dressed up as infrastructure.
 
 ModelMariner takes the opposite tack. It is an **offline compiler**. You feed it
 the traces you already recorded — every model, every task, every token, dollar,
+millisecond, quality score, error, and privacy tier — and it *compiles* a
+routing policy the way a build tool compiles source: deterministically,
+explainably, and with the whole picture in view.
+
+The distinction matters for three reasons a captain cares about:
+
+1. **Evidence over optimism.** Every decision is backed by observations you can
+   point at. When ModelMariner routes `draft-legal-clause` to `lighthouse-local`,
+   it can show you the 45 recorded calls that justify it.
+2. **Hard constraints are actually hard.** A budget cap, a latency ceiling, a
+   privacy tier — these *disqualify* candidates. They are never "soft penalties"
+   that a high enough quality score can bribe past. Regulated workloads demand
+   this, and so does anyone who has ever been paged at 3 a.m.
+3. **Reproducibility.** The same traces and the same policy always compile to the
+   same routing table, byte for byte. You can commit the output, diff it in code
+   review, and gate CI on it.
+
+ModelMariner never opens a socket to a provider. It cannot. That is the point.
+
