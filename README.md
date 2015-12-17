@@ -65,3 +65,22 @@ The distinction matters for three reasons a captain cares about:
 
 ModelMariner never opens a socket to a provider. It cannot. That is the point.
 
+---
+
+## The voyage in one glance
+
+```
+   traces.jsonl ──▶ ingest & validate ──▶ reliability aggregation
+                                                    │
+                                                    ▼
+                                          Pareto frontier per task
+                                                    │
+        policy.json ──▶ hard-constraint evaluation ─┤
+                                                    ▼
+                                    routing simulation (replay traces)
+                                                    │
+                                                    ▼
+                              explanations  ◀──  deterministic report
+                                                    │
+                        report.json + report.txt + policies.json
+                                                    │
