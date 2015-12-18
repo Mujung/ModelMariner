@@ -103,3 +103,22 @@ Every arrow is a package with tests. Every box is a decision you can inspect.
 | **Compilation** | Applying a policy to the frontier to pick one winner per task, then replaying recorded traces to measure what that choice actually delivers. |
 | **Explanation** | The human-readable "why": margins, score components, replayed evidence, and the exact constraint each rejected model tripped over. |
 
+### The fleet
+
+The bundled synthetic corpus sails five vessels, each a caricature of a real
+trade-off you will recognize:
+
+- **`harbor-nano`** — the dinghy. Cheapest and fastest, but its quality founders
+  on hard generative work.
+- **`harbor-mini`** — the sloop. A superb all-rounder that wins most
+  cost-sensitive routes.
+- **`clipper-pro`** — the clipper. Fast *and* accurate, at a real price.
+- **`galleon-max`** — the galleon. Top quality, heaviest cost and latency.
+- **`lighthouse-local`** — the on-prem lighthouse. Modest metrics, but the *only*
+  vessel cleared to carry restricted cargo without leaving harbor.
+
+No single vessel wins everywhere. That is by design — a router with an obvious
+answer is not worth compiling.
+
+---
+
