@@ -84,3 +84,22 @@ ModelMariner never opens a socket to a provider. It cannot. That is the point.
                                                     │
                         report.json + report.txt + policies.json
                                                     │
+                                                    ▼
+                              TypeScript navigation dashboard
+```
+
+Every arrow is a package with tests. Every box is a decision you can inspect.
+
+---
+
+## Chart room: core concepts
+
+| Term | What it means aboard ModelMariner |
+|------|------------------------------------|
+| **Trace** | One recorded observation: a model handling a task, with its cost/latency/quality/error/privacy. The atom of everything. |
+| **Reliability** | Per model/task success rate plus a **Wilson score lower bound** so a lucky 9/10 never outranks a proven 90/100. |
+| **Pareto frontier** | The set of *non-dominated* models for a task — the only candidates a rational router should even consider. |
+| **Policy** | A bundle of **hard constraints** (budget, latency, quality, reliability, privacy) plus a weighted **preference** for ranking survivors. |
+| **Compilation** | Applying a policy to the frontier to pick one winner per task, then replaying recorded traces to measure what that choice actually delivers. |
+| **Explanation** | The human-readable "why": margins, score components, replayed evidence, and the exact constraint each rejected model tripped over. |
+
