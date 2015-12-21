@@ -160,3 +160,22 @@ corpus — not a mock-up.
 ========================================================================
  RELIABILITY (per model / task)
 ========================================================================
+task               model               n  success  reliab.LB    p95 ms  quality
+classify-intent    clipper-pro        70    97.1%      0.902      1040    0.926
+classify-intent    galleon-max        70    98.6%      0.923      1696    0.953
+classify-intent    harbor-mini        70    97.1%      0.902       512    0.908
+classify-intent    harbor-nano        70    95.7%      0.881       309    0.778
+classify-intent    lighthouse-lo.     70    98.6%      0.923       584    0.784
+draft-legal-clause clipper-pro        45   100.0%      0.921       925    0.939
+draft-legal-clause galleon-max        45   100.0%      0.921      1634    0.964
+draft-legal-clause harbor-mini        45    97.8%      0.884       417    0.819
+draft-legal-clause harbor-nano        45    84.4%      0.712       302    0.589
+draft-legal-clause lighthouse-lo.     45    97.8%      0.884       550    0.779
+```
+
+Notice `harbor-nano` on `draft-legal-clause`: only **84.4%** success and a
+reliability lower bound of **0.712**. The dinghy is out of its depth on legal
+drafting, and the numbers say so before any policy is applied.
+
+### A compiled routing decision, fully explained
+
