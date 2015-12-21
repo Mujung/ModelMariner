@@ -179,3 +179,22 @@ drafting, and the numbers say so before any policy is applied.
 
 ### A compiled routing decision, fully explained
 
+```
+• route "classify-intent" to harbor-mini (score 0.8157)
+    - harbor-mini beat runner-up lighthouse-local by a margin of 0.0698 in weighted score
+    - score components: cost=0.5573, quality=0.1860, reliability=0.0724
+    evidence: replayed 70 recorded call(s): 97.1% success, mean quality 0.908, mean latency 259 ms, total cost $12.9234
+    evidence: versus cheapest-model baseline harbor-nano: $7.5293 more cost, 0.908 vs 0.778 mean quality
+    rejected: clipper-pro — max_cost_usd (limit 0.35, observed 0.6692)
+    rejected: galleon-max — max_cost_usd (limit 0.35, observed 1.612)
+```
+
+Every line is defensible. The winner, the runner-up and the margin between them,
+the weighted breakdown, the replayed evidence, the baseline comparison, and the
+precise reason each disqualified vessel was left at the dock.
+
+### Privacy that actually holds the line
+
+```
+• route "draft-legal-clause" to lighthouse-local (score 0.6630)
+    - lighthouse-local was the only model to satisfy every hard constraint
