@@ -122,3 +122,22 @@ answer is not worth compiling.
 
 ---
 
+## Setting sail: quick start
+
+You need **Go 1.24+** and (for the dashboard) **Node 20+**. Nothing else.
+
+```bash
+# 1. Build the compiler
+make build            # produces ./bin/modelmariner
+
+# 2. Compile a report + routing tables from the sample fleet
+make report           # writes testdata/output/{report.json,report.txt,policies.json}
+
+# 3. Explore it in the dashboard
+make demo             # builds the TS dashboard and prints the fleet overview
+```
+
+Or drive the binary directly:
+
+```bash
+./bin/modelmariner analyze \
