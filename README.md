@@ -141,3 +141,22 @@ Or drive the binary directly:
 
 ```bash
 ./bin/modelmariner analyze \
+  --traces testdata/fleet.jsonl \
+  --policy testdata/policies.json \
+  --out    testdata/output \
+  --format both
+```
+
+---
+
+## Reading the log: real output
+
+This is **actual output** from `modelmariner analyze` over the 1,400-line sample
+corpus — not a mock-up.
+
+### Reliability, per model and task
+
+```
+========================================================================
+ RELIABILITY (per model / task)
+========================================================================
