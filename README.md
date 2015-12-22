@@ -236,3 +236,22 @@ ride the frontier; a dominated vessel drifts grey and is never chosen. Objective
 minimized (cost, latency) point one way; objectives maximized (quality,
 reliability) point the other. The frontier is the coastline between them.
 
+---
+
+## Writing routing policies
+
+A policy set is JSON. Constraints are hard; the preference ranks whoever
+survives. Here is the bundled `budget-guard`:
+
+```json
+{
+  "name": "budget-guard",
+  "description": "Minimize spend while keeping quality acceptable across all tasks.",
+  "constraints": {
+    "max_cost_usd": 0.35,
+    "min_quality": 0.7,
+    "min_reliability": 0.8
+  },
+  "preference": {
+    "weights": [
+      { "objective": "cost", "weight": 0.6 },
