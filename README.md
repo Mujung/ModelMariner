@@ -198,3 +198,22 @@ precise reason each disqualified vessel was left at the dock.
 ```
 • route "draft-legal-clause" to lighthouse-local (score 0.6630)
     - lighthouse-local was the only model to satisfy every hard constraint
+    rejected: clipper-pro — max_privacy (task data reaches "confidential"
+              but policy caps at "internal" and model is not privacy-safe)
+    rejected: galleon-max — max_privacy (task data reaches "confidential"
+              but policy caps at "internal" and model is not privacy-safe)
+```
+
+Under the `privacy-lockdown` policy, confidential data cannot leave on-prem
+infrastructure. The cloud vessels are disqualified outright — not down-weighted,
+**disqualified** — and the only privacy-safe model wins by default.
+
+---
+
+## The Pareto compass
+
+<p align="center">
+  <img src="docs/assets/pareto-compass.svg" alt="Animated compass needle sweeping a cost-versus-quality Pareto frontier" width="520">
+</p>
+
+Before any policy is applied, ModelMariner draws the **Pareto frontier** for each
