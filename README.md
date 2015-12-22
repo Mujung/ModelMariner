@@ -217,3 +217,22 @@ infrastructure. The cloud vessels are disqualified outright — not down-weighte
 </p>
 
 Before any policy is applied, ModelMariner draws the **Pareto frontier** for each
+task. A model is *dominated* when some other model is at least as good on every
+objective — cheaper-or-equal, faster-or-equal, higher-or-equal quality,
+more-reliable-or-equal — and strictly better on at least one. Dominated models
+are vessels no rational captain would ever choose, so they are flagged and
+explained:
+
+```
+ PARETO FRONTIERS (non-dominated models per task)
+classify-intent    frontier: harbor-nano, lighthouse-local, harbor-mini, clipper-pro, galleon-max
+    harbor-nano    cost $0.0774  p95 309ms  q 0.778  rel 0.881  on-frontier
+    harbor-mini    cost $0.1867  p95 512ms  q 0.908  rel 0.902  on-frontier
+    galleon-max    cost $1.6117  p95 1696ms q 0.953  rel 0.923  on-frontier
+```
+
+The compass needle in the image above sweeps exactly this space: cyan vessels
+ride the frontier; a dominated vessel drifts grey and is never chosen. Objectives
+minimized (cost, latency) point one way; objectives maximized (quality,
+reliability) point the other. The frontier is the coastline between them.
+
