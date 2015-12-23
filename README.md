@@ -274,3 +274,22 @@ survives. Here is the bundled `budget-guard`:
   the whole voyage.
 
 The full schema — input traces, policy language, and every output artifact —
+lives in [`docs/TRACE.md`](docs/TRACE.md).
+
+---
+
+## The navigation dashboard
+
+The `dashboard/` directory holds a strictly-typed TypeScript consumer of
+`report.json`. It has **zero runtime dependencies** (only the TypeScript
+compiler and Node's built-in test runner at dev time) and renders entirely in the
+terminal — no browser, no remote assets.
+
+```
+──────────────────────────────────────────────────────────────────────
+  MODELMARINER DASHBOARD — fleet overview
+──────────────────────────────────────────────────────────────────────
+  Traces: 1400 accepted / 1400 lines  |  5 models  |  5 tasks  |  4 policies
+
+  ROUTING WINNERS BY TASK
+  task                      budget-guard      latency-critical  privacy-lockdown  quality-first
