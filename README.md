@@ -255,3 +255,22 @@ survives. Here is the bundled `budget-guard`:
   "preference": {
     "weights": [
       { "objective": "cost", "weight": 0.6 },
+      { "objective": "quality", "weight": 0.25 },
+      { "objective": "reliability", "weight": 0.15 }
+    ]
+  }
+}
+```
+
+- **`constraints`** — any candidate that breaches `max_cost_usd`,
+  `max_latency_ms` (checked against p95), `min_quality`, `min_reliability`, or the
+  privacy cap is disqualified. Add `deny_models`, `allow_models`, and
+  `privacy_safe_models` to steer the fleet by name.
+- **`preference.weights`** — rank the survivors. Weights normalize to 1, so only
+  the *ratios* matter. Cost and latency are inverted (lower is better) and every
+  objective is scaled across the candidate set before weighting, so a policy
+  never accidentally compares dollars to milliseconds.
+- **`tasks`** (optional) — scope a policy to specific tasks; omit it to govern
+  the whole voyage.
+
+The full schema — input traces, policy language, and every output artifact —
