@@ -293,3 +293,22 @@ terminal — no browser, no remote assets.
 
   ROUTING WINNERS BY TASK
   task                      budget-guard      latency-critical  privacy-lockdown  quality-first
+  classify-intent           harbor-mini       harbor-nano       —                 —
+  draft-legal-clause        lighthouse-local  —                 lighthouse-local  clipper-pro
+  extract-pii-redaction     lighthouse-local  —                 lighthouse-local  —
+
+  POLICY ECONOMICS (realized vs cheapest-model baseline)
+  budget-guard         spent $23.4950 for +0.137 quality (5 routed, 0 unrouted)
+  privacy-lockdown     spent $3.8977  for +0.167 quality (2 routed, 0 unrouted)
+  quality-first        spent $100.1142 for +0.297 quality (2 routed, 0 unrouted)
+```
+
+Views:
+
+| Command | Shows |
+|---------|-------|
+| `overview` | Fleet summary + winners-by-task grid + policy economics. |
+| `task <name>` | One task: reliability table, frontier, and each policy's pick. |
+| `model <name>` | One model across every task, and how often it is chosen. |
+| `policy <name>` | A policy's compiled decisions with full explanations. |
+| `routes <name>` | Just the compiled winner-per-task routing table. |
