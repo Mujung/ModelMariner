@@ -312,3 +312,22 @@ Views:
 | `model <name>` | One model across every task, and how often it is chosen. |
 | `policy <name>` | A policy's compiled decisions with full explanations. |
 | `routes <name>` | Just the compiled winner-per-task routing table. |
+
+```bash
+cd dashboard
+npm install && npm run build
+node dist/dashboard.js ../testdata/output/report.json task draft-legal-clause
+```
+
+---
+
+## Deckhand's manual: CLI reference
+
+```
+modelmariner analyze  --traces FILE [--policy FILE] [--out DIR]
+                      [--format json|text|both] [--strict] [--with-timestamp]
+modelmariner validate --traces FILE [--strict]
+modelmariner version
+```
+
+| Flag | Purpose |
