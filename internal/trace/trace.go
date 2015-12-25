@@ -29,3 +29,18 @@ const (
 	PrivacyPublic PrivacyTier = iota
 	// PrivacyInternal marks data that must stay within the organization.
 	PrivacyInternal
+	// PrivacyConfidential marks sensitive business data.
+	PrivacyConfidential
+	// PrivacyRestricted marks the most sensitive data (PII, secrets, regulated).
+	PrivacyRestricted
+)
+
+var privacyNames = [...]string{"public", "internal", "confidential", "restricted"}
+
+// String renders the tier as its canonical lowercase name.
+func (p PrivacyTier) String() string {
+	if p < 0 || int(p) >= len(privacyNames) {
+		return "unknown"
+	}
+	return privacyNames[p]
+}
