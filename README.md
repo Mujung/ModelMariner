@@ -369,3 +369,22 @@ JSON is **byte-for-byte identical** across runs on identical inputs:
 
 - Traces are sorted by `(model, task, timestamp, line)` after ingestion.
 - Every map is emitted through sorted keys.
+- The frontier, evaluations, decisions, and policies all carry stable ordering.
+- HTML escaping is disabled so `<`, `>`, and `&` survive diffs unmangled.
+- The generation timestamp is **omitted by default** (opt in with
+  `--with-timestamp`).
+
+The CI smoke test runs `analyze` twice and `diff`s the output; a mismatch fails
+the build. Determinism is not an aspiration here — it is enforced.
+
+---
+
+## Testing the rigging
+
+```bash
+make test        # Go unit + integration tests
+make cover       # with per-package coverage
+make dashboard   # TypeScript type-check + build + node:test
+make ci          # fmt-check + vet + test + dashboard (what CI runs)
+```
+
