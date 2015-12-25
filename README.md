@@ -388,3 +388,23 @@ make dashboard   # TypeScript type-check + build + node:test
 make ci          # fmt-check + vet + test + dashboard (what CI runs)
 ```
 
+Go coverage sits comfortably above the waterline across every engine package
+(Pareto and reliability above 96%), and the dashboard ships twelve `node:test`
+cases covering the navigator and every render view. Tests assert the *behavior*
+that matters: budgets disqualify, privacy caps hold, dominated models drop off
+the frontier, Wilson bounds reward evidence, and reports stay deterministic.
+
+---
+
+## Project layout
+
+```
+modelmariner/
+├── cmd/modelmariner/        # CLI entrypoint + integration tests
+├── internal/
+│   ├── trace/               # ingestion, validation, privacy tiers
+│   ├── reliability/         # aggregation, Wilson bounds, percentiles
+│   ├── pareto/              # dominance & frontier analysis
+│   ├── policy/              # policy language + hard-constraint evaluator
+│   ├── routing/             # winner selection + trace replay
+│   ├── explain/             # decision rationale
