@@ -350,3 +350,22 @@ ModelMariner is **pure Go standard library** — not a single third-party import
 Each plank of the hull is an internal package with a single responsibility:
 
 | Package | Responsibility |
+|---------|----------------|
+| `internal/trace` | JSONL ingestion, validation, normalization, privacy tiers. |
+| `internal/reliability` | Success rates, Wilson bounds, latency percentiles. |
+| `internal/pareto` | Multi-objective dominance and frontier extraction. |
+| `internal/policy` | Policy language, hard-constraint evaluation, scoring. |
+| `internal/routing` | Winner selection + trace replay + baseline economics. |
+| `internal/explain` | Human-readable rationale for every decision. |
+| `internal/report` | Deterministic JSON/text assembly + compiled artifacts. |
+| `cmd/modelmariner` | The CLI that wires the voyage together. |
+
+---
+
+## Determinism: the ship's chronometer
+
+A router you cannot reproduce is a router you cannot trust. ModelMariner's report
+JSON is **byte-for-byte identical** across runs on identical inputs:
+
+- Traces are sorted by `(model, task, timestamp, line)` after ingestion.
+- Every map is emitted through sorted keys.
