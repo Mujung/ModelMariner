@@ -59,3 +59,18 @@ func ParsePrivacyTier(s string) (PrivacyTier, error) {
 // MarshalJSON encodes the tier as its name so reports read cleanly.
 func (p PrivacyTier) MarshalJSON() ([]byte, error) {
 	return json.Marshal(p.String())
+}
+
+// UnmarshalJSON accepts either the string name or the integer rank.
+func (p *PrivacyTier) UnmarshalJSON(data []byte) error {
+	var s string
+	if err := json.Unmarshal(data, &s); err == nil {
+		tier, err := ParsePrivacyTier(s)
+		if err != nil {
+			return err
+		}
+		*p = tier
+		return nil
+	}
+	var n int
+	if err := json.Unmarshal(data, &n); err != nil {
