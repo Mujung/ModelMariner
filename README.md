@@ -408,3 +408,22 @@ modelmariner/
 │   ├── policy/              # policy language + hard-constraint evaluator
 │   ├── routing/             # winner selection + trace replay
 │   ├── explain/             # decision rationale
+│   └── report/              # deterministic JSON/text + artifacts
+├── dashboard/               # TypeScript navigation dashboard
+│   ├── src/                 # types, navigator, renderer, tests
+│   ├── package.json
+│   └── tsconfig.json
+├── docs/
+│   ├── TRACE.md             # authoritative format reference
+│   └── assets/              # two animated SVGs (no remote media)
+├── testdata/
+│   ├── fleet.jsonl          # 1,400-line synthetic corpus
+│   ├── gen_traces.go        # deterministic corpus generator
+│   ├── policies.json        # four example policies
+│   └── output/              # committed sample report artifacts
+├── .github/workflows/ci.yml
+├── Makefile
+├── go.mod
+├── LICENSE
+├── CHANGELOG.md
+└── README.md
