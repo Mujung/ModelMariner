@@ -74,3 +74,18 @@ func (p *PrivacyTier) UnmarshalJSON(data []byte) error {
 	}
 	var n int
 	if err := json.Unmarshal(data, &n); err != nil {
+		return fmt.Errorf("privacy tier must be a string or integer: %w", err)
+	}
+	if n < 0 || n >= len(privacyNames) {
+		return fmt.Errorf("privacy tier rank %d out of range", n)
+	}
+	*p = PrivacyTier(n)
+	return nil
+}
+
+// Record is the raw shape read from a JSONL line. Fields use pointers where a
+// missing value is semantically different from a zero value so validation can
+// distinguish "absent" from "explicitly zero".
+type Record struct {
+	Model     string      `json:"model"`
+	Task      string      `json:"task"`
