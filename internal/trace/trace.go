@@ -89,3 +89,18 @@ func (p *PrivacyTier) UnmarshalJSON(data []byte) error {
 type Record struct {
 	Model     string      `json:"model"`
 	Task      string      `json:"task"`
+	Provider  string      `json:"provider,omitempty"`
+	Region    string      `json:"region,omitempty"`
+	Tokens    *TokenUsage `json:"tokens"`
+	CostUSD   *float64    `json:"cost_usd"`
+	LatencyMS *float64    `json:"latency_ms"`
+	Quality   *float64    `json:"quality"`
+	Error     bool        `json:"error"`
+	ErrorKind string      `json:"error_kind,omitempty"`
+	Privacy   PrivacyTier `json:"privacy"`
+	Timestamp string      `json:"timestamp,omitempty"`
+}
+
+// TokenUsage captures prompt and completion token counts.
+type TokenUsage struct {
+	Prompt     int `json:"prompt"`
