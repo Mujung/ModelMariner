@@ -134,3 +134,18 @@ type Trace struct {
 func (t Trace) Tokens() int { return t.Prompt + t.Completion }
 
 // ValidationError describes exactly why a single source line was rejected.
+type ValidationError struct {
+	Line   int
+	Field  string
+	Reason string
+}
+
+func (e ValidationError) Error() string {
+	return fmt.Sprintf("line %d: field %q: %s", e.Line, e.Field, e.Reason)
+}
+
+// IngestResult bundles the successfully parsed traces with any per-line errors.
+// Ingestion is intentionally lenient at the collection level (it keeps going
+// past bad lines) but strict per record, so callers can decide whether a run
+// with rejected lines should fail.
+type IngestResult struct {
