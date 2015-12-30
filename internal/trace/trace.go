@@ -149,3 +149,18 @@ func (e ValidationError) Error() string {
 // past bad lines) but strict per record, so callers can decide whether a run
 // with rejected lines should fail.
 type IngestResult struct {
+	Traces   []Trace
+	Errors   []ValidationError
+	Rejected int
+	Total    int
+}
+
+// Options tunes the ingestion pipeline.
+type Options struct {
+	// SkipInvalid keeps ingestion going past invalid lines instead of stopping.
+	SkipInvalid bool
+	// MaxQuality clamps quality to this ceiling (defaults to 1.0).
+	MaxQuality float64
+}
+
+// DefaultOptions returns the standard ingestion configuration.
