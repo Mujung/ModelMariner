@@ -164,3 +164,18 @@ type Options struct {
 }
 
 // DefaultOptions returns the standard ingestion configuration.
+func DefaultOptions() Options {
+	return Options{SkipInvalid: true, MaxQuality: 1.0}
+}
+
+// Ingest reads JSONL from r, validating and normalizing each line. Blank lines
+// and lines beginning with '#' (comments) are ignored. The returned traces are
+// sorted deterministically by (model, task, timestamp, line) so downstream
+// output never depends on input ordering.
+func Ingest(r io.Reader, opts Options) (IngestResult, error) {
+	if opts.MaxQuality <= 0 {
+		opts.MaxQuality = 1.0
+	}
+	var res IngestResult
+	scanner := bufio.NewScanner(r)
+	// Allow long lines; traces can carry large token counts and metadata.
