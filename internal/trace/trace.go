@@ -179,3 +179,18 @@ func Ingest(r io.Reader, opts Options) (IngestResult, error) {
 	var res IngestResult
 	scanner := bufio.NewScanner(r)
 	// Allow long lines; traces can carry large token counts and metadata.
+	scanner.Buffer(make([]byte, 0, 64*1024), 4*1024*1024)
+	lineNo := 0
+	for scanner.Scan() {
+		lineNo++
+		raw := strings.TrimSpace(scanner.Text())
+		if raw == "" || strings.HasPrefix(raw, "#") {
+			continue
+		}
+		res.Total++
+		var rec Record
+		dec := json.NewDecoder(strings.NewReader(raw))
+		dec.DisallowUnknownFields()
+		if err := dec.Decode(&rec); err != nil {
+			ve := ValidationError{Line: lineNo, Field: "<json>", Reason: err.Error()}
+			res.Errors = append(res.Errors, ve)
