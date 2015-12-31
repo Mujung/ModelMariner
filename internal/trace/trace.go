@@ -194,3 +194,18 @@ func Ingest(r io.Reader, opts Options) (IngestResult, error) {
 		if err := dec.Decode(&rec); err != nil {
 			ve := ValidationError{Line: lineNo, Field: "<json>", Reason: err.Error()}
 			res.Errors = append(res.Errors, ve)
+			res.Rejected++
+			if !opts.SkipInvalid {
+				return res, ve
+			}
+			continue
+		}
+		tr, verrs := normalize(rec, lineNo, opts)
+		if len(verrs) > 0 {
+			res.Errors = append(res.Errors, verrs...)
+			res.Rejected++
+			if !opts.SkipInvalid {
+				return res, verrs[0]
+			}
+			continue
+		}
