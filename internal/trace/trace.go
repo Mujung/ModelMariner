@@ -209,3 +209,18 @@ func Ingest(r io.Reader, opts Options) (IngestResult, error) {
 			}
 			continue
 		}
+		res.Traces = append(res.Traces, tr)
+	}
+	if err := scanner.Err(); err != nil {
+		return res, fmt.Errorf("reading traces: %w", err)
+	}
+	sort.SliceStable(res.Traces, func(i, j int) bool {
+		a, b := res.Traces[i], res.Traces[j]
+		if a.Model != b.Model {
+			return a.Model < b.Model
+		}
+		if a.Task != b.Task {
+			return a.Task < b.Task
+		}
+		if a.Timestamp != b.Timestamp {
+			return a.Timestamp < b.Timestamp
