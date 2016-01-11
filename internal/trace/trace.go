@@ -224,3 +224,18 @@ func Ingest(r io.Reader, opts Options) (IngestResult, error) {
 		}
 		if a.Timestamp != b.Timestamp {
 			return a.Timestamp < b.Timestamp
+		}
+		return a.Line < b.Line
+	})
+	return res, nil
+}
+
+// normalize validates a raw record and converts it into a canonical Trace.
+func normalize(rec Record, line int, opts Options) (Trace, []ValidationError) {
+	var errs []ValidationError
+	add := func(field, reason string) {
+		errs = append(errs, ValidationError{Line: line, Field: field, Reason: reason})
+	}
+
+	model := strings.TrimSpace(rec.Model)
+	if model == "" {
