@@ -239,3 +239,18 @@ func normalize(rec Record, line int, opts Options) (Trace, []ValidationError) {
 
 	model := strings.TrimSpace(rec.Model)
 	if model == "" {
+		add("model", "must be a non-empty identifier")
+	}
+	task := strings.TrimSpace(rec.Task)
+	if task == "" {
+		add("task", "must be a non-empty identifier")
+	}
+	if rec.Tokens == nil {
+		add("tokens", "required object with prompt and completion counts")
+	} else {
+		if rec.Tokens.Prompt < 0 {
+			add("tokens.prompt", "must be >= 0")
+		}
+		if rec.Tokens.Completion < 0 {
+			add("tokens.completion", "must be >= 0")
+		}
