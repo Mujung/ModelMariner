@@ -32,3 +32,16 @@ type Decision struct {
 	NoEligible bool `json:"no_eligible"`
 }
 
+// RejectedCandidate summarizes why a model was excluded.
+type RejectedCandidate struct {
+	Model      string             `json:"model"`
+	Violations []policy.Violation `json:"violations"`
+}
+
+// RealizedMetrics reports the outcome of replaying traces through a routing
+// choice. Baseline uses the naive "cheapest model regardless of policy" pick so
+// the report can quantify what the policy bought or cost.
+type RealizedMetrics struct {
+	Model         string  `json:"model"`
+	Calls         int     `json:"calls"`
+	Successes     int     `json:"successes"`
