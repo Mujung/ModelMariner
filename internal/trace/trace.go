@@ -254,3 +254,18 @@ func normalize(rec Record, line int, opts Options) (Trace, []ValidationError) {
 		if rec.Tokens.Completion < 0 {
 			add("tokens.completion", "must be >= 0")
 		}
+	}
+	if rec.CostUSD == nil {
+		add("cost_usd", "required numeric field")
+	} else if *rec.CostUSD < 0 {
+		add("cost_usd", "must be >= 0")
+	} else if math.IsNaN(*rec.CostUSD) || math.IsInf(*rec.CostUSD, 0) {
+		add("cost_usd", "must be a finite number")
+	}
+	if rec.LatencyMS == nil {
+		add("latency_ms", "required numeric field")
+	} else if *rec.LatencyMS < 0 {
+		add("latency_ms", "must be >= 0")
+	} else if math.IsNaN(*rec.LatencyMS) || math.IsInf(*rec.LatencyMS, 0) {
+		add("latency_ms", "must be a finite number")
+	}
