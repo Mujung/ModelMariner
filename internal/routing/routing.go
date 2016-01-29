@@ -45,3 +45,16 @@ type RealizedMetrics struct {
 	Model         string  `json:"model"`
 	Calls         int     `json:"calls"`
 	Successes     int     `json:"successes"`
+	SuccessRate   float64 `json:"success_rate"`
+	TotalCostUSD  float64 `json:"total_cost_usd"`
+	MeanLatencyMS float64 `json:"mean_latency_ms"`
+	MeanQuality   float64 `json:"mean_quality"`
+}
+
+// Simulation is the full routing result across all tasks for one policy.
+type Simulation struct {
+	Policy    string     `json:"policy"`
+	Decisions []Decision `json:"decisions"`
+	Totals    Totals     `json:"totals"`
+}
+
