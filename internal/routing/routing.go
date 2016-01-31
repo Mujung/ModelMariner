@@ -84,3 +84,15 @@ func Simulate(p policy.Policy, sum reliability.Summary, traces []trace.Trace) Si
 		}
 		aggs := sum.ForTask(task)
 		evals := policy.Evaluate(p, aggs)
+
+		d := Decision{
+			Task:        task,
+			Policy:      p.Name,
+			Evaluations: evals,
+		}
+
+		var eligible []policy.Evaluation
+		for _, e := range evals {
+			if e.Eligible {
+				eligible = append(eligible, e)
+				d.Eligible = append(d.Eligible, e.Model)
