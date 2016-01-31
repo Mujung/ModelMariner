@@ -71,3 +71,16 @@ type Totals struct {
 
 // Simulate compiles a single policy into per-task routing decisions and replays
 // the recorded traces to measure realized outcomes.
+func Simulate(p policy.Policy, sum reliability.Summary, traces []trace.Trace) Simulation {
+	byTaskModel := indexTraces(traces)
+	sim := Simulation{Policy: p.Name}
+
+	var realizedQualitySum, baselineQualitySum float64
+	var qualityWeight int
+
+	for _, task := range sum.Tasks {
+		if !p.AppliesTo(task) {
+			continue
+		}
+		aggs := sum.ForTask(task)
+		evals := policy.Evaluate(p, aggs)
