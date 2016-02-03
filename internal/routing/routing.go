@@ -122,3 +122,16 @@ func Simulate(p policy.Policy, sum reliability.Summary, traces []trace.Trace) Si
 		}
 
 		d.Realized = replay(task, winner.Model, byTaskModel)
+		d.Baseline = replay(task, cheapestModel(aggs), byTaskModel)
+
+		sim.Totals.TasksDecided++
+		sim.Totals.RealizedCostUSD += d.Realized.TotalCostUSD
+		sim.Totals.BaselineCostUSD += d.Baseline.TotalCostUSD
+		realizedQualitySum += d.Realized.MeanQuality
+		baselineQualitySum += d.Baseline.MeanQuality
+		qualityWeight++
+
+		sim.Decisions = append(sim.Decisions, d)
+	}
+
+	sort.Slice(sim.Decisions, func(i, j int) bool { return sim.Decisions[i].Task < sim.Decisions[j].Task })
