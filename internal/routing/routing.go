@@ -148,3 +148,15 @@ func SimulateAll(set policy.Set, sum reliability.Summary, traces []trace.Trace) 
 	out := make([]Simulation, 0, len(set.Policies))
 	for _, p := range set.Policies {
 		out = append(out, Simulate(p, sum, traces))
+	}
+	return out
+}
+
+// indexTraces groups traces by task then model for O(1) replay lookups.
+func indexTraces(traces []trace.Trace) map[string]map[string][]trace.Trace {
+	idx := map[string]map[string][]trace.Trace{}
+	for _, t := range traces {
+		if idx[t.Task] == nil {
+			idx[t.Task] = map[string][]trace.Trace{}
+		}
+		idx[t.Task][t.Model] = append(idx[t.Task][t.Model], t)
