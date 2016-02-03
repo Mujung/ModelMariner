@@ -96,3 +96,16 @@ func Simulate(p policy.Policy, sum reliability.Summary, traces []trace.Trace) Si
 			if e.Eligible {
 				eligible = append(eligible, e)
 				d.Eligible = append(d.Eligible, e.Model)
+			} else {
+				d.Rejected = append(d.Rejected, RejectedCandidate{
+					Model:      e.Model,
+					Violations: e.Violations,
+				})
+			}
+		}
+
+		if len(eligible) == 0 {
+			d.NoEligible = true
+			sim.Decisions = append(sim.Decisions, d)
+			sim.Totals.TasksUnrouted++
+			continue
