@@ -109,3 +109,16 @@ func Simulate(p policy.Policy, sum reliability.Summary, traces []trace.Trace) Si
 			sim.Decisions = append(sim.Decisions, d)
 			sim.Totals.TasksUnrouted++
 			continue
+		}
+
+		winner := eligible[0]
+		d.Winner = winner.Model
+		d.Score = winner.Score
+		if len(eligible) > 1 {
+			d.Runnerup = eligible[1].Model
+			d.Margin = winner.Score - eligible[1].Score
+		} else {
+			d.Margin = winner.Score
+		}
+
+		d.Realized = replay(task, winner.Model, byTaskModel)
