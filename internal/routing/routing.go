@@ -173,3 +173,16 @@ func replay(task, model string, idx map[string]map[string][]trace.Trace) Realize
 	var successCount int
 	for _, t := range traces {
 		m.Calls++
+		m.TotalCostUSD += t.CostUSD
+		if t.Error {
+			continue
+		}
+		successCount++
+		latSum += t.LatencyMS
+		qualSum += t.Quality
+	}
+	m.Successes = successCount
+	if m.Calls > 0 {
+		m.SuccessRate = float64(successCount) / float64(m.Calls)
+	}
+	if successCount > 0 {
