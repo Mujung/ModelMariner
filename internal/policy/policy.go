@@ -88,3 +88,20 @@ func (p Policy) AppliesTo(task string) bool {
 		return true
 	}
 	for _, t := range p.Tasks {
+		if t == task {
+			return true
+		}
+	}
+	return false
+}
+
+// Load parses and validates a policy set from JSON.
+func Load(r io.Reader) (Set, error) {
+	var set Set
+	dec := json.NewDecoder(r)
+	dec.DisallowUnknownFields()
+	if err := dec.Decode(&set); err != nil {
+		return set, fmt.Errorf("parsing policy file: %w", err)
+	}
+	if set.Version == 0 {
+		set.Version = 1
