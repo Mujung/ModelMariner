@@ -55,3 +55,20 @@ type Constraints struct {
 }
 
 // Weight assigns relative importance to an objective for tie-breaking / scoring.
+type Weight struct {
+	Objective Objective `json:"objective"`
+	Weight    float64   `json:"weight"`
+}
+
+// Preference declares how survivors are ranked. Weights are normalized before
+// scoring, so their absolute magnitudes do not matter — only their ratios.
+type Preference struct {
+	Weights []Weight `json:"weights"`
+}
+
+// Policy is a named bundle of constraints and a preference, optionally scoped
+// to specific tasks. A policy with no Tasks applies to every task.
+type Policy struct {
+	Name        string      `json:"name"`
+	Description string      `json:"description,omitempty"`
+	Tasks       []string    `json:"tasks,omitempty"`
