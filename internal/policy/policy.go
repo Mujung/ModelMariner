@@ -38,3 +38,20 @@ type Constraints struct {
 	// MaxLatencyMS caps the P95 latency. Zero means "no cap".
 	MaxLatencyMS float64 `json:"max_latency_ms,omitempty"`
 	// MinQuality is the minimum acceptable mean quality. Zero means "no floor".
+	MinQuality float64 `json:"min_quality,omitempty"`
+	// MinReliability is the minimum acceptable Wilson lower bound. Zero means none.
+	MinReliability float64 `json:"min_reliability,omitempty"`
+	// MaxPrivacy is the strictest privacy tier a candidate may handle. When set,
+	// a candidate is disqualified if the task's observed privacy tier exceeds it
+	// unless the model is on AllowPrivacy. Empty means "no privacy constraint".
+	MaxPrivacy *trace.PrivacyTier `json:"max_privacy,omitempty"`
+	// DenyModels lists models forbidden regardless of metrics (e.g. deprecated).
+	DenyModels []string `json:"deny_models,omitempty"`
+	// AllowModels, when non-empty, restricts routing to exactly these models.
+	AllowModels []string `json:"allow_models,omitempty"`
+	// PrivacySafeModels lists models cleared to handle data above MaxPrivacy
+	// (for example on-premise deployments that never egress data).
+	PrivacySafeModels []string `json:"privacy_safe_models,omitempty"`
+}
+
+// Weight assigns relative importance to an objective for tie-breaking / scoring.
