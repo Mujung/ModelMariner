@@ -72,3 +72,19 @@ type Policy struct {
 	Name        string      `json:"name"`
 	Description string      `json:"description,omitempty"`
 	Tasks       []string    `json:"tasks,omitempty"`
+	Constraints Constraints `json:"constraints"`
+	Preference  Preference  `json:"preference"`
+}
+
+// Set is a collection of policies loaded from a policy file.
+type Set struct {
+	Version  int      `json:"version"`
+	Policies []Policy `json:"policies"`
+}
+
+// AppliesTo reports whether the policy governs the given task.
+func (p Policy) AppliesTo(task string) bool {
+	if len(p.Tasks) == 0 {
+		return true
+	}
+	for _, t := range p.Tasks {
