@@ -105,3 +105,20 @@ func Load(r io.Reader) (Set, error) {
 	}
 	if set.Version == 0 {
 		set.Version = 1
+	}
+	if len(set.Policies) == 0 {
+		return set, fmt.Errorf("policy file defines no policies")
+	}
+	names := map[string]bool{}
+	for i := range set.Policies {
+		p := &set.Policies[i]
+		p.Name = strings.TrimSpace(p.Name)
+		if p.Name == "" {
+			return set, fmt.Errorf("policy #%d has an empty name", i+1)
+		}
+		if names[p.Name] {
+			return set, fmt.Errorf("duplicate policy name %q", p.Name)
+		}
+		names[p.Name] = true
+		if err := validatePreference(p.Preference); err != nil {
+			return set, fmt.Errorf("policy %q: %w", p.Name, err)
