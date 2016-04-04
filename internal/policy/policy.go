@@ -155,3 +155,20 @@ func validatePreference(pref Preference) error {
 	return nil
 }
 
+func validateConstraints(c Constraints) error {
+	if c.MaxCostUSD < 0 {
+		return fmt.Errorf("max_cost_usd must be >= 0")
+	}
+	if c.MaxLatencyMS < 0 {
+		return fmt.Errorf("max_latency_ms must be >= 0")
+	}
+	if c.MinQuality < 0 || c.MinQuality > 1 {
+		return fmt.Errorf("min_quality must be in [0,1]")
+	}
+	if c.MinReliability < 0 || c.MinReliability > 1 {
+		return fmt.Errorf("min_reliability must be in [0,1]")
+	}
+	return nil
+}
+
+// Violation records a single reason a candidate failed a constraint.
