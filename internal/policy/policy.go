@@ -122,3 +122,19 @@ func Load(r io.Reader) (Set, error) {
 		names[p.Name] = true
 		if err := validatePreference(p.Preference); err != nil {
 			return set, fmt.Errorf("policy %q: %w", p.Name, err)
+		}
+		if err := validateConstraints(p.Constraints); err != nil {
+			return set, fmt.Errorf("policy %q: %w", p.Name, err)
+		}
+	}
+	return set, nil
+}
+
+func validatePreference(pref Preference) error {
+	if len(pref.Weights) == 0 {
+		return fmt.Errorf("preference must define at least one weight")
+	}
+	seen := map[Objective]bool{}
+	var total float64
+	for _, w := range pref.Weights {
+		if !validObjectives[w.Objective] {
