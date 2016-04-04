@@ -172,3 +172,19 @@ func validateConstraints(c Constraints) error {
 }
 
 // Violation records a single reason a candidate failed a constraint.
+type Violation struct {
+	Constraint string  `json:"constraint"`
+	Detail     string  `json:"detail"`
+	Limit      float64 `json:"limit,omitempty"`
+	Observed   float64 `json:"observed,omitempty"`
+}
+
+// Evaluation is the verdict for one candidate model under one policy.
+type Evaluation struct {
+	Model      string      `json:"model"`
+	Eligible   bool        `json:"eligible"`
+	Score      float64     `json:"score"`
+	Violations []Violation `json:"violations,omitempty"`
+	// Components exposes the normalized per-objective contributions to Score.
+	Components map[string]float64 `json:"components,omitempty"`
+}
