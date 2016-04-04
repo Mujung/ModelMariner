@@ -138,3 +138,20 @@ func validatePreference(pref Preference) error {
 	var total float64
 	for _, w := range pref.Weights {
 		if !validObjectives[w.Objective] {
+			return fmt.Errorf("unknown objective %q (want cost, latency, quality, reliability)", w.Objective)
+		}
+		if seen[w.Objective] {
+			return fmt.Errorf("objective %q weighted more than once", w.Objective)
+		}
+		seen[w.Objective] = true
+		if w.Weight < 0 {
+			return fmt.Errorf("objective %q has negative weight", w.Objective)
+		}
+		total += w.Weight
+	}
+	if total <= 0 {
+		return fmt.Errorf("preference weights sum to zero")
+	}
+	return nil
+}
+
