@@ -255,3 +255,20 @@ func Evaluate(p Policy, aggs []reliability.Aggregate) []Evaluation {
 			})
 		}
 		if c.MaxLatencyMS > 0 && a.P95LatencyMS > c.MaxLatencyMS+1e-9 {
+			ev.Eligible = false
+			ev.Violations = append(ev.Violations, Violation{
+				Constraint: "max_latency_ms",
+				Detail:     "p95 latency exceeds ceiling",
+				Limit:      c.MaxLatencyMS,
+				Observed:   a.P95LatencyMS,
+			})
+		}
+		if c.MinQuality > 0 && a.MeanQuality < c.MinQuality-1e-9 {
+			ev.Eligible = false
+			ev.Violations = append(ev.Violations, Violation{
+				Constraint: "min_quality",
+				Detail:     "mean quality below floor",
+				Limit:      c.MinQuality,
+				Observed:   a.MeanQuality,
+			})
+		}
