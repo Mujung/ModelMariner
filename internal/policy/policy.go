@@ -238,3 +238,20 @@ func Evaluate(p Policy, aggs []reliability.Aggregate) []Evaluation {
 				Detail:     fmt.Sprintf("model %q is explicitly denied", a.Model),
 			})
 		}
+		if allow != nil && !allow[a.Model] {
+			ev.Eligible = false
+			ev.Violations = append(ev.Violations, Violation{
+				Constraint: "allow_models",
+				Detail:     fmt.Sprintf("model %q is not in the allow list", a.Model),
+			})
+		}
+		if c.MaxCostUSD > 0 && a.MeanCostUSD > c.MaxCostUSD+1e-9 {
+			ev.Eligible = false
+			ev.Violations = append(ev.Violations, Violation{
+				Constraint: "max_cost_usd",
+				Detail:     "mean cost exceeds budget",
+				Limit:      c.MaxCostUSD,
+				Observed:   a.MeanCostUSD,
+			})
+		}
+		if c.MaxLatencyMS > 0 && a.P95LatencyMS > c.MaxLatencyMS+1e-9 {
