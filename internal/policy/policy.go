@@ -289,3 +289,19 @@ func Evaluate(p Policy, aggs []reliability.Aggregate) []Evaluation {
 					a.HighestPrivacy, c.MaxPrivacy.String()),
 			})
 		}
+
+		if ev.Eligible {
+			ev.Score, ev.Components = score(a, p.Preference.NormalizedWeights(), ranges)
+		}
+		out = append(out, ev)
+	}
+
+	sort.SliceStable(out, func(i, j int) bool {
+		if out[i].Eligible != out[j].Eligible {
+			return out[i].Eligible // eligible first
+		}
+		if out[i].Eligible && !almostEqual(out[i].Score, out[j].Score) {
+			return out[i].Score > out[j].Score
+		}
+		return out[i].Model < out[j].Model
+	})
