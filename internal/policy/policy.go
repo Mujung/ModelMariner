@@ -305,3 +305,20 @@ func Evaluate(p Policy, aggs []reliability.Aggregate) []Evaluation {
 		}
 		return out[i].Model < out[j].Model
 	})
+	return out
+}
+
+// objectiveRange records the min/max of each objective across candidates so
+// scores can be normalized to [0,1] regardless of absolute units.
+type objectiveRange struct {
+	minCost, maxCost float64
+	minLat, maxLat   float64
+	minQual, maxQual float64
+	minRel, maxRel   float64
+}
+
+func computeRanges(aggs []reliability.Aggregate) objectiveRange {
+	r := objectiveRange{
+		minCost: pos, maxCost: 0,
+		minLat: pos, maxLat: 0,
+		minQual: pos, maxQual: 0,
