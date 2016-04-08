@@ -205,3 +205,20 @@ func (p Preference) NormalizedWeights() map[Objective]float64 {
 	return out
 }
 
+// Evaluate applies a policy to every candidate aggregate for a task and returns
+// per-model verdicts sorted by score (descending) then model name. Candidates
+// with no successful samples are always ineligible.
+func Evaluate(p Policy, aggs []reliability.Aggregate) []Evaluation {
+	deny := toSet(p.Constraints.DenyModels)
+	var allow map[string]bool
+	if len(p.Constraints.AllowModels) > 0 {
+		allow = toSet(p.Constraints.AllowModels)
+	}
+	safe := toSet(p.Constraints.PrivacySafeModels)
+
+	// Compute scaling extents for score normalization across the candidate set.
+	ranges := computeRanges(aggs)
+
+	out := make([]Evaluation, 0, len(aggs))
+	for _, a := range aggs {
+		ev := Evaluation{Model: a.Model, Eligible: true}
