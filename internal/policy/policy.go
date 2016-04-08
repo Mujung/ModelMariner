@@ -222,3 +222,19 @@ func Evaluate(p Policy, aggs []reliability.Aggregate) []Evaluation {
 	out := make([]Evaluation, 0, len(aggs))
 	for _, a := range aggs {
 		ev := Evaluation{Model: a.Model, Eligible: true}
+		c := p.Constraints
+
+		if a.Successes == 0 {
+			ev.Eligible = false
+			ev.Violations = append(ev.Violations, Violation{
+				Constraint: "samples",
+				Detail:     "no successful samples recorded for this model/task",
+			})
+		}
+		if deny[a.Model] {
+			ev.Eligible = false
+			ev.Violations = append(ev.Violations, Violation{
+				Constraint: "deny_models",
+				Detail:     fmt.Sprintf("model %q is explicitly denied", a.Model),
+			})
+		}
