@@ -188,3 +188,20 @@ type Evaluation struct {
 	// Components exposes the normalized per-objective contributions to Score.
 	Components map[string]float64 `json:"components,omitempty"`
 }
+
+// NormalizedWeights returns the preference weights scaled to sum to 1.
+func (p Preference) NormalizedWeights() map[Objective]float64 {
+	total := 0.0
+	for _, w := range p.Weights {
+		total += w.Weight
+	}
+	out := map[Objective]float64{}
+	if total <= 0 {
+		return out
+	}
+	for _, w := range p.Weights {
+		out[w.Objective] = w.Weight / total
+	}
+	return out
+}
+
