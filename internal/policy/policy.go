@@ -272,3 +272,20 @@ func Evaluate(p Policy, aggs []reliability.Aggregate) []Evaluation {
 				Observed:   a.MeanQuality,
 			})
 		}
+		if c.MinReliability > 0 && a.WilsonLower < c.MinReliability-1e-9 {
+			ev.Eligible = false
+			ev.Violations = append(ev.Violations, Violation{
+				Constraint: "min_reliability",
+				Detail:     "reliability lower bound below floor",
+				Limit:      c.MinReliability,
+				Observed:   a.WilsonLower,
+			})
+		}
+		if c.MaxPrivacy != nil && a.HighestPrivacy > *c.MaxPrivacy && !safe[a.Model] {
+			ev.Eligible = false
+			ev.Violations = append(ev.Violations, Violation{
+				Constraint: "max_privacy",
+				Detail: fmt.Sprintf("task data reaches %q but policy caps at %q and model is not privacy-safe",
+					a.HighestPrivacy, c.MaxPrivacy.String()),
+			})
+		}
