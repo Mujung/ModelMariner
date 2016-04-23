@@ -339,3 +339,19 @@ func computeRanges(aggs []reliability.Aggregate) objectiveRange {
 		r.minRel = min(r.minRel, a.WilsonLower)
 		r.maxRel = max(r.maxRel, a.WilsonLower)
 	}
+	if !found {
+		return objectiveRange{}
+	}
+	return r
+}
+
+const pos = 1e18
+
+// score produces a normalized [0,1] weighted score. Cost and latency are
+// inverted (lower is better) via normalization; quality and reliability are
+// used directly. Components are exposed so explanations can show the breakdown.
+func score(a reliability.Aggregate, w map[Objective]float64, r objectiveRange) (float64, map[string]float64) {
+	comp := map[string]float64{}
+	total := 0.0
+
+	normLowerBetter := func(v, lo, hi float64) float64 {
