@@ -44,3 +44,13 @@ func (f Frontier) FrontierModels() []string {
 // Analysis holds frontiers for every task.
 type Analysis struct {
 	Frontiers []Frontier `json:"frontiers"`
+}
+
+// ForTask returns the frontier for a named task and whether it exists.
+func (a Analysis) ForTask(task string) (Frontier, bool) {
+	for _, f := range a.Frontiers {
+		if f.Task == task {
+			return f, true
+		}
+	}
+	return Frontier{}, false
