@@ -54,3 +54,14 @@ func (a Analysis) ForTask(task string) (Frontier, bool) {
 		}
 	}
 	return Frontier{}, false
+}
+
+// Compute derives Pareto frontiers per task from a reliability summary. Only
+// models with at least one successful sample participate; a model that never
+// succeeded has no meaningful cost/latency/quality position.
+func Compute(sum reliability.Summary) Analysis {
+	var an Analysis
+	for _, task := range sum.Tasks {
+		aggs := sum.ForTask(task)
+		points := make([]Point, 0, len(aggs))
+		for _, a := range aggs {
