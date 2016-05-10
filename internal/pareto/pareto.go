@@ -96,3 +96,13 @@ func Compute(sum reliability.Summary) Analysis {
 		})
 		sort.Slice(points, func(i, j int) bool { return points[i].Model < points[j].Model })
 		an.Frontiers = append(an.Frontiers, Frontier{
+			Task:     task,
+			Points:   points,
+			Frontier: frontier,
+		})
+	}
+	sort.Slice(an.Frontiers, func(i, j int) bool { return an.Frontiers[i].Task < an.Frontiers[j].Task })
+	return an
+}
+
+// markDominance fills the Dominated / DominatedBy fields in place. We minimize
