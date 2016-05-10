@@ -65,3 +65,13 @@ func Compute(sum reliability.Summary) Analysis {
 		aggs := sum.ForTask(task)
 		points := make([]Point, 0, len(aggs))
 		for _, a := range aggs {
+			if a.Successes == 0 {
+				continue
+			}
+			points = append(points, Point{
+				Model:       a.Model,
+				CostUSD:     a.MeanCostUSD,
+				LatencyMS:   a.P95LatencyMS,
+				Quality:     a.MeanQuality,
+				Reliability: a.WilsonLower,
+			})
