@@ -106,3 +106,14 @@ func Compute(sum reliability.Summary) Analysis {
 }
 
 // markDominance fills the Dominated / DominatedBy fields in place. We minimize
+// cost and latency, maximize quality and reliability.
+func markDominance(points []Point) {
+	for i := range points {
+		var dominators []string
+		for j := range points {
+			if i == j {
+				continue
+			}
+			if dominates(points[j], points[i]) {
+				dominators = append(dominators, points[j].Model)
+			}
