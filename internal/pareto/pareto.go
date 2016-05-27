@@ -117,3 +117,13 @@ func markDominance(points []Point) {
 			if dominates(points[j], points[i]) {
 				dominators = append(dominators, points[j].Model)
 			}
+		}
+		if len(dominators) > 0 {
+			sort.Strings(dominators)
+			points[i].Dominated = true
+			points[i].DominatedBy = dominators
+		}
+	}
+}
+
+// dominates reports whether point a Pareto-dominates point b: a is no worse on
