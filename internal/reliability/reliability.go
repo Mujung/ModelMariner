@@ -48,3 +48,16 @@ type Summary struct {
 	Tasks      []string            `json:"tasks"`
 	TaskModels map[string][]string `json:"-"`
 }
+
+// key uniquely identifies a model/task pairing.
+type key struct {
+	model string
+	task  string
+}
+
+// Compute folds a slice of validated traces into a deterministic Summary.
+func Compute(traces []trace.Trace) Summary {
+	type bucket struct {
+		agg      Aggregate
+		latency  []float64
+		costSum  float64
