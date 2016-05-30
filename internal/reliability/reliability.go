@@ -61,3 +61,17 @@ func Compute(traces []trace.Trace) Summary {
 		agg      Aggregate
 		latency  []float64
 		costSum  float64
+		qualSum  float64
+		tokenSum float64
+		privacy  trace.PrivacyTier
+		errKinds map[string]int
+	}
+	buckets := map[key]*bucket{}
+	modelSet := map[string]struct{}{}
+	taskSet := map[string]struct{}{}
+	taskModelSet := map[string]map[string]struct{}{}
+
+	for _, t := range traces {
+		k := key{t.Model, t.Task}
+		b := buckets[k]
+		if b == nil {
