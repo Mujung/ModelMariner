@@ -34,3 +34,17 @@ type Aggregate struct {
 	MeanTokens    float64 `json:"mean_tokens"`
 
 	// HighestPrivacy is the strictest privacy tier ever observed for this task,
+	// which routing uses to reason about what a candidate must be able to handle.
+	HighestPrivacy trace.PrivacyTier `json:"highest_privacy"`
+
+	// ErrorKinds counts each distinct failure category.
+	ErrorKinds map[string]int `json:"error_kinds,omitempty"`
+}
+
+// Summary is the complete reliability view across all models and tasks.
+type Summary struct {
+	Aggregates []Aggregate         `json:"aggregates"`
+	Models     []string            `json:"models"`
+	Tasks      []string            `json:"tasks"`
+	TaskModels map[string][]string `json:"-"`
+}
