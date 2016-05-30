@@ -89,3 +89,16 @@ func Compute(traces []trace.Trace) Summary {
 			}
 		} else {
 			b.agg.Successes++
+			// Only successful calls contribute to quality/latency/cost
+			// distributions, because a failed call's metrics are not
+			// representative of the service the model actually delivers.
+			b.latency = append(b.latency, t.LatencyMS)
+			b.costSum += t.CostUSD
+			b.qualSum += t.Quality
+			b.tokenSum += float64(t.Tokens())
+		}
+		if t.Privacy > b.privacy {
+			b.privacy = t.Privacy
+		}
+		modelSet[t.Model] = struct{}{}
+		taskSet[t.Task] = struct{}{}
