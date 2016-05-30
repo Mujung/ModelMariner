@@ -102,3 +102,17 @@ func Compute(traces []trace.Trace) Summary {
 		}
 		modelSet[t.Model] = struct{}{}
 		taskSet[t.Task] = struct{}{}
+		if taskModelSet[t.Task] == nil {
+			taskModelSet[t.Task] = map[string]struct{}{}
+		}
+		taskModelSet[t.Task][t.Model] = struct{}{}
+	}
+
+	var out Summary
+	for _, b := range buckets {
+		a := b.agg
+		if a.Samples > 0 {
+			a.SuccessRate = float64(a.Successes) / float64(a.Samples)
+			a.WilsonLower = wilsonLowerBound(a.Successes, a.Samples)
+		}
+		if a.Successes > 0 {
