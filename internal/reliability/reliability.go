@@ -143,3 +143,17 @@ func Compute(traces []trace.Trace) Summary {
 	out.Tasks = sortedKeys(taskSet)
 	out.TaskModels = map[string][]string{}
 	for task, models := range taskModelSet {
+		out.TaskModels[task] = sortedKeys(models)
+	}
+	return out
+}
+
+// ForTask returns aggregates belonging to a single task, in deterministic order.
+func (s Summary) ForTask(task string) []Aggregate {
+	var out []Aggregate
+	for _, a := range s.Aggregates {
+		if a.Task == task {
+			out = append(out, a)
+		}
+	}
+	return out
