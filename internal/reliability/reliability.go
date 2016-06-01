@@ -116,3 +116,16 @@ func Compute(traces []trace.Trace) Summary {
 			a.WilsonLower = wilsonLowerBound(a.Successes, a.Samples)
 		}
 		if a.Successes > 0 {
+			a.MeanCostUSD = b.costSum / float64(a.Successes)
+			a.MeanQuality = b.qualSum / float64(a.Successes)
+			a.MeanTokens = b.tokenSum / float64(a.Successes)
+			sort.Float64s(b.latency)
+			a.MeanLatencyMS = mean(b.latency)
+			a.P50LatencyMS = percentile(b.latency, 0.50)
+			a.P95LatencyMS = percentile(b.latency, 0.95)
+			a.P99LatencyMS = percentile(b.latency, 0.99)
+		}
+		a.HighestPrivacy = b.privacy
+		if len(b.errKinds) > 0 {
+			a.ErrorKinds = b.errKinds
+		}
