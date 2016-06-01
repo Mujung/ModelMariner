@@ -129,3 +129,17 @@ func Compute(traces []trace.Trace) Summary {
 		if len(b.errKinds) > 0 {
 			a.ErrorKinds = b.errKinds
 		}
+		out.Aggregates = append(out.Aggregates, a)
+	}
+
+	sort.Slice(out.Aggregates, func(i, j int) bool {
+		if out.Aggregates[i].Task != out.Aggregates[j].Task {
+			return out.Aggregates[i].Task < out.Aggregates[j].Task
+		}
+		return out.Aggregates[i].Model < out.Aggregates[j].Model
+	})
+
+	out.Models = sortedKeys(modelSet)
+	out.Tasks = sortedKeys(taskSet)
+	out.TaskModels = map[string][]string{}
+	for task, models := range taskModelSet {
