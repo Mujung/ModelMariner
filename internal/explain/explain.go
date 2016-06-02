@@ -10,3 +10,13 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/Mujung/modelmariner/internal/routing"
+)
+
+// Explanation is a structured rationale for a single decision.
+type Explanation struct {
+	Task       string   `json:"task"`
+	Policy     string   `json:"policy"`
+	Headline   string   `json:"headline"`
+	Reasons    []string `json:"reasons"`
+	Evidence   []string `json:"evidence"`
