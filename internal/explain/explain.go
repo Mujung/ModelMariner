@@ -29,3 +29,13 @@ func For(d routing.Decision) Explanation {
 	if d.NoEligible {
 		e.Headline = fmt.Sprintf("task %q has NO eligible model under policy %q", d.Task, d.Policy)
 		e.Reasons = append(e.Reasons, "every candidate violated at least one hard constraint")
+		for _, r := range d.Rejected {
+			e.Rejections = append(e.Rejections, rejectionLine(r))
+		}
+		return e
+	}
+
+	e.Headline = fmt.Sprintf("route %q to %s (score %.4f)", d.Task, d.Winner, d.Score)
+
+	if d.Runnerup != "" {
+		e.Reasons = append(e.Reasons, fmt.Sprintf(
