@@ -184,3 +184,16 @@ func percentile(sorted []float64, p float64) float64 {
 	if p <= 0 {
 		return sorted[0]
 	}
+	if p >= 1 {
+		return sorted[n-1]
+	}
+	rank := p * float64(n-1)
+	lo := int(math.Floor(rank))
+	hi := int(math.Ceil(rank))
+	if lo == hi {
+		return sorted[lo]
+	}
+	frac := rank - float64(lo)
+	return sorted[lo]*(1-frac) + sorted[hi]*frac
+}
+
