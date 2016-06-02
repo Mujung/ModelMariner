@@ -170,3 +170,17 @@ func mean(xs []float64) float64 {
 	}
 	return sum / float64(len(xs))
 }
+
+// percentile returns the p-th percentile (0..1) of a sorted slice using linear
+// interpolation between closest ranks. The slice MUST be sorted ascending.
+func percentile(sorted []float64, p float64) float64 {
+	n := len(sorted)
+	if n == 0 {
+		return 0
+	}
+	if n == 1 {
+		return sorted[0]
+	}
+	if p <= 0 {
+		return sorted[0]
+	}
