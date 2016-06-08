@@ -48,3 +48,13 @@ func For(d routing.Decision) Explanation {
 
 	// Surface the winner's score component breakdown.
 	for _, ev := range d.Evaluations {
+		if ev.Model == d.Winner && len(ev.Components) > 0 {
+			e.Reasons = append(e.Reasons, "score components: "+componentBreakdown(ev.Components))
+		}
+	}
+
+	r := d.Realized
+	e.Evidence = append(e.Evidence, fmt.Sprintf(
+		"replayed %d recorded call(s): %.1f%% success, mean quality %.3f, mean latency %.0f ms, total cost $%.4f",
+		r.Calls, r.SuccessRate*100, r.MeanQuality, r.MeanLatencyMS, r.TotalCostUSD))
+
