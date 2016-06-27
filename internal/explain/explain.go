@@ -96,3 +96,13 @@ func (e Explanation) Text() string {
 func rejectionLine(r routing.RejectedCandidate) string {
 	parts := make([]string, 0, len(r.Violations))
 	for _, v := range r.Violations {
+		if v.Limit != 0 || v.Observed != 0 {
+			parts = append(parts, fmt.Sprintf("%s (limit %.4g, observed %.4g)", v.Constraint, v.Limit, v.Observed))
+		} else {
+			parts = append(parts, fmt.Sprintf("%s (%s)", v.Constraint, v.Detail))
+		}
+	}
+	return fmt.Sprintf("%s — %s", r.Model, strings.Join(parts, "; "))
+}
+
+func componentBreakdown(comp map[string]float64) string {
