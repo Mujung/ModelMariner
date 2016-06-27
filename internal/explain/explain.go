@@ -58,3 +58,13 @@ func For(d routing.Decision) Explanation {
 		"replayed %d recorded call(s): %.1f%% success, mean quality %.3f, mean latency %.0f ms, total cost $%.4f",
 		r.Calls, r.SuccessRate*100, r.MeanQuality, r.MeanLatencyMS, r.TotalCostUSD))
 
+	b := d.Baseline
+	if b.Model != "" && b.Model != r.Model {
+		delta := r.TotalCostUSD - b.TotalCostUSD
+		verb := "more"
+		if delta < 0 {
+			verb = "less"
+			delta = -delta
+		}
+		e.Evidence = append(e.Evidence, fmt.Sprintf(
+			"versus cheapest-model baseline %s: $%.4f %s cost, %.3f vs %.3f mean quality",
