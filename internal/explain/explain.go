@@ -68,3 +68,12 @@ func For(d routing.Decision) Explanation {
 		}
 		e.Evidence = append(e.Evidence, fmt.Sprintf(
 			"versus cheapest-model baseline %s: $%.4f %s cost, %.3f vs %.3f mean quality",
+			b.Model, delta, verb, r.MeanQuality, b.MeanQuality))
+	}
+
+	for _, rej := range d.Rejected {
+		e.Rejections = append(e.Rejections, rejectionLine(rej))
+	}
+	return e
+}
+
