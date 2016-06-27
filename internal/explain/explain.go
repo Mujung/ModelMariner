@@ -87,3 +87,12 @@ func (e Explanation) Text() string {
 	for _, ev := range e.Evidence {
 		fmt.Fprintf(&sb, "    evidence: %s\n", ev)
 	}
+	for _, rej := range e.Rejections {
+		fmt.Fprintf(&sb, "    rejected: %s\n", rej)
+	}
+	return sb.String()
+}
+
+func rejectionLine(r routing.RejectedCandidate) string {
+	parts := make([]string, 0, len(r.Violations))
+	for _, v := range r.Violations {
