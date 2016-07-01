@@ -22,3 +22,15 @@ import (
 )
 
 // SchemaVersion identifies the report format so the dashboard can guard against
+// consuming an incompatible document.
+const SchemaVersion = "modelmariner/v1"
+
+// Report is the complete, self-describing analysis document.
+type Report struct {
+	Schema      string                  `json:"schema"`
+	Generated   string                  `json:"generated,omitempty"`
+	Input       InputSummary            `json:"input"`
+	Reliability []reliability.Aggregate `json:"reliability"`
+	Pareto      []pareto.Frontier       `json:"pareto"`
+	Policies    []PolicyReport          `json:"policies"`
+}
