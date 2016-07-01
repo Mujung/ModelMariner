@@ -34,3 +34,16 @@ type Report struct {
 	Pareto      []pareto.Frontier       `json:"pareto"`
 	Policies    []PolicyReport          `json:"policies"`
 }
+
+// InputSummary describes what was ingested.
+type InputSummary struct {
+	TotalLines int      `json:"total_lines"`
+	Accepted   int      `json:"accepted"`
+	Rejected   int      `json:"rejected"`
+	Models     []string `json:"models"`
+	Tasks      []string `json:"tasks"`
+	Warnings   []string `json:"warnings,omitempty"`
+}
+
+// PolicyReport bundles a simulation with its explanations.
+type PolicyReport struct {
