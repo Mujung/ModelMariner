@@ -59,3 +59,16 @@ type BuildInput struct {
 	Traces      []trace.Trace
 	Reliability reliability.Summary
 	Pareto      pareto.Analysis
+	Policies    policy.Set
+	Simulations []routing.Simulation
+	// Deterministic omits the wall-clock timestamp so output is reproducible.
+	Deterministic bool
+	Now           time.Time
+}
+
+// Build assembles a Report from all engine outputs.
+func Build(in BuildInput) Report {
+	r := Report{
+		Schema: SchemaVersion,
+		Input: InputSummary{
+			TotalLines: in.Ingest.Total,
