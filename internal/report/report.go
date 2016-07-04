@@ -72,3 +72,15 @@ func Build(in BuildInput) Report {
 		Schema: SchemaVersion,
 		Input: InputSummary{
 			TotalLines: in.Ingest.Total,
+			Accepted:   len(in.Traces),
+			Rejected:   in.Ingest.Rejected,
+			Models:     in.Reliability.Models,
+			Tasks:      in.Reliability.Tasks,
+		},
+		Reliability: in.Reliability.Aggregates,
+		Pareto:      in.Pareto.Frontiers,
+	}
+	if !in.Deterministic {
+		r.Generated = in.Now.UTC().Format(time.RFC3339)
+	}
+	for _, ve := range in.Ingest.Errors {
