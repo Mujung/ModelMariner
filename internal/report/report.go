@@ -84,3 +84,16 @@ func Build(in BuildInput) Report {
 		r.Generated = in.Now.UTC().Format(time.RFC3339)
 	}
 	for _, ve := range in.Ingest.Errors {
+		r.Input.Warnings = append(r.Input.Warnings, ve.Error())
+	}
+	sort.Strings(r.Input.Warnings)
+
+	byName := map[string]policy.Policy{}
+	for _, p := range in.Policies.Policies {
+		byName[p.Name] = p
+	}
+	for _, sim := range in.Simulations {
+		pr := PolicyReport{
+			Name:         sim.Policy,
+			Description:  byName[sim.Policy].Description,
+			Simulation:   sim,
