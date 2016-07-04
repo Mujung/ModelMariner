@@ -47,3 +47,15 @@ type InputSummary struct {
 
 // PolicyReport bundles a simulation with its explanations.
 type PolicyReport struct {
+	Name         string                `json:"name"`
+	Description  string                `json:"description,omitempty"`
+	Simulation   routing.Simulation    `json:"simulation"`
+	Explanations []explain.Explanation `json:"explanations"`
+}
+
+// BuildInput carries everything needed to assemble a report.
+type BuildInput struct {
+	Ingest      trace.IngestResult
+	Traces      []trace.Trace
+	Reliability reliability.Summary
+	Pareto      pareto.Analysis
