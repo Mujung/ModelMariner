@@ -97,3 +97,15 @@ func Build(in BuildInput) Report {
 			Name:         sim.Policy,
 			Description:  byName[sim.Policy].Description,
 			Simulation:   sim,
+			Explanations: explain.All(sim),
+		}
+		r.Policies = append(r.Policies, pr)
+	}
+	sort.Slice(r.Policies, func(i, j int) bool { return r.Policies[i].Name < r.Policies[j].Name })
+	return r
+}
+
+// JSON renders the report as indented, deterministic JSON. HTML escaping is
+// disabled so operators (comparison symbols) render as themselves in diffs.
+func (r Report) JSON() ([]byte, error) {
+	var buf bytes.Buffer
