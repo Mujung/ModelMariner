@@ -122,3 +122,15 @@ func (r Report) JSON() ([]byte, error) {
 func (r Report) Text() string {
 	var sb strings.Builder
 	line := strings.Repeat("=", 72)
+	fmt.Fprintf(&sb, "%s\n MODELMARINER — offline routing-policy compilation report\n%s\n", line, line)
+	fmt.Fprintf(&sb, "Schema: %s\n", r.Schema)
+	if r.Generated != "" {
+		fmt.Fprintf(&sb, "Generated: %s\n", r.Generated)
+	}
+	fmt.Fprintf(&sb, "Ingested: %d line(s) — %d accepted, %d rejected\n",
+		r.Input.TotalLines, r.Input.Accepted, r.Input.Rejected)
+	fmt.Fprintf(&sb, "Models: %s\n", strings.Join(r.Input.Models, ", "))
+	fmt.Fprintf(&sb, "Tasks:  %s\n", strings.Join(r.Input.Tasks, ", "))
+	if len(r.Input.Warnings) > 0 {
+		fmt.Fprintf(&sb, "Warnings: %d rejected line(s)\n", len(r.Input.Warnings))
+	}
