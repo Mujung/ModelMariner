@@ -109,3 +109,16 @@ func Build(in BuildInput) Report {
 // disabled so operators (comparison symbols) render as themselves in diffs.
 func (r Report) JSON() ([]byte, error) {
 	var buf bytes.Buffer
+	enc := json.NewEncoder(&buf)
+	enc.SetEscapeHTML(false)
+	enc.SetIndent("", "  ")
+	if err := enc.Encode(r); err != nil {
+		return nil, fmt.Errorf("encoding report: %w", err)
+	}
+	return buf.Bytes(), nil
+}
+
+// Text renders a human-readable report suitable for a terminal or a log.
+func (r Report) Text() string {
+	var sb strings.Builder
+	line := strings.Repeat("=", 72)
