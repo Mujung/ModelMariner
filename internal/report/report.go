@@ -134,3 +134,16 @@ func (r Report) Text() string {
 	if len(r.Input.Warnings) > 0 {
 		fmt.Fprintf(&sb, "Warnings: %d rejected line(s)\n", len(r.Input.Warnings))
 	}
+
+	fmt.Fprintf(&sb, "\n%s\n RELIABILITY (per model / task)\n%s\n", line, line)
+	fmt.Fprintf(&sb, "%-18s %-14s %6s %8s %10s %9s %8s\n",
+		"task", "model", "n", "success", "reliab.LB", "p95 ms", "quality")
+	for _, a := range r.Reliability {
+		fmt.Fprintf(&sb, "%-18s %-14s %6d %7.1f%% %10.3f %9.0f %8.3f\n",
+			trunc(a.Task, 18), trunc(a.Model, 14), a.Samples,
+			a.SuccessRate*100, a.WilsonLower, a.P95LatencyMS, a.MeanQuality)
+	}
+
+	fmt.Fprintf(&sb, "\n%s\n PARETO FRONTIERS (non-dominated models per task)\n%s\n", line, line)
+	for _, f := range r.Pareto {
+		names := f.FrontierModels()
