@@ -147,3 +147,15 @@ func (r Report) Text() string {
 	fmt.Fprintf(&sb, "\n%s\n PARETO FRONTIERS (non-dominated models per task)\n%s\n", line, line)
 	for _, f := range r.Pareto {
 		names := f.FrontierModels()
+		fmt.Fprintf(&sb, "%-18s frontier: %s\n", trunc(f.Task, 18), strings.Join(names, ", "))
+		for _, p := range f.Points {
+			flag := "  on-frontier"
+			if p.Dominated {
+				flag = "  dominated by " + strings.Join(p.DominatedBy, "/")
+			}
+			fmt.Fprintf(&sb, "    %-14s cost $%.4f  p95 %.0fms  q %.3f  rel %.3f%s\n",
+				trunc(p.Model, 14), p.CostUSD, p.LatencyMS, p.Quality, p.Reliability, flag)
+		}
+	}
+
+	for _, pr := range r.Policies {
