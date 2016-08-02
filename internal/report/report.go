@@ -159,3 +159,16 @@ func (r Report) Text() string {
 	}
 
 	for _, pr := range r.Policies {
+		fmt.Fprintf(&sb, "\n%s\n POLICY: %s\n%s\n", line, pr.Name, line)
+		if pr.Description != "" {
+			fmt.Fprintf(&sb, "%s\n\n", pr.Description)
+		}
+		t := pr.Simulation.Totals
+		fmt.Fprintf(&sb, "Decided %d task(s), %d unrouted. ",
+			t.TasksDecided, t.TasksUnrouted)
+		fmt.Fprintf(&sb, "Realized cost $%.4f vs baseline $%.4f (delta $%+.4f). ",
+			t.RealizedCostUSD, t.BaselineCostUSD, t.CostDeltaUSD)
+		fmt.Fprintf(&sb, "Quality %.3f vs %.3f.\n\n", t.RealizedQuality, t.BaselineQuality)
+		for _, e := range pr.Explanations {
+			sb.WriteString(e.Text())
+		}
