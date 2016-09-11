@@ -172,3 +172,15 @@ func (r Report) Text() string {
 		for _, e := range pr.Explanations {
 			sb.WriteString(e.Text())
 		}
+	}
+	return sb.String()
+}
+
+// PolicyArtifact is the compiled, standalone routing table that a runtime could
+// load to make decisions. It contains only the essential winner-per-task map
+// plus provenance so it can be regenerated and verified.
+type PolicyArtifact struct {
+	Schema   string            `json:"schema"`
+	Policy   string            `json:"policy"`
+	Routes   []Route           `json:"routes"`
+	Fallback map[string]string `json:"unrouted,omitempty"`
