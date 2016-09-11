@@ -197,3 +197,15 @@ type Route struct {
 // CompilePolicyArtifacts extracts standalone routing tables from simulations.
 func CompilePolicyArtifacts(sims []routing.Simulation) []PolicyArtifact {
 	out := make([]PolicyArtifact, 0, len(sims))
+	for _, sim := range sims {
+		art := PolicyArtifact{Schema: SchemaVersion, Policy: sim.Policy}
+		for _, d := range sim.Decisions {
+			if d.NoEligible {
+				if art.Fallback == nil {
+					art.Fallback = map[string]string{}
+				}
+				art.Fallback[d.Task] = "no eligible model under policy constraints"
+				continue
+			}
+			art.Routes = append(art.Routes, Route{
+				Task:   d.Task,
