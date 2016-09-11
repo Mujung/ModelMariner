@@ -184,3 +184,16 @@ type PolicyArtifact struct {
 	Policy   string            `json:"policy"`
 	Routes   []Route           `json:"routes"`
 	Fallback map[string]string `json:"unrouted,omitempty"`
+}
+
+// Route is a single compiled winner for a task.
+type Route struct {
+	Task   string  `json:"task"`
+	Model  string  `json:"model"`
+	Score  float64 `json:"score"`
+	Margin float64 `json:"margin"`
+}
+
+// CompilePolicyArtifacts extracts standalone routing tables from simulations.
+func CompilePolicyArtifacts(sims []routing.Simulation) []PolicyArtifact {
+	out := make([]PolicyArtifact, 0, len(sims))
