@@ -97,3 +97,21 @@ func parseAnalyzeFlags(args []string) (analyzeFlags, error) {
 		case a == "--format":
 			f.format, err = next()
 		case strings.HasPrefix(a, "--format="):
+			f.format = strings.TrimPrefix(a, "--format=")
+		case a == "--strict":
+			f.strict = true
+		case a == "--with-timestamp":
+			f.deterministic = false
+		default:
+			return f, fmt.Errorf("unknown flag %q", a)
+		}
+		if err != nil {
+			return f, err
+		}
+	}
+	if f.traces == "" {
+		return f, fmt.Errorf("--traces is required")
+	}
+	switch f.format {
+	case "json", "text", "both":
+	default:
