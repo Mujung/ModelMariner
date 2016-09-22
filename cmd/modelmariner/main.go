@@ -45,3 +45,20 @@ func run(args []string) error {
 	switch cmd {
 	case "analyze":
 		return cmdAnalyze(rest)
+	case "validate":
+		return cmdValidate(rest)
+	case "version", "--version", "-v":
+		fmt.Printf("modelmariner %s\n", version)
+		return nil
+	case "help", "--help", "-h":
+		printUsage(os.Stdout)
+		return nil
+	default:
+		printUsage(os.Stderr)
+		return fmt.Errorf("unknown command %q", cmd)
+	}
+}
+
+// analyzeFlags collects everything the analyze command accepts.
+type analyzeFlags struct {
+	traces        string
