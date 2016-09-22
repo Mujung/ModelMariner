@@ -62,3 +62,21 @@ func run(args []string) error {
 // analyzeFlags collects everything the analyze command accepts.
 type analyzeFlags struct {
 	traces        string
+	policy        string
+	outDir        string
+	format        string
+	strict        bool
+	deterministic bool
+}
+
+func parseAnalyzeFlags(args []string) (analyzeFlags, error) {
+	f := analyzeFlags{format: "both", deterministic: true}
+	for i := 0; i < len(args); i++ {
+		a := args[i]
+		next := func() (string, error) {
+			if i+1 >= len(args) {
+				return "", fmt.Errorf("flag %s requires a value", a)
+			}
+			i++
+			return args[i], nil
+		}
