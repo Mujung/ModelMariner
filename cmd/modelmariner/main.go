@@ -80,3 +80,20 @@ func parseAnalyzeFlags(args []string) (analyzeFlags, error) {
 			i++
 			return args[i], nil
 		}
+		var err error
+		switch {
+		case a == "--traces" || a == "-t":
+			f.traces, err = next()
+		case strings.HasPrefix(a, "--traces="):
+			f.traces = strings.TrimPrefix(a, "--traces=")
+		case a == "--policy" || a == "-p":
+			f.policy, err = next()
+		case strings.HasPrefix(a, "--policy="):
+			f.policy = strings.TrimPrefix(a, "--policy=")
+		case a == "--out" || a == "-o":
+			f.outDir, err = next()
+		case strings.HasPrefix(a, "--out="):
+			f.outDir = strings.TrimPrefix(a, "--out=")
+		case a == "--format":
+			f.format, err = next()
+		case strings.HasPrefix(a, "--format="):
