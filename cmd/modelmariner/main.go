@@ -115,3 +115,20 @@ func parseAnalyzeFlags(args []string) (analyzeFlags, error) {
 	switch f.format {
 	case "json", "text", "both":
 	default:
+		return f, fmt.Errorf("--format must be json, text, or both (got %q)", f.format)
+	}
+	return f, nil
+}
+
+func cmdAnalyze(args []string) error {
+	f, err := parseAnalyzeFlags(args)
+	if err != nil {
+		return err
+	}
+
+	ingest, err := loadTraces(f.traces, f.strict)
+	if err != nil {
+		return err
+	}
+	if len(ingest.Traces) == 0 {
+		return fmt.Errorf("no valid traces found in %s", f.traces)
