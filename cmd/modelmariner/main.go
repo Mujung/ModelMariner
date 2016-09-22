@@ -27,3 +27,21 @@ import (
 )
 
 // version is overridable at build time via -ldflags "-X main.version=...".
+var version = "1.0.0"
+
+func main() {
+	if err := run(os.Args[1:]); err != nil {
+		fmt.Fprintf(os.Stderr, "modelmariner: %v\n", err)
+		os.Exit(1)
+	}
+}
+
+func run(args []string) error {
+	if len(args) == 0 {
+		printUsage(os.Stderr)
+		return fmt.Errorf("no command given")
+	}
+	cmd, rest := args[0], args[1:]
+	switch cmd {
+	case "analyze":
+		return cmdAnalyze(rest)
