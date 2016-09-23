@@ -132,3 +132,20 @@ func cmdAnalyze(args []string) error {
 	}
 	if len(ingest.Traces) == 0 {
 		return fmt.Errorf("no valid traces found in %s", f.traces)
+	}
+
+	sum := reliability.Compute(ingest.Traces)
+	par := pareto.Compute(sum)
+
+	var set policy.Set
+	var sims []routing.Simulation
+	if f.policy != "" {
+		pf, err := os.Open(f.policy)
+		if err != nil {
+			return fmt.Errorf("opening policy file: %w", err)
+		}
+		set, err = policy.Load(pf)
+		pf.Close()
+		if err != nil {
+			return err
+		}
