@@ -149,3 +149,21 @@ func cmdAnalyze(args []string) error {
 		if err != nil {
 			return err
 		}
+		sims = routing.SimulateAll(set, sum, ingest.Traces)
+	}
+
+	rep := report.Build(report.BuildInput{
+		Ingest:        ingest,
+		Traces:        ingest.Traces,
+		Reliability:   sum,
+		Pareto:        par,
+		Policies:      set,
+		Simulations:   sims,
+		Deterministic: f.deterministic,
+		Now:           time.Now(),
+	})
+
+	// Emit to stdout in the requested format.
+	if f.format == "text" || f.format == "both" {
+		fmt.Print(rep.Text())
+	}
