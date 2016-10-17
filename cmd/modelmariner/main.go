@@ -167,3 +167,20 @@ func cmdAnalyze(args []string) error {
 	if f.format == "text" || f.format == "both" {
 		fmt.Print(rep.Text())
 	}
+	if f.format == "json" {
+		b, err := rep.JSON()
+		if err != nil {
+			return err
+		}
+		os.Stdout.Write(b)
+	}
+
+	// Write files if an output directory was requested.
+	if f.outDir != "" {
+		if err := writeArtifacts(f.outDir, rep, sims); err != nil {
+			return err
+		}
+		fmt.Fprintf(os.Stderr, "wrote report artifacts to %s\n", f.outDir)
+	}
+	return nil
+}
