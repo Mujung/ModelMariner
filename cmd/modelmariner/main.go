@@ -237,3 +237,20 @@ func cmdValidate(args []string) error {
 	ingest, err := loadTraces(path, strict)
 	if err != nil {
 		return err
+	}
+	fmt.Printf("validated %s: %d line(s), %d accepted, %d rejected\n",
+		path, ingest.Total, len(ingest.Traces), ingest.Rejected)
+	for _, ve := range ingest.Errors {
+		fmt.Printf("  reject: %s\n", ve.Error())
+	}
+	if ingest.Rejected > 0 && strict {
+		return fmt.Errorf("%d line(s) rejected under --strict", ingest.Rejected)
+	}
+	return nil
+}
+
+// loadTraces opens a JSONL file and ingests it. Under strict mode a single bad
+// line aborts the run; otherwise bad lines are collected and skipped.
+func loadTraces(path string, strict bool) (trace.IngestResult, error) {
+	fh, err := os.Open(path)
+	if err != nil {
