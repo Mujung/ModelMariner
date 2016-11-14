@@ -38,3 +38,15 @@ function sampleReport(): Report {
     pareto: [
       {
         task: "t",
+        points: [
+          { model: "cheap", cost_usd: 0.1, latency_ms: 120, quality: 0.81, reliability: 0.34, dominated: false },
+          { model: "premium", cost_usd: 0.6, latency_ms: 420, quality: 0.975, reliability: 0.34, dominated: false },
+        ],
+        frontier: [
+          { model: "cheap", cost_usd: 0.1, latency_ms: 120, quality: 0.81, reliability: 0.34, dominated: false },
+          { model: "premium", cost_usd: 0.6, latency_ms: 420, quality: 0.975, reliability: 0.34, dominated: false },
+        ],
+      },
+    ],
+    policies: [
+      {
