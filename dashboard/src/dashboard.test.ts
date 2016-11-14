@@ -26,3 +26,15 @@ function sampleReport(): Report {
         mean_latency_ms: 110, p50_latency_ms: 110, p95_latency_ms: 120,
         p99_latency_ms: 120, mean_quality: 0.81, mean_tokens: 20,
         highest_privacy: "public",
+      },
+      {
+        model: "premium", task: "t", samples: 2, successes: 2, failures: 0,
+        success_rate: 1, reliability_lower: 0.34, mean_cost_usd: 0.6,
+        mean_latency_ms: 410, p50_latency_ms: 410, p95_latency_ms: 420,
+        p99_latency_ms: 420, mean_quality: 0.975, mean_tokens: 20,
+        highest_privacy: "public",
+      },
+    ],
+    pareto: [
+      {
+        task: "t",
