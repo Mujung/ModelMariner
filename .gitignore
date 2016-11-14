@@ -1,0 +1,15 @@
+# Go build output
+/bin/
+*.exe
+*.test
+*.out
+
+# Dashboard build output & deps
+dashboard/dist/
+dashboard/node_modules/
+dashboard/package-lock.json
+
+# Editor/OS noise
+.DS_Store
+*.swp
+.idea/
