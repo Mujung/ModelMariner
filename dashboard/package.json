@@ -1,0 +1,22 @@
+{
+  "name": "modelmariner-dashboard",
+  "version": "1.0.0",
+  "description": "Terminal navigation dashboard for modelmariner routing-policy reports",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "bin": {
+    "modelmariner-dashboard": "dist/dashboard.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "tsc -p tsconfig.json && node --test \"dist/**/*.test.js\"",
+    "demo": "npm run build && node dist/dashboard.js ../testdata/output/report.json overview"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "typescript": "5.6.3",
+    "@types/node": "20.14.10"
+  }
