@@ -62,3 +62,16 @@ function sampleReport(): Report {
                 { model: "premium", eligible: true, score: 1 },
                 { model: "cheap", eligible: true, score: 0.5 },
               ],
+              realized: { model: "premium", calls: 2, successes: 2, success_rate: 1, total_cost_usd: 1.2, mean_latency_ms: 415, mean_quality: 0.975 },
+              baseline: { model: "cheap", calls: 2, successes: 2, success_rate: 1, total_cost_usd: 0.2, mean_latency_ms: 110, mean_quality: 0.81 },
+              no_eligible: false,
+            },
+          ],
+          totals: {
+            tasks_decided: 1, tasks_unrouted: 0,
+            realized_cost_usd: 1.2, baseline_cost_usd: 0.2, cost_delta_usd: 1.0,
+            realized_mean_quality: 0.975, baseline_mean_quality: 0.81,
+          },
+        },
+        explanations: [
+          {
