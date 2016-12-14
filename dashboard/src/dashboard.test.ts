@@ -50,3 +50,15 @@ function sampleReport(): Report {
     ],
     policies: [
       {
+        name: "quality",
+        description: "prefer quality",
+        simulation: {
+          policy: "quality",
+          decisions: [
+            {
+              task: "t", policy: "quality", winner: "premium", runner_up: "cheap",
+              score: 1, margin: 0.5, eligible: ["premium", "cheap"],
+              evaluations: [
+                { model: "premium", eligible: true, score: 1 },
+                { model: "cheap", eligible: true, score: 0.5 },
+              ],
