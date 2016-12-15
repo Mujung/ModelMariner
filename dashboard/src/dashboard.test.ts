@@ -75,3 +75,15 @@ function sampleReport(): Report {
         },
         explanations: [
           {
+            task: "t", policy: "quality",
+            headline: 'route "t" to premium (score 1.0000)',
+            reasons: ["premium beat runner-up cheap"],
+            evidence: ["replayed 2 recorded call(s)"],
+          },
+        ],
+      },
+    ],
+  };
+}
+
+test("navigator validates schema", () => {
