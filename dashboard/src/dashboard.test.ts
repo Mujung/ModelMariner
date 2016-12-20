@@ -99,3 +99,15 @@ test("navigator rejects wrong schema", () => {
 });
 
 test("fromJSON rejects invalid json", () => {
+  assert.throws(() => ReportNavigator.fromJSON("{not json"), SchemaError);
+});
+
+test("routing table compiles winners", () => {
+  const nav = new ReportNavigator(sampleReport());
+  const table = nav.routingTable("quality");
+  assert.equal(table.length, 1);
+  assert.equal(table[0].model, "premium");
+  assert.equal(table[0].task, "t");
+});
+
+test("cost delta reads totals", () => {
