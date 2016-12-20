@@ -87,3 +87,15 @@ function sampleReport(): Report {
 }
 
 test("navigator validates schema", () => {
+  const nav = new ReportNavigator(sampleReport());
+  assert.deepEqual(nav.tasks(), ["t"]);
+  assert.deepEqual(nav.models(), ["cheap", "premium"]);
+  assert.deepEqual(nav.policies(), ["quality"]);
+});
+
+test("navigator rejects wrong schema", () => {
+  const bad = { ...sampleReport(), schema: "bogus/v9" };
+  assert.throws(() => new ReportNavigator(bad as Report), SchemaError);
+});
+
+test("fromJSON rejects invalid json", () => {
