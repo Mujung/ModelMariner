@@ -111,3 +111,15 @@ test("routing table compiles winners", () => {
 });
 
 test("cost delta reads totals", () => {
+  const nav = new ReportNavigator(sampleReport());
+  assert.equal(nav.policyCostDelta("quality"), 1.0);
+});
+
+test("quality ranking orders descending", () => {
+  const nav = new ReportNavigator(sampleReport());
+  const ranking = nav.qualityRanking("t");
+  assert.equal(ranking[0].model, "premium");
+  assert.ok(ranking[0].quality > ranking[1].quality);
+});
+
+test("task overview aggregates winners across policies", () => {
