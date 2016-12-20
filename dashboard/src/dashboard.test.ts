@@ -123,3 +123,15 @@ test("quality ranking orders descending", () => {
 });
 
 test("task overview aggregates winners across policies", () => {
+  const nav = new ReportNavigator(sampleReport());
+  const ov = nav.taskOverview("t");
+  assert.deepEqual(ov.frontierModels, ["cheap", "premium"]);
+  assert.equal(ov.winnersByPolicy[0].winner, "premium");
+});
+
+test("render overview contains headline and winners", () => {
+  const nav = new ReportNavigator(sampleReport());
+  const out = render(nav, ["overview"]);
+  assert.match(out, /fleet overview/);
+  assert.match(out, /premium/);
+});
