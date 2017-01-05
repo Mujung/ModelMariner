@@ -21,3 +21,18 @@ const BAR = "─".repeat(70);
 function pad(s: string, n: number): string {
   return s.length >= n ? s.slice(0, n) : s + " ".repeat(n - s.length);
 }
+
+function money(n: number): string {
+  return `$${n.toFixed(4)}`;
+}
+
+function pct(n: number): string {
+  return `${(n * 100).toFixed(1)}%`;
+}
+
+function renderOverview(nav: ReportNavigator): string {
+  const out: string[] = [];
+  const r = nav.report;
+  out.push(BAR);
+  out.push("  MODELMARINER DASHBOARD — fleet overview");
+  out.push(BAR);
