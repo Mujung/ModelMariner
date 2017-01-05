@@ -36,3 +36,18 @@ function renderOverview(nav: ReportNavigator): string {
   out.push(BAR);
   out.push("  MODELMARINER DASHBOARD — fleet overview");
   out.push(BAR);
+  out.push(
+    `  Traces: ${r.input.accepted} accepted / ${r.input.total_lines} lines  |  ` +
+      `${r.input.models.length} models  |  ${r.input.tasks.length} tasks  |  ` +
+      `${r.policies.length} policies`,
+  );
+  out.push(`  Models: ${r.input.models.join(", ")}`);
+  out.push("");
+  out.push("  ROUTING WINNERS BY TASK");
+  out.push(`  ${pad("task", 26)}${r.policies.map((p) => pad(p.name, 18)).join("")}`);
+  for (const task of nav.tasks()) {
+    const ov = nav.taskOverview(task);
+    const cells = r.policies.map((p) => {
+      const w = ov.winnersByPolicy.find((x) => x.policy === p.name);
+      if (!w) return pad("—", 18);
+      return pad(w.winner ?? "UNROUTED", 18);
