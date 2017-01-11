@@ -51,3 +51,18 @@ function renderOverview(nav: ReportNavigator): string {
       const w = ov.winnersByPolicy.find((x) => x.policy === p.name);
       if (!w) return pad("—", 18);
       return pad(w.winner ?? "UNROUTED", 18);
+    });
+    out.push(`  ${pad(task, 26)}${cells.join("")}`);
+  }
+  out.push("");
+  out.push("  POLICY ECONOMICS (realized vs cheapest-model baseline)");
+  for (const p of r.policies) {
+    const t = p.simulation.totals;
+    const verb = t.cost_delta_usd >= 0 ? "spent" : "saved";
+    out.push(
+      `  ${pad(p.name, 20)} ${verb} ${money(Math.abs(t.cost_delta_usd))} ` +
+        `for +${(t.realized_mean_quality - t.baseline_mean_quality).toFixed(3)} quality ` +
+        `(${t.tasks_decided} routed, ${t.tasks_unrouted} unrouted)`,
+    );
+  }
+  return out.join("\n");
