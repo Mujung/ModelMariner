@@ -66,3 +66,18 @@ function renderOverview(nav: ReportNavigator): string {
     );
   }
   return out.join("\n");
+}
+
+function renderTask(nav: ReportNavigator, task: string): string {
+  const out: string[] = [];
+  out.push(BAR);
+  out.push(`  TASK: ${task}`);
+  out.push(BAR);
+  const rel = nav.reliabilityForTask(task);
+  if (rel.length === 0) {
+    return `no such task: ${task}`;
+  }
+  out.push(`  ${pad("model", 18)}${pad("success", 10)}${pad("reliab.LB", 12)}${pad("p95 ms", 10)}${pad("quality", 10)}${pad("cost", 10)}`);
+  for (const a of rel) {
+    out.push(
+      `  ${pad(a.model, 18)}${pad(pct(a.success_rate), 10)}` +
