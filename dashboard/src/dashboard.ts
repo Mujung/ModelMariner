@@ -81,3 +81,18 @@ function renderTask(nav: ReportNavigator, task: string): string {
   for (const a of rel) {
     out.push(
       `  ${pad(a.model, 18)}${pad(pct(a.success_rate), 10)}` +
+        `${pad(a.reliability_lower.toFixed(3), 12)}${pad(a.p95_latency_ms.toFixed(0), 10)}` +
+        `${pad(a.mean_quality.toFixed(3), 10)}${pad(money(a.mean_cost_usd), 10)}`,
+    );
+  }
+  const f = nav.frontier(task);
+  if (f) {
+    out.push("");
+    out.push(`  Pareto frontier: ${f.frontier.map((p) => p.model).join(", ")}`);
+    const dominated = f.points.filter((p) => p.dominated);
+    for (const p of dominated) {
+      out.push(`    ${p.model} dominated by ${(p.dominated_by ?? []).join("/")}`);
+    }
+  }
+  out.push("");
+  out.push("  POLICY SELECTIONS");
