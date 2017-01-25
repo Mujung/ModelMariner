@@ -96,3 +96,18 @@ function renderTask(nav: ReportNavigator, task: string): string {
   }
   out.push("");
   out.push("  POLICY SELECTIONS");
+  for (const policy of nav.policies()) {
+    const d = nav.decision(policy, task);
+    if (!d) continue;
+    if (d.no_eligible) {
+      out.push(`    ${pad(policy, 20)} UNROUTED — no eligible model`);
+    } else {
+      out.push(`    ${pad(policy, 20)} → ${d.winner} (score ${d.score.toFixed(4)}, margin ${d.margin.toFixed(4)})`);
+    }
+  }
+  return out.join("\n");
+}
+
+function renderModel(nav: ReportNavigator, model: string): string {
+  const out: string[] = [];
+  out.push(BAR);
