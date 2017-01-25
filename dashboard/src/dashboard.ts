@@ -126,3 +126,18 @@ function renderModel(nav: ReportNavigator, model: string): string {
   }
   // Count how many task/policy combinations pick this model.
   let wins = 0;
+  for (const policy of nav.policies()) {
+    for (const entry of nav.routingTable(policy)) {
+      if (entry.model === model) wins++;
+    }
+  }
+  out.push("");
+  out.push(`  Selected as winner in ${wins} task/policy combination(s).`);
+  return out.join("\n");
+}
+
+function renderPolicy(nav: ReportNavigator, name: string): string {
+  const pr = nav.policy(name);
+  if (!pr) return `no such policy: ${name}`;
+  const out: string[] = [];
+  out.push(BAR);
