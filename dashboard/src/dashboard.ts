@@ -156,3 +156,18 @@ function renderPolicy(nav: ReportNavigator, name: string): string {
     out.push(`  • ${e.headline}`);
     for (const reason of e.reasons) out.push(`      - ${reason}`);
     for (const ev of e.evidence) out.push(`      evidence: ${ev}`);
+    for (const rej of e.rejections ?? []) out.push(`      rejected: ${rej}`);
+  }
+  return out.join("\n");
+}
+
+function renderRoutes(nav: ReportNavigator, name: string): string {
+  const table = nav.routingTable(name);
+  if (table.length === 0 && !nav.policy(name)) {
+    return `no such policy: ${name}`;
+  }
+  const out: string[] = [];
+  out.push(BAR);
+  out.push(`  COMPILED ROUTING TABLE: ${name}`);
+  out.push(BAR);
+  out.push(`  ${pad("task", 28)}${pad("model", 20)}${pad("score", 10)}${pad("margin", 10)}`);
