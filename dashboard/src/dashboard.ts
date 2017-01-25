@@ -171,3 +171,18 @@ function renderRoutes(nav: ReportNavigator, name: string): string {
   out.push(`  COMPILED ROUTING TABLE: ${name}`);
   out.push(BAR);
   out.push(`  ${pad("task", 28)}${pad("model", 20)}${pad("score", 10)}${pad("margin", 10)}`);
+  for (const r of table) {
+    out.push(`  ${pad(r.task, 28)}${pad(r.model, 20)}${pad(r.score.toFixed(4), 10)}${pad(r.margin.toFixed(4), 10)}`);
+  }
+  const unrouted = nav.unroutedTasks(name);
+  if (unrouted.length > 0) {
+    out.push("");
+    out.push(`  UNROUTED (no eligible model): ${unrouted.join(", ")}`);
+  }
+  return out.join("\n");
+}
+
+export function render(nav: ReportNavigator, args: string[]): string {
+  const [command, arg] = args;
+  switch (command) {
+    case undefined:
