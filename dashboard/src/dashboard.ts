@@ -111,3 +111,18 @@ function renderTask(nav: ReportNavigator, task: string): string {
 function renderModel(nav: ReportNavigator, model: string): string {
   const out: string[] = [];
   out.push(BAR);
+  out.push(`  MODEL: ${model}`);
+  out.push(BAR);
+  const rows = nav.reliabilityForModel(model);
+  if (rows.length === 0) {
+    return `no such model: ${model}`;
+  }
+  out.push(`  ${pad("task", 26)}${pad("success", 10)}${pad("p95 ms", 10)}${pad("quality", 10)}${pad("cost", 10)}`);
+  for (const a of rows) {
+    out.push(
+      `  ${pad(a.task, 26)}${pad(pct(a.success_rate), 10)}` +
+        `${pad(a.p95_latency_ms.toFixed(0), 10)}${pad(a.mean_quality.toFixed(3), 10)}${pad(money(a.mean_cost_usd), 10)}`,
+    );
+  }
+  // Count how many task/policy combinations pick this model.
+  let wins = 0;
