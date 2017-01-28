@@ -186,3 +186,18 @@ export function render(nav: ReportNavigator, args: string[]): string {
   const [command, arg] = args;
   switch (command) {
     case undefined:
+    case "overview":
+      return renderOverview(nav);
+    case "task":
+      if (!arg) return "usage: task <name>";
+      return renderTask(nav, arg);
+    case "model":
+      if (!arg) return "usage: model <name>";
+      return renderModel(nav, arg);
+    case "policy":
+      if (!arg) return "usage: policy <name>";
+      return renderPolicy(nav, arg);
+    case "routes":
+      if (!arg) return "usage: routes <name>";
+      return renderRoutes(nav, arg);
+    default:
