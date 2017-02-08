@@ -42,3 +42,17 @@ export class ReportNavigator {
     }
     if (report.schema !== SCHEMA_VERSION) {
       throw new SchemaError(
+        `unsupported schema ${JSON.stringify(report.schema)} (expected ${SCHEMA_VERSION})`,
+      );
+    }
+    if (!Array.isArray(report.reliability) || !Array.isArray(report.pareto)) {
+      throw new SchemaError("report is missing reliability or pareto sections");
+    }
+    this.report = report;
+  }
+
+  /** Parse a JSON string into a validated navigator. */
+  static fromJSON(text: string): ReportNavigator {
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(text);
