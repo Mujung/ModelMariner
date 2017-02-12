@@ -70,3 +70,17 @@ export class ReportNavigator {
   /** All model names, sorted. */
   models(): string[] {
     return [...this.report.input.models];
+  }
+
+  /** All policy names in the report. */
+  policies(): string[] {
+    return this.report.policies.map((p) => p.name);
+  }
+
+  /** Reliability aggregates for a single task. */
+  reliabilityForTask(task: string): ReliabilityAggregate[] {
+    return this.report.reliability.filter((a) => a.task === task);
+  }
+
+  /** Reliability aggregates for a single model across every task. */
+  reliabilityForModel(model: string): ReliabilityAggregate[] {
