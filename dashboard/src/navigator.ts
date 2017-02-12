@@ -84,3 +84,17 @@ export class ReportNavigator {
 
   /** Reliability aggregates for a single model across every task. */
   reliabilityForModel(model: string): ReliabilityAggregate[] {
+    return this.report.reliability.filter((a) => a.model === model);
+  }
+
+  /** The Pareto frontier for a task, if present. */
+  frontier(task: string): ParetoFrontier | undefined {
+    return this.report.pareto.find((f) => f.task === task);
+  }
+
+  /** A named policy report, if present. */
+  policy(name: string): PolicyReport | undefined {
+    return this.report.policies.find((p) => p.name === name);
+  }
+
+  /** The routing decision for a task under a policy, if present. */
