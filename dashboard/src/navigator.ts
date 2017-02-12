@@ -56,3 +56,17 @@ export class ReportNavigator {
     let parsed: unknown;
     try {
       parsed = JSON.parse(text);
+    } catch (e) {
+      throw new SchemaError(`report is not valid JSON: ${(e as Error).message}`);
+    }
+    return new ReportNavigator(parsed as Report);
+  }
+
+  /** All task names, sorted. */
+  tasks(): string[] {
+    return [...this.report.input.tasks];
+  }
+
+  /** All model names, sorted. */
+  models(): string[] {
+    return [...this.report.input.models];
