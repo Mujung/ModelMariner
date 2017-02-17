@@ -98,3 +98,16 @@ export class ReportNavigator {
   }
 
   /** The routing decision for a task under a policy, if present. */
+  decision(policy: string, task: string): Decision | undefined {
+    return this.policy(policy)?.simulation.decisions.find(
+      (d) => d.task === task,
+    );
+  }
+
+  /** Compile the winner-per-task routing table for a policy. */
+  routingTable(policy: string): RouteEntry[] {
+    const pr = this.policy(policy);
+    if (!pr) return [];
+    return pr.simulation.decisions
+      .filter((d) => !d.no_eligible)
+      .map((d) => ({
