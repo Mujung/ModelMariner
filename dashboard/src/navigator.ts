@@ -125,3 +125,17 @@ export class ReportNavigator {
     if (!pr) return [];
     return pr.simulation.decisions
       .filter((d) => d.no_eligible)
+      .map((d) => d.task)
+      .sort((a, b) => a.localeCompare(b));
+  }
+
+  /** A cross-policy overview for a single task. */
+  taskOverview(task: string): TaskOverview {
+    const frontier = this.frontier(task);
+    const winnersByPolicy = this.report.policies
+      .map((p) => {
+        const d = p.simulation.decisions.find((x) => x.task === task);
+        if (!d) return null;
+        return {
+          policy: p.name,
+          winner: d.no_eligible ? null : d.winner,
