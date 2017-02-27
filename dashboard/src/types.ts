@@ -12,3 +12,17 @@ export type PrivacyTier =
 
 export interface InputSummary {
   total_lines: number;
+  accepted: number;
+  rejected: number;
+  models: string[];
+  tasks: string[];
+  warnings?: string[];
+}
+
+export interface ReliabilityAggregate {
+  model: string;
+  task: string;
+  samples: number;
+  successes: number;
+  failures: number;
+  success_rate: number;
