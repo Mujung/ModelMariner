@@ -70,3 +70,18 @@ export interface Evaluation {
 }
 
 export interface RejectedCandidate {
+  model: string;
+  violations: Violation[];
+}
+
+export interface RealizedMetrics {
+  model: string;
+  calls: number;
+  successes: number;
+  success_rate: number;
+  total_cost_usd: number;
+  mean_latency_ms: number;
+  mean_quality: number;
+}
+
+export interface Decision {
