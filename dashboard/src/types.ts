@@ -41,3 +41,18 @@ export interface ReliabilityAggregate {
 export interface ParetoPoint {
   model: string;
   cost_usd: number;
+  latency_ms: number;
+  quality: number;
+  reliability: number;
+  dominated: boolean;
+  dominated_by?: string[];
+}
+
+export interface ParetoFrontier {
+  task: string;
+  points: ParetoPoint[];
+  frontier: ParetoPoint[];
+}
+
+export interface Violation {
+  constraint: string;
