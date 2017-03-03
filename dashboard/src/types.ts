@@ -85,3 +85,18 @@ export interface RealizedMetrics {
 }
 
 export interface Decision {
+  task: string;
+  policy: string;
+  winner: string;
+  runner_up?: string;
+  score: number;
+  margin: number;
+  eligible: string[];
+  rejected?: RejectedCandidate[];
+  evaluations: Evaluation[];
+  realized: RealizedMetrics;
+  baseline: RealizedMetrics;
+  no_eligible: boolean;
+}
+
+export interface Totals {
