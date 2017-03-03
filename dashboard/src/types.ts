@@ -56,3 +56,17 @@ export interface ParetoFrontier {
 
 export interface Violation {
   constraint: string;
+  detail: string;
+  limit?: number;
+  observed?: number;
+}
+
+export interface Evaluation {
+  model: string;
+  eligible: boolean;
+  score: number;
+  violations?: Violation[];
+  components?: Record<string, number>;
+}
+
+export interface RejectedCandidate {
