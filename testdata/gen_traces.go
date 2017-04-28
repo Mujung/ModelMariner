@@ -25,3 +25,16 @@ type profile struct {
 	quality   float64
 	errRate   float64
 	privacy   string
+}
+
+func main() {
+	rng := rand.New(rand.NewSource(20260831))
+
+	tasks := []struct {
+		name    string
+		privacy string
+		volume  int
+	}{
+		{"summarize-support-ticket", "internal", 60},
+		{"classify-intent", "public", 70},
+		{"extract-pii-redaction", "restricted", 50},
