@@ -78,3 +78,16 @@ func main() {
 				if m.model == "harbor-nano" || m.model == "harbor-mini" {
 					p.quality += 0.08
 				}
+			case "extract-pii-redaction":
+				// Only the on-prem model is privacy-safe; cloud models still
+				// appear in traces (they were tried) but score lower on quality.
+				if m.model == "lighthouse-local" {
+					p.quality += 0.06
+				}
+			case "code-review-comment":
+				if m.model == "clipper-pro" {
+					p.quality += 0.03
+				}
+			}
+
+			for i := 0; i < task.volume; i++ {
