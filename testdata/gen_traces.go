@@ -38,3 +38,16 @@ func main() {
 		{"summarize-support-ticket", "internal", 60},
 		{"classify-intent", "public", 70},
 		{"extract-pii-redaction", "restricted", 50},
+		{"draft-legal-clause", "confidential", 45},
+		{"code-review-comment", "internal", 55},
+	}
+
+	// Each model behaves differently per task class. We describe base profiles
+	// then perturb per task to create realistic, non-trivial trade-offs.
+	models := []profile{
+		{"harbor-nano", "coastal", "eu-west", 0.06, 180, 90, 0.71, 0.03, ""},
+		{"harbor-mini", "coastal", "eu-west", 0.15, 240, 120, 0.82, 0.02, ""},
+		{"clipper-pro", "openseas", "us-east", 0.55, 620, 260, 0.93, 0.015, ""},
+		{"galleon-max", "openseas", "us-east", 1.20, 1150, 400, 0.965, 0.01, ""},
+		{"lighthouse-local", "onprem", "on-prem", 0.09, 320, 140, 0.78, 0.04, ""},
+	}
