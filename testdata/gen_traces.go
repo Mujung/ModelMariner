@@ -51,3 +51,16 @@ func main() {
 		{"galleon-max", "openseas", "us-east", 1.20, 1150, 400, 0.965, 0.01, ""},
 		{"lighthouse-local", "onprem", "on-prem", 0.09, 320, 140, 0.78, 0.04, ""},
 	}
+
+	baseTime := time.Date(2026, 8, 25, 8, 0, 0, 0, time.UTC)
+	var seq int
+
+	emit := func(rec string) { fmt.Fprintln(os.Stdout, rec) }
+	emit("# modelmariner synthetic trace corpus — provider-neutral JSONL")
+	emit("# deterministic seed 20260831; each line is one recorded observation")
+
+	for _, task := range tasks {
+		for _, m := range models {
+			// Task-specific perturbations so no single model wins everywhere.
+			p := m
+			switch task.name {
