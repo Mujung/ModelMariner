@@ -91,3 +91,16 @@ func main() {
 			}
 
 			for i := 0; i < task.volume; i++ {
+				seq++
+				prompt := 200 + rng.Intn(1400)
+				completion := 40 + rng.Intn(600)
+				tokens := prompt + completion
+				cost := p.costPer1k * float64(tokens) / 1000.0
+				// Add mild lognormal-ish latency noise.
+				lat := p.baseLatMS + rng.NormFloat64()*p.jitterMS
+				if lat < 20 {
+					lat = 20
+				}
+				isErr := rng.Float64() < p.errRate
+				quality := 0.0
+				errKind := ""
