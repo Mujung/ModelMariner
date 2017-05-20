@@ -17,3 +17,14 @@
       },
       {
         "task": "draft-legal-clause",
+        "model": "lighthouse-local",
+        "score": 0.8350613635191895,
+        "margin": 0.007091747499459289
+      },
+      {
+        "task": "extract-pii-redaction",
+        "model": "lighthouse-local",
+        "score": 0.7937876584279551,
+        "margin": 0.12348349876309483
+      },
+      {
