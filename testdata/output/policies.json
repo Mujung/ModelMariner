@@ -50,3 +50,14 @@
         "model": "harbor-mini",
         "score": 0.8462249307835714,
         "margin": 0.31476525081180806
+      }
+    ]
+  },
+  {
+    "schema": "modelmariner/v1",
+    "policy": "privacy-lockdown",
+    "routes": [
+      {
+        "task": "draft-legal-clause",
+        "model": "lighthouse-local",
+        "score": 0.6630042637105268,
