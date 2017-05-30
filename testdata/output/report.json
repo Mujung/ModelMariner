@@ -493,3 +493,118 @@
       "task": "summarize-support-ticket",
       "samples": 60,
       "successes": 59,
+      "failures": 1,
+      "success_rate": 0.9833333333333333,
+      "reliability_lower": 0.9114487027240993,
+      "mean_cost_usd": 0.11130864406779657,
+      "mean_latency_ms": 311.57627118644064,
+      "p50_latency_ms": 322.9,
+      "p95_latency_ms": 494.96999999999997,
+      "p99_latency_ms": 567.6620000000003,
+      "mean_quality": 0.7743220338983049,
+      "mean_tokens": 1236.7627118644068,
+      "highest_privacy": "internal",
+      "error_kinds": {
+        "content_filter": 1
+      }
+    }
+  ],
+  "pareto": [
+    {
+      "task": "classify-intent",
+      "points": [
+        {
+          "model": "clipper-pro",
+          "cost_usd": 0.6692286764705881,
+          "latency_ms": 1040.155,
+          "quality": 0.9257617647058825,
+          "reliability": 0.901677438815761,
+          "dominated": false
+        },
+        {
+          "model": "galleon-max",
+          "cost_usd": 1.6117043478260868,
+          "latency_ms": 1695.9999999999995,
+          "quality": 0.9529855072463767,
+          "reliability": 0.9234181286879167,
+          "dominated": false
+        },
+        {
+          "model": "harbor-mini",
+          "cost_usd": 0.186675,
+          "latency_ms": 512.035,
+          "quality": 0.908094117647059,
+          "reliability": 0.901677438815761,
+          "dominated": false
+        },
+        {
+          "model": "harbor-nano",
+          "cost_usd": 0.07736059701492536,
+          "latency_ms": 308.61,
+          "quality": 0.777520895522388,
+          "reliability": 0.8814033125147246,
+          "dominated": false
+        },
+        {
+          "model": "lighthouse-local",
+          "cost_usd": 0.11269956521739131,
+          "latency_ms": 583.6399999999999,
+          "quality": 0.7843550724637681,
+          "reliability": 0.9234181286879167,
+          "dominated": false
+        }
+      ],
+      "frontier": [
+        {
+          "model": "harbor-nano",
+          "cost_usd": 0.07736059701492536,
+          "latency_ms": 308.61,
+          "quality": 0.777520895522388,
+          "reliability": 0.8814033125147246,
+          "dominated": false
+        },
+        {
+          "model": "lighthouse-local",
+          "cost_usd": 0.11269956521739131,
+          "latency_ms": 583.6399999999999,
+          "quality": 0.7843550724637681,
+          "reliability": 0.9234181286879167,
+          "dominated": false
+        },
+        {
+          "model": "harbor-mini",
+          "cost_usd": 0.186675,
+          "latency_ms": 512.035,
+          "quality": 0.908094117647059,
+          "reliability": 0.901677438815761,
+          "dominated": false
+        },
+        {
+          "model": "clipper-pro",
+          "cost_usd": 0.6692286764705881,
+          "latency_ms": 1040.155,
+          "quality": 0.9257617647058825,
+          "reliability": 0.901677438815761,
+          "dominated": false
+        },
+        {
+          "model": "galleon-max",
+          "cost_usd": 1.6117043478260868,
+          "latency_ms": 1695.9999999999995,
+          "quality": 0.9529855072463767,
+          "reliability": 0.9234181286879167,
+          "dominated": false
+        }
+      ]
+    },
+    {
+      "task": "code-review-comment",
+      "points": [
+        {
+          "model": "clipper-pro",
+          "cost_usd": 0.679850925925926,
+          "latency_ms": 1038.815,
+          "quality": 0.942761111111111,
+          "reliability": 0.903942239378376,
+          "dominated": false
+        },
