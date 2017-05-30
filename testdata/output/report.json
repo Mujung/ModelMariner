@@ -264,3 +264,117 @@
       "failures": 1,
       "success_rate": 0.9777777777777777,
       "reliability_lower": 0.8843331823158513,
+      "mean_cost_usd": 0.19231704545454542,
+      "mean_latency_ms": 220.3204545454545,
+      "p50_latency_ms": 214.35,
+      "p95_latency_ms": 417.27000000000004,
+      "p99_latency_ms": 492.519,
+      "mean_quality": 0.8189772727272726,
+      "mean_tokens": 1282.1136363636363,
+      "highest_privacy": "confidential",
+      "error_kinds": {
+        "server_error": 1
+      }
+    },
+    {
+      "model": "harbor-nano",
+      "task": "draft-legal-clause",
+      "samples": 45,
+      "successes": 38,
+      "failures": 7,
+      "success_rate": 0.8444444444444444,
+      "reliability_lower": 0.7121609112760374,
+      "mean_cost_usd": 0.0728494736842105,
+      "mean_latency_ms": 166.7605263157894,
+      "p50_latency_ms": 166.2,
+      "p95_latency_ms": 301.62999999999994,
+      "p99_latency_ms": 341.54100000000005,
+      "mean_quality": 0.5893921052631579,
+      "mean_tokens": 1214.157894736842,
+      "highest_privacy": "confidential",
+      "error_kinds": {
+        "content_filter": 3,
+        "rate_limit": 2,
+        "server_error": 1,
+        "timeout": 1
+      }
+    },
+    {
+      "model": "lighthouse-local",
+      "task": "draft-legal-clause",
+      "samples": 45,
+      "successes": 44,
+      "failures": 1,
+      "success_rate": 0.9777777777777777,
+      "reliability_lower": 0.8843331823158513,
+      "mean_cost_usd": 0.10992477272727273,
+      "mean_latency_ms": 314.91590909090905,
+      "p50_latency_ms": 286.9,
+      "p95_latency_ms": 550.415,
+      "p99_latency_ms": 621.526,
+      "mean_quality": 0.7792613636363636,
+      "mean_tokens": 1221.3863636363637,
+      "highest_privacy": "confidential",
+      "error_kinds": {
+        "timeout": 1
+      }
+    },
+    {
+      "model": "clipper-pro",
+      "task": "extract-pii-redaction",
+      "samples": 50,
+      "successes": 49,
+      "failures": 1,
+      "success_rate": 0.98,
+      "reliability_lower": 0.895045564103622,
+      "mean_cost_usd": 0.731881632653061,
+      "mean_latency_ms": 620.5530612244896,
+      "p50_latency_ms": 635.2,
+      "p95_latency_ms": 962.4599999999998,
+      "p99_latency_ms": 1210.9159999999997,
+      "mean_quality": 0.9308306122448979,
+      "mean_tokens": 1330.6938775510205,
+      "highest_privacy": "restricted",
+      "error_kinds": {
+        "content_filter": 1
+      }
+    },
+    {
+      "model": "galleon-max",
+      "task": "extract-pii-redaction",
+      "samples": 50,
+      "successes": 50,
+      "failures": 0,
+      "success_rate": 1,
+      "reliability_lower": 0.9286524008666414,
+      "mean_cost_usd": 1.5338399999999999,
+      "mean_latency_ms": 1177.076,
+      "p50_latency_ms": 1181.35,
+      "p95_latency_ms": 1832.565,
+      "p99_latency_ms": 2045.7649999999999,
+      "mean_quality": 0.9598739999999998,
+      "mean_tokens": 1278.2,
+      "highest_privacy": "restricted"
+    },
+    {
+      "model": "harbor-mini",
+      "task": "extract-pii-redaction",
+      "samples": 50,
+      "successes": 48,
+      "failures": 2,
+      "success_rate": 0.96,
+      "reliability_lower": 0.8653990931249298,
+      "mean_cost_usd": 0.19752187499999996,
+      "mean_latency_ms": 256.2770833333334,
+      "p50_latency_ms": 266.70000000000005,
+      "p95_latency_ms": 405.805,
+      "p99_latency_ms": 440.60600000000005,
+      "mean_quality": 0.813425,
+      "mean_tokens": 1316.8125,
+      "highest_privacy": "restricted",
+      "error_kinds": {
+        "rate_limit": 1,
+        "timeout": 1
+      }
+    },
+    {
