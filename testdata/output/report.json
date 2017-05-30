@@ -723,3 +723,118 @@
           "model": "lighthouse-local",
           "cost_usd": 0.10992477272727273,
           "latency_ms": 550.415,
+          "quality": 0.7792613636363636,
+          "reliability": 0.8843331823158513,
+          "dominated": false
+        }
+      ],
+      "frontier": [
+        {
+          "model": "harbor-nano",
+          "cost_usd": 0.0728494736842105,
+          "latency_ms": 301.62999999999994,
+          "quality": 0.5893921052631579,
+          "reliability": 0.7121609112760374,
+          "dominated": false
+        },
+        {
+          "model": "lighthouse-local",
+          "cost_usd": 0.10992477272727273,
+          "latency_ms": 550.415,
+          "quality": 0.7792613636363636,
+          "reliability": 0.8843331823158513,
+          "dominated": false
+        },
+        {
+          "model": "harbor-mini",
+          "cost_usd": 0.19231704545454542,
+          "latency_ms": 417.27000000000004,
+          "quality": 0.8189772727272726,
+          "reliability": 0.8843331823158513,
+          "dominated": false
+        },
+        {
+          "model": "clipper-pro",
+          "cost_usd": 0.6151566666666666,
+          "latency_ms": 924.6199999999998,
+          "quality": 0.9390444444444442,
+          "reliability": 0.9213484012671117,
+          "dominated": false
+        },
+        {
+          "model": "galleon-max",
+          "cost_usd": 1.5441866666666664,
+          "latency_ms": 1633.58,
+          "quality": 0.9639688888888889,
+          "reliability": 0.9213484012671117,
+          "dominated": false
+        }
+      ]
+    },
+    {
+      "task": "extract-pii-redaction",
+      "points": [
+        {
+          "model": "clipper-pro",
+          "cost_usd": 0.731881632653061,
+          "latency_ms": 962.4599999999998,
+          "quality": 0.9308306122448979,
+          "reliability": 0.895045564103622,
+          "dominated": false
+        },
+        {
+          "model": "galleon-max",
+          "cost_usd": 1.5338399999999999,
+          "latency_ms": 1832.565,
+          "quality": 0.9598739999999998,
+          "reliability": 0.9286524008666414,
+          "dominated": false
+        },
+        {
+          "model": "harbor-mini",
+          "cost_usd": 0.19752187499999996,
+          "latency_ms": 405.805,
+          "quality": 0.813425,
+          "reliability": 0.8653990931249298,
+          "dominated": false
+        },
+        {
+          "model": "harbor-nano",
+          "cost_usd": 0.069945306122449,
+          "latency_ms": 315.93999999999994,
+          "quality": 0.7080020408163265,
+          "reliability": 0.895045564103622,
+          "dominated": false
+        },
+        {
+          "model": "lighthouse-local",
+          "cost_usd": 0.11661979591836735,
+          "latency_ms": 619.8799999999999,
+          "quality": 0.8516836734693874,
+          "reliability": 0.895045564103622,
+          "dominated": false
+        }
+      ],
+      "frontier": [
+        {
+          "model": "harbor-nano",
+          "cost_usd": 0.069945306122449,
+          "latency_ms": 315.93999999999994,
+          "quality": 0.7080020408163265,
+          "reliability": 0.895045564103622,
+          "dominated": false
+        },
+        {
+          "model": "lighthouse-local",
+          "cost_usd": 0.11661979591836735,
+          "latency_ms": 619.8799999999999,
+          "quality": 0.8516836734693874,
+          "reliability": 0.895045564103622,
+          "dominated": false
+        },
+        {
+          "model": "harbor-mini",
+          "cost_usd": 0.19752187499999996,
+          "latency_ms": 405.805,
+          "quality": 0.813425,
+          "reliability": 0.8653990931249298,
