@@ -608,3 +608,118 @@
           "reliability": 0.903942239378376,
           "dominated": false
         },
+        {
+          "model": "galleon-max",
+          "cost_usd": 1.4605963636363632,
+          "latency_ms": 1749.699999999999,
+          "quality": 0.9633927272727274,
+          "reliability": 0.9347150988829136,
+          "dominated": false
+        },
+        {
+          "model": "harbor-mini",
+          "cost_usd": 0.18841132075471695,
+          "latency_ms": 359.99999999999994,
+          "quality": 0.8309698113207546,
+          "reliability": 0.8767653602534898,
+          "dominated": false
+        },
+        {
+          "model": "harbor-nano",
+          "cost_usd": 0.08221999999999999,
+          "latency_ms": 330.92499999999995,
+          "quality": 0.718124074074074,
+          "reliability": 0.903942239378376,
+          "dominated": false
+        },
+        {
+          "model": "lighthouse-local",
+          "cost_usd": 0.1123269230769231,
+          "latency_ms": 499.56499999999994,
+          "quality": 0.7862115384615382,
+          "reliability": 0.851469394559462,
+          "dominated": false
+        }
+      ],
+      "frontier": [
+        {
+          "model": "harbor-nano",
+          "cost_usd": 0.08221999999999999,
+          "latency_ms": 330.92499999999995,
+          "quality": 0.718124074074074,
+          "reliability": 0.903942239378376,
+          "dominated": false
+        },
+        {
+          "model": "lighthouse-local",
+          "cost_usd": 0.1123269230769231,
+          "latency_ms": 499.56499999999994,
+          "quality": 0.7862115384615382,
+          "reliability": 0.851469394559462,
+          "dominated": false
+        },
+        {
+          "model": "harbor-mini",
+          "cost_usd": 0.18841132075471695,
+          "latency_ms": 359.99999999999994,
+          "quality": 0.8309698113207546,
+          "reliability": 0.8767653602534898,
+          "dominated": false
+        },
+        {
+          "model": "clipper-pro",
+          "cost_usd": 0.679850925925926,
+          "latency_ms": 1038.815,
+          "quality": 0.942761111111111,
+          "reliability": 0.903942239378376,
+          "dominated": false
+        },
+        {
+          "model": "galleon-max",
+          "cost_usd": 1.4605963636363632,
+          "latency_ms": 1749.699999999999,
+          "quality": 0.9633927272727274,
+          "reliability": 0.9347150988829136,
+          "dominated": false
+        }
+      ]
+    },
+    {
+      "task": "draft-legal-clause",
+      "points": [
+        {
+          "model": "clipper-pro",
+          "cost_usd": 0.6151566666666666,
+          "latency_ms": 924.6199999999998,
+          "quality": 0.9390444444444442,
+          "reliability": 0.9213484012671117,
+          "dominated": false
+        },
+        {
+          "model": "galleon-max",
+          "cost_usd": 1.5441866666666664,
+          "latency_ms": 1633.58,
+          "quality": 0.9639688888888889,
+          "reliability": 0.9213484012671117,
+          "dominated": false
+        },
+        {
+          "model": "harbor-mini",
+          "cost_usd": 0.19231704545454542,
+          "latency_ms": 417.27000000000004,
+          "quality": 0.8189772727272726,
+          "reliability": 0.8843331823158513,
+          "dominated": false
+        },
+        {
+          "model": "harbor-nano",
+          "cost_usd": 0.0728494736842105,
+          "latency_ms": 301.62999999999994,
+          "quality": 0.5893921052631579,
+          "reliability": 0.7121609112760374,
+          "dominated": false
+        },
+        {
+          "model": "lighthouse-local",
+          "cost_usd": 0.10992477272727273,
+          "latency_ms": 550.415,
