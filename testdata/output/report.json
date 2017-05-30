@@ -838,3 +838,117 @@
           "latency_ms": 405.805,
           "quality": 0.813425,
           "reliability": 0.8653990931249298,
+          "dominated": false
+        },
+        {
+          "model": "clipper-pro",
+          "cost_usd": 0.731881632653061,
+          "latency_ms": 962.4599999999998,
+          "quality": 0.9308306122448979,
+          "reliability": 0.895045564103622,
+          "dominated": false
+        },
+        {
+          "model": "galleon-max",
+          "cost_usd": 1.5338399999999999,
+          "latency_ms": 1832.565,
+          "quality": 0.9598739999999998,
+          "reliability": 0.9286524008666414,
+          "dominated": false
+        }
+      ]
+    },
+    {
+      "task": "summarize-support-ticket",
+      "points": [
+        {
+          "model": "clipper-pro",
+          "cost_usd": 0.7180525000000003,
+          "latency_ms": 1077.16,
+          "quality": 0.9170483333333335,
+          "reliability": 0.93982814785791,
+          "dominated": false
+        },
+        {
+          "model": "galleon-max",
+          "cost_usd": 1.44386,
+          "latency_ms": 1782.8699999999997,
+          "quality": 0.9625116666666665,
+          "reliability": 0.93982814785791,
+          "dominated": false
+        },
+        {
+          "model": "harbor-mini",
+          "cost_usd": 0.17644500000000005,
+          "latency_ms": 422.25,
+          "quality": 0.8211266666666667,
+          "reliability": 0.93982814785791,
+          "dominated": false
+        },
+        {
+          "model": "harbor-nano",
+          "cost_usd": 0.07244440677966103,
+          "latency_ms": 314.3599999999999,
+          "quality": 0.7130830508474576,
+          "reliability": 0.9114487027240993,
+          "dominated": false
+        },
+        {
+          "model": "lighthouse-local",
+          "cost_usd": 0.11130864406779657,
+          "latency_ms": 494.96999999999997,
+          "quality": 0.7743220338983049,
+          "reliability": 0.9114487027240993,
+          "dominated": false
+        }
+      ],
+      "frontier": [
+        {
+          "model": "harbor-nano",
+          "cost_usd": 0.07244440677966103,
+          "latency_ms": 314.3599999999999,
+          "quality": 0.7130830508474576,
+          "reliability": 0.9114487027240993,
+          "dominated": false
+        },
+        {
+          "model": "lighthouse-local",
+          "cost_usd": 0.11130864406779657,
+          "latency_ms": 494.96999999999997,
+          "quality": 0.7743220338983049,
+          "reliability": 0.9114487027240993,
+          "dominated": false
+        },
+        {
+          "model": "harbor-mini",
+          "cost_usd": 0.17644500000000005,
+          "latency_ms": 422.25,
+          "quality": 0.8211266666666667,
+          "reliability": 0.93982814785791,
+          "dominated": false
+        },
+        {
+          "model": "clipper-pro",
+          "cost_usd": 0.7180525000000003,
+          "latency_ms": 1077.16,
+          "quality": 0.9170483333333335,
+          "reliability": 0.93982814785791,
+          "dominated": false
+        },
+        {
+          "model": "galleon-max",
+          "cost_usd": 1.44386,
+          "latency_ms": 1782.8699999999997,
+          "quality": 0.9625116666666665,
+          "reliability": 0.93982814785791,
+          "dominated": false
+        }
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "name": "budget-guard",
+      "description": "Minimize spend while keeping quality acceptable across all tasks. Caps per-call cost and demands a modest quality floor, then ranks survivors mostly on cost with a light quality tie-breaker.",
+      "simulation": {
+        "policy": "budget-guard",
