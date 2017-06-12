@@ -1067,3 +1067,118 @@
             },
             "no_eligible": false
           },
+          {
+            "task": "code-review-comment",
+            "policy": "budget-guard",
+            "winner": "harbor-mini",
+            "runner_up": "harbor-nano",
+            "score": 0.7143787278703492,
+            "margin": 0.019828182748470202,
+            "eligible": [
+              "harbor-mini",
+              "harbor-nano",
+              "lighthouse-local"
+            ],
+            "rejected": [
+              {
+                "model": "clipper-pro",
+                "violations": [
+                  {
+                    "constraint": "max_cost_usd",
+                    "detail": "mean cost exceeds budget",
+                    "limit": 0.35,
+                    "observed": 0.679850925925926
+                  }
+                ]
+              },
+              {
+                "model": "galleon-max",
+                "violations": [
+                  {
+                    "constraint": "max_cost_usd",
+                    "detail": "mean cost exceeds budget",
+                    "limit": 0.35,
+                    "observed": 1.4605963636363632
+                  }
+                ]
+              }
+            ],
+            "evaluations": [
+              {
+                "model": "harbor-mini",
+                "eligible": true,
+                "score": 0.7143787278703492,
+                "components": {
+                  "cost": 0.5537754751650406,
+                  "quality": 0.11502258418983749,
+                  "reliability": 0.04558066851547117
+                }
+              },
+              {
+                "model": "harbor-nano",
+                "eligible": true,
+                "score": 0.694550545121879,
+                "components": {
+                  "cost": 0.6,
+                  "quality": 0,
+                  "reliability": 0.09455054512187895
+                }
+              },
+              {
+                "model": "lighthouse-local",
+                "eligible": true,
+                "score": 0.6562955176842186,
+                "components": {
+                  "cost": 0.5868946143283407,
+                  "quality": 0.06940090335587785,
+                  "reliability": 0
+                }
+              },
+              {
+                "model": "clipper-pro",
+                "eligible": false,
+                "score": 0,
+                "violations": [
+                  {
+                    "constraint": "max_cost_usd",
+                    "detail": "mean cost exceeds budget",
+                    "limit": 0.35,
+                    "observed": 0.679850925925926
+                  }
+                ]
+              },
+              {
+                "model": "galleon-max",
+                "eligible": false,
+                "score": 0,
+                "violations": [
+                  {
+                    "constraint": "max_cost_usd",
+                    "detail": "mean cost exceeds budget",
+                    "limit": 0.35,
+                    "observed": 1.4605963636363632
+                  }
+                ]
+              }
+            ],
+            "realized": {
+              "model": "harbor-mini",
+              "calls": 55,
+              "successes": 53,
+              "success_rate": 0.9636363636363636,
+              "total_cost_usd": 10.38345,
+              "mean_latency_ms": 204.85283018867932,
+              "mean_quality": 0.8309698113207546
+            },
+            "baseline": {
+              "model": "harbor-nano",
+              "calls": 55,
+              "successes": 54,
+              "success_rate": 0.9818181818181818,
+              "total_cost_usd": 4.53264,
+              "mean_latency_ms": 171.4203703703704,
+              "mean_quality": 0.718124074074074
+            },
+            "no_eligible": false
+          },
+          {
