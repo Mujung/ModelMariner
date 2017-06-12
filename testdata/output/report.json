@@ -952,3 +952,118 @@
       "description": "Minimize spend while keeping quality acceptable across all tasks. Caps per-call cost and demands a modest quality floor, then ranks survivors mostly on cost with a light quality tie-breaker.",
       "simulation": {
         "policy": "budget-guard",
+        "decisions": [
+          {
+            "task": "classify-intent",
+            "policy": "budget-guard",
+            "winner": "harbor-mini",
+            "runner_up": "lighthouse-local",
+            "score": 0.8156742821122855,
+            "margin": 0.06975620938332328,
+            "eligible": [
+              "harbor-mini",
+              "lighthouse-local",
+              "harbor-nano"
+            ],
+            "rejected": [
+              {
+                "model": "clipper-pro",
+                "violations": [
+                  {
+                    "constraint": "max_cost_usd",
+                    "detail": "mean cost exceeds budget",
+                    "limit": 0.35,
+                    "observed": 0.6692286764705881
+                  }
+                ]
+              },
+              {
+                "model": "galleon-max",
+                "violations": [
+                  {
+                    "constraint": "max_cost_usd",
+                    "detail": "mean cost exceeds budget",
+                    "limit": 0.35,
+                    "observed": 1.6117043478260868
+                  }
+                ]
+              }
+            ],
+            "evaluations": [
+              {
+                "model": "harbor-mini",
+                "eligible": true,
+                "score": 0.8156742821122855,
+                "components": {
+                  "cost": 0.5572529677548658,
+                  "quality": 0.18603925435697943,
+                  "reliability": 0.07238206000044031
+                }
+              },
+              {
+                "model": "lighthouse-local",
+                "eligible": true,
+                "score": 0.7459180727289623,
+                "components": {
+                  "cost": 0.5861808144946202,
+                  "quality": 0.009737258234341985,
+                  "reliability": 0.15
+                }
+              },
+              {
+                "model": "harbor-nano",
+                "eligible": true,
+                "score": 0.6,
+                "components": {
+                  "cost": 0.6,
+                  "quality": 0,
+                  "reliability": 0
+                }
+              },
+              {
+                "model": "clipper-pro",
+                "eligible": false,
+                "score": 0,
+                "violations": [
+                  {
+                    "constraint": "max_cost_usd",
+                    "detail": "mean cost exceeds budget",
+                    "limit": 0.35,
+                    "observed": 0.6692286764705881
+                  }
+                ]
+              },
+              {
+                "model": "galleon-max",
+                "eligible": false,
+                "score": 0,
+                "violations": [
+                  {
+                    "constraint": "max_cost_usd",
+                    "detail": "mean cost exceeds budget",
+                    "limit": 0.35,
+                    "observed": 1.6117043478260868
+                  }
+                ]
+              }
+            ],
+            "realized": {
+              "model": "harbor-mini",
+              "calls": 70,
+              "successes": 68,
+              "success_rate": 0.9714285714285714,
+              "total_cost_usd": 12.9234,
+              "mean_latency_ms": 259.0823529411765,
+              "mean_quality": 0.908094117647059
+            },
+            "baseline": {
+              "model": "harbor-nano",
+              "calls": 70,
+              "successes": 67,
+              "success_rate": 0.9571428571428572,
+              "total_cost_usd": 5.3940600000000005,
+              "mean_latency_ms": 169.81641791044777,
+              "mean_quality": 0.777520895522388
+            },
+            "no_eligible": false
+          },
