@@ -1182,3 +1182,118 @@
             "no_eligible": false
           },
           {
+            "task": "draft-legal-clause",
+            "policy": "budget-guard",
+            "winner": "lighthouse-local",
+            "runner_up": "harbor-mini",
+            "score": 0.8350613635191895,
+            "margin": 0.007091747499459289,
+            "eligible": [
+              "lighthouse-local",
+              "harbor-mini"
+            ],
+            "rejected": [
+              {
+                "model": "clipper-pro",
+                "violations": [
+                  {
+                    "constraint": "max_cost_usd",
+                    "detail": "mean cost exceeds budget",
+                    "limit": 0.35,
+                    "observed": 0.6151566666666666
+                  }
+                ]
+              },
+              {
+                "model": "galleon-max",
+                "violations": [
+                  {
+                    "constraint": "max_cost_usd",
+                    "detail": "mean cost exceeds budget",
+                    "limit": 0.35,
+                    "observed": 1.5441866666666664
+                  }
+                ]
+              },
+              {
+                "model": "harbor-nano",
+                "violations": [
+                  {
+                    "constraint": "min_quality",
+                    "detail": "mean quality below floor",
+                    "limit": 0.7,
+                    "observed": 0.5893921052631579
+                  },
+                  {
+                    "constraint": "min_reliability",
+                    "detail": "reliability lower bound below floor",
+                    "limit": 0.8,
+                    "observed": 0.7121609112760374
+                  }
+                ]
+              }
+            ],
+            "evaluations": [
+              {
+                "model": "lighthouse-local",
+                "eligible": true,
+                "score": 0.8350613635191895,
+                "components": {
+                  "cost": 0.5848809779757246,
+                  "quality": 0.12672252170526865,
+                  "reliability": 0.12345786383819624
+                }
+              },
+              {
+                "model": "harbor-mini",
+                "eligible": true,
+                "score": 0.8279696160197302,
+                "components": {
+                  "cost": 0.5512820423461859,
+                  "quality": 0.15322970983534798,
+                  "reliability": 0.12345786383819624
+                }
+              },
+              {
+                "model": "clipper-pro",
+                "eligible": false,
+                "score": 0,
+                "violations": [
+                  {
+                    "constraint": "max_cost_usd",
+                    "detail": "mean cost exceeds budget",
+                    "limit": 0.35,
+                    "observed": 0.6151566666666666
+                  }
+                ]
+              },
+              {
+                "model": "galleon-max",
+                "eligible": false,
+                "score": 0,
+                "violations": [
+                  {
+                    "constraint": "max_cost_usd",
+                    "detail": "mean cost exceeds budget",
+                    "limit": 0.35,
+                    "observed": 1.5441866666666664
+                  }
+                ]
+              },
+              {
+                "model": "harbor-nano",
+                "eligible": false,
+                "score": 0,
+                "violations": [
+                  {
+                    "constraint": "min_quality",
+                    "detail": "mean quality below floor",
+                    "limit": 0.7,
+                    "observed": 0.5893921052631579
+                  },
+                  {
+                    "constraint": "min_reliability",
+                    "detail": "reliability lower bound below floor",
+                    "limit": 0.8,
+                    "observed": 0.7121609112760374
+                  }
