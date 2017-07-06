@@ -1526,3 +1526,118 @@
                     "observed": 1.44386
                   }
                 ]
+              }
+            ],
+            "realized": {
+              "model": "harbor-mini",
+              "calls": 60,
+              "successes": 60,
+              "success_rate": 1,
+              "total_cost_usd": 10.586700000000002,
+              "mean_latency_ms": 236.02500000000003,
+              "mean_quality": 0.8211266666666667
+            },
+            "baseline": {
+              "model": "harbor-nano",
+              "calls": 60,
+              "successes": 59,
+              "success_rate": 0.9833333333333333,
+              "total_cost_usd": 4.36956,
+              "mean_latency_ms": 181.18644067796615,
+              "mean_quality": 0.7130830508474576
+            },
+            "no_eligible": false
+          }
+        ],
+        "totals": {
+          "tasks_decided": 5,
+          "tasks_unrouted": 0,
+          "realized_cost_usd": 44.686260000000004,
+          "baseline_cost_usd": 21.191280000000003,
+          "cost_delta_usd": 23.49498,
+          "realized_mean_quality": 0.8382271265480462,
+          "baseline_mean_quality": 0.7012244333046806
+        }
+      },
+      "explanations": [
+        {
+          "task": "classify-intent",
+          "policy": "budget-guard",
+          "headline": "route \"classify-intent\" to harbor-mini (score 0.8157)",
+          "reasons": [
+            "harbor-mini beat runner-up lighthouse-local by a margin of 0.0698 in weighted score",
+            "score components: cost=0.5573, quality=0.1860, reliability=0.0724"
+          ],
+          "evidence": [
+            "replayed 70 recorded call(s): 97.1% success, mean quality 0.908, mean latency 259 ms, total cost $12.9234",
+            "versus cheapest-model baseline harbor-nano: $7.5293 more cost, 0.908 vs 0.778 mean quality"
+          ],
+          "rejections": [
+            "clipper-pro — max_cost_usd (limit 0.35, observed 0.6692)",
+            "galleon-max — max_cost_usd (limit 0.35, observed 1.612)"
+          ]
+        },
+        {
+          "task": "code-review-comment",
+          "policy": "budget-guard",
+          "headline": "route \"code-review-comment\" to harbor-mini (score 0.7144)",
+          "reasons": [
+            "harbor-mini beat runner-up harbor-nano by a margin of 0.0198 in weighted score",
+            "score components: cost=0.5538, quality=0.1150, reliability=0.0456"
+          ],
+          "evidence": [
+            "replayed 55 recorded call(s): 96.4% success, mean quality 0.831, mean latency 205 ms, total cost $10.3834",
+            "versus cheapest-model baseline harbor-nano: $5.8508 more cost, 0.831 vs 0.718 mean quality"
+          ],
+          "rejections": [
+            "clipper-pro — max_cost_usd (limit 0.35, observed 0.6799)",
+            "galleon-max — max_cost_usd (limit 0.35, observed 1.461)"
+          ]
+        },
+        {
+          "task": "draft-legal-clause",
+          "policy": "budget-guard",
+          "headline": "route \"draft-legal-clause\" to lighthouse-local (score 0.8351)",
+          "reasons": [
+            "lighthouse-local beat runner-up harbor-mini by a margin of 0.0071 in weighted score",
+            "score components: cost=0.5849, quality=0.1267, reliability=0.1235"
+          ],
+          "evidence": [
+            "replayed 45 recorded call(s): 97.8% success, mean quality 0.779, mean latency 315 ms, total cost $4.9595",
+            "versus cheapest-model baseline harbor-nano: $1.5914 more cost, 0.779 vs 0.589 mean quality"
+          ],
+          "rejections": [
+            "clipper-pro — max_cost_usd (limit 0.35, observed 0.6152)",
+            "galleon-max — max_cost_usd (limit 0.35, observed 1.544)",
+            "harbor-nano — min_quality (limit 0.7, observed 0.5894); min_reliability (limit 0.8, observed 0.7122)"
+          ]
+        },
+        {
+          "task": "extract-pii-redaction",
+          "policy": "budget-guard",
+          "headline": "route \"extract-pii-redaction\" to lighthouse-local (score 0.7938)",
+          "reasons": [
+            "lighthouse-local beat runner-up harbor-nano by a margin of 0.1235 in weighted score",
+            "score components: cost=0.5809, quality=0.1426, reliability=0.0703"
+          ],
+          "evidence": [
+            "replayed 50 recorded call(s): 98.0% success, mean quality 0.852, mean latency 345 ms, total cost $5.8333",
+            "versus cheapest-model baseline harbor-nano: $2.3063 more cost, 0.852 vs 0.708 mean quality"
+          ],
+          "rejections": [
+            "clipper-pro — max_cost_usd (limit 0.35, observed 0.7319)",
+            "galleon-max — max_cost_usd (limit 0.35, observed 1.534)"
+          ]
+        },
+        {
+          "task": "summarize-support-ticket",
+          "policy": "budget-guard",
+          "headline": "route \"summarize-support-ticket\" to harbor-mini (score 0.8128)",
+          "reasons": [
+            "harbor-mini beat runner-up lighthouse-local by a margin of 0.1684 in weighted score",
+            "score components: cost=0.5545, quality=0.1083, reliability=0.1500"
+          ],
+          "evidence": [
+            "replayed 60 recorded call(s): 100.0% success, mean quality 0.821, mean latency 236 ms, total cost $10.5867",
+            "versus cheapest-model baseline harbor-nano: $6.2171 more cost, 0.821 vs 0.713 mean quality"
+          ],
