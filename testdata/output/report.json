@@ -1641,3 +1641,118 @@
             "replayed 60 recorded call(s): 100.0% success, mean quality 0.821, mean latency 236 ms, total cost $10.5867",
             "versus cheapest-model baseline harbor-nano: $6.2171 more cost, 0.821 vs 0.713 mean quality"
           ],
+          "rejections": [
+            "clipper-pro — max_cost_usd (limit 0.35, observed 0.7181)",
+            "galleon-max — max_cost_usd (limit 0.35, observed 1.444)"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "latency-critical",
+      "description": "Interactive workloads where p95 latency must stay under 500ms. Ranks primarily on speed, then reliability.",
+      "simulation": {
+        "policy": "latency-critical",
+        "decisions": [
+          {
+            "task": "classify-intent",
+            "policy": "latency-critical",
+            "winner": "harbor-nano",
+            "score": 0.55,
+            "margin": 0.55,
+            "eligible": [
+              "harbor-nano"
+            ],
+            "rejected": [
+              {
+                "model": "clipper-pro",
+                "violations": [
+                  {
+                    "constraint": "max_latency_ms",
+                    "detail": "p95 latency exceeds ceiling",
+                    "limit": 500,
+                    "observed": 1040.155
+                  }
+                ]
+              },
+              {
+                "model": "galleon-max",
+                "violations": [
+                  {
+                    "constraint": "max_latency_ms",
+                    "detail": "p95 latency exceeds ceiling",
+                    "limit": 500,
+                    "observed": 1695.9999999999995
+                  }
+                ]
+              },
+              {
+                "model": "harbor-mini",
+                "violations": [
+                  {
+                    "constraint": "max_latency_ms",
+                    "detail": "p95 latency exceeds ceiling",
+                    "limit": 500,
+                    "observed": 512.035
+                  }
+                ]
+              },
+              {
+                "model": "lighthouse-local",
+                "violations": [
+                  {
+                    "constraint": "max_latency_ms",
+                    "detail": "p95 latency exceeds ceiling",
+                    "limit": 500,
+                    "observed": 583.6399999999999
+                  }
+                ]
+              }
+            ],
+            "evaluations": [
+              {
+                "model": "harbor-nano",
+                "eligible": true,
+                "score": 0.55,
+                "components": {
+                  "latency": 0.55,
+                  "quality": 0,
+                  "reliability": 0
+                }
+              },
+              {
+                "model": "clipper-pro",
+                "eligible": false,
+                "score": 0,
+                "violations": [
+                  {
+                    "constraint": "max_latency_ms",
+                    "detail": "p95 latency exceeds ceiling",
+                    "limit": 500,
+                    "observed": 1040.155
+                  }
+                ]
+              },
+              {
+                "model": "galleon-max",
+                "eligible": false,
+                "score": 0,
+                "violations": [
+                  {
+                    "constraint": "max_latency_ms",
+                    "detail": "p95 latency exceeds ceiling",
+                    "limit": 500,
+                    "observed": 1695.9999999999995
+                  }
+                ]
+              },
+              {
+                "model": "harbor-mini",
+                "eligible": false,
+                "score": 0,
+                "violations": [
+                  {
+                    "constraint": "max_latency_ms",
+                    "detail": "p95 latency exceeds ceiling",
+                    "limit": 500,
+                    "observed": 512.035
