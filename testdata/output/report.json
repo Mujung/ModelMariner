@@ -2215,3 +2215,118 @@
               }
             ],
             "realized": {
+              "model": "lighthouse-local",
+              "calls": 50,
+              "successes": 49,
+              "success_rate": 0.98,
+              "total_cost_usd": 5.83326,
+              "mean_latency_ms": 344.7367346938775,
+              "mean_quality": 0.8516836734693874
+            },
+            "baseline": {
+              "model": "harbor-nano",
+              "calls": 50,
+              "successes": 49,
+              "success_rate": 0.98,
+              "total_cost_usd": 3.526980000000001,
+              "mean_latency_ms": 189.9122448979592,
+              "mean_quality": 0.7080020408163265
+            },
+            "no_eligible": false
+          }
+        ],
+        "totals": {
+          "tasks_decided": 2,
+          "tasks_unrouted": 0,
+          "realized_cost_usd": 10.79271,
+          "baseline_cost_usd": 6.8950200000000015,
+          "cost_delta_usd": 3.897689999999998,
+          "realized_mean_quality": 0.8154725185528755,
+          "baseline_mean_quality": 0.6486970730397421
+        }
+      },
+      "explanations": [
+        {
+          "task": "draft-legal-clause",
+          "policy": "privacy-lockdown",
+          "headline": "route \"draft-legal-clause\" to lighthouse-local (score 0.6630)",
+          "reasons": [
+            "lighthouse-local was the only model to satisfy every hard constraint",
+            "score components: latency=0.1626, quality=0.2534, reliability=0.2469"
+          ],
+          "evidence": [
+            "replayed 45 recorded call(s): 97.8% success, mean quality 0.779, mean latency 315 ms, total cost $4.9595",
+            "versus cheapest-model baseline harbor-nano: $1.5914 more cost, 0.779 vs 0.589 mean quality"
+          ],
+          "rejections": [
+            "clipper-pro — max_privacy (task data reaches \"confidential\" but policy caps at \"internal\" and model is not privacy-safe)",
+            "galleon-max — max_privacy (task data reaches \"confidential\" but policy caps at \"internal\" and model is not privacy-safe)",
+            "harbor-mini — max_privacy (task data reaches \"confidential\" but policy caps at \"internal\" and model is not privacy-safe)",
+            "harbor-nano — min_reliability (limit 0.75, observed 0.7122); max_privacy (task data reaches \"confidential\" but policy caps at \"internal\" and model is not privacy-safe)"
+          ]
+        },
+        {
+          "task": "extract-pii-redaction",
+          "policy": "privacy-lockdown",
+          "headline": "route \"extract-pii-redaction\" to lighthouse-local (score 0.5858)",
+          "reasons": [
+            "lighthouse-local was the only model to satisfy every hard constraint",
+            "score components: latency=0.1599, quality=0.2852, reliability=0.1406"
+          ],
+          "evidence": [
+            "replayed 50 recorded call(s): 98.0% success, mean quality 0.852, mean latency 345 ms, total cost $5.8333",
+            "versus cheapest-model baseline harbor-nano: $2.3063 more cost, 0.852 vs 0.708 mean quality"
+          ],
+          "rejections": [
+            "clipper-pro — max_privacy (task data reaches \"restricted\" but policy caps at \"internal\" and model is not privacy-safe)",
+            "galleon-max — max_privacy (task data reaches \"restricted\" but policy caps at \"internal\" and model is not privacy-safe)",
+            "harbor-mini — max_privacy (task data reaches \"restricted\" but policy caps at \"internal\" and model is not privacy-safe)",
+            "harbor-nano — max_privacy (task data reaches \"restricted\" but policy caps at \"internal\" and model is not privacy-safe)"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "quality-first",
+      "description": "Accuracy-sensitive generative tasks. Demands a high quality floor and strong reliability, then ranks on quality with cost as a secondary consideration.",
+      "simulation": {
+        "policy": "quality-first",
+        "decisions": [
+          {
+            "task": "code-review-comment",
+            "policy": "quality-first",
+            "winner": "galleon-max",
+            "runner_up": "clipper-pro",
+            "score": 0.85,
+            "margin": 0.05792322303883979,
+            "eligible": [
+              "galleon-max",
+              "clipper-pro"
+            ],
+            "rejected": [
+              {
+                "model": "harbor-mini",
+                "violations": [
+                  {
+                    "constraint": "min_quality",
+                    "detail": "mean quality below floor",
+                    "limit": 0.85,
+                    "observed": 0.8309698113207546
+                  },
+                  {
+                    "constraint": "min_reliability",
+                    "detail": "reliability lower bound below floor",
+                    "limit": 0.9,
+                    "observed": 0.8767653602534898
+                  }
+                ]
+              },
+              {
+                "model": "harbor-nano",
+                "violations": [
+                  {
+                    "constraint": "min_quality",
+                    "detail": "mean quality below floor",
+                    "limit": 0.85,
+                    "observed": 0.718124074074074
+                  }
