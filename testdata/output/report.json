@@ -2100,3 +2100,118 @@
               "mean_latency_ms": 314.91590909090917,
               "mean_quality": 0.7792613636363636
             },
+            "baseline": {
+              "model": "harbor-nano",
+              "calls": 45,
+              "successes": 38,
+              "success_rate": 0.8444444444444444,
+              "total_cost_usd": 3.3680400000000006,
+              "mean_latency_ms": 166.76052631578943,
+              "mean_quality": 0.5893921052631579
+            },
+            "no_eligible": false
+          },
+          {
+            "task": "extract-pii-redaction",
+            "policy": "privacy-lockdown",
+            "winner": "lighthouse-local",
+            "score": 0.5857547463437147,
+            "margin": 0.5857547463437147,
+            "eligible": [
+              "lighthouse-local"
+            ],
+            "rejected": [
+              {
+                "model": "clipper-pro",
+                "violations": [
+                  {
+                    "constraint": "max_privacy",
+                    "detail": "task data reaches \"restricted\" but policy caps at \"internal\" and model is not privacy-safe"
+                  }
+                ]
+              },
+              {
+                "model": "galleon-max",
+                "violations": [
+                  {
+                    "constraint": "max_privacy",
+                    "detail": "task data reaches \"restricted\" but policy caps at \"internal\" and model is not privacy-safe"
+                  }
+                ]
+              },
+              {
+                "model": "harbor-mini",
+                "violations": [
+                  {
+                    "constraint": "max_privacy",
+                    "detail": "task data reaches \"restricted\" but policy caps at \"internal\" and model is not privacy-safe"
+                  }
+                ]
+              },
+              {
+                "model": "harbor-nano",
+                "violations": [
+                  {
+                    "constraint": "max_privacy",
+                    "detail": "task data reaches \"restricted\" but policy caps at \"internal\" and model is not privacy-safe"
+                  }
+                ]
+              }
+            ],
+            "evaluations": [
+              {
+                "model": "lighthouse-local",
+                "eligible": true,
+                "score": 0.5857547463437147,
+                "components": {
+                  "latency": 0.15991889887084812,
+                  "quality": 0.28522752814314595,
+                  "reliability": 0.14060831932972057
+                }
+              },
+              {
+                "model": "clipper-pro",
+                "eligible": false,
+                "score": 0,
+                "violations": [
+                  {
+                    "constraint": "max_privacy",
+                    "detail": "task data reaches \"restricted\" but policy caps at \"internal\" and model is not privacy-safe"
+                  }
+                ]
+              },
+              {
+                "model": "galleon-max",
+                "eligible": false,
+                "score": 0,
+                "violations": [
+                  {
+                    "constraint": "max_privacy",
+                    "detail": "task data reaches \"restricted\" but policy caps at \"internal\" and model is not privacy-safe"
+                  }
+                ]
+              },
+              {
+                "model": "harbor-mini",
+                "eligible": false,
+                "score": 0,
+                "violations": [
+                  {
+                    "constraint": "max_privacy",
+                    "detail": "task data reaches \"restricted\" but policy caps at \"internal\" and model is not privacy-safe"
+                  }
+                ]
+              },
+              {
+                "model": "harbor-nano",
+                "eligible": false,
+                "score": 0,
+                "violations": [
+                  {
+                    "constraint": "max_privacy",
+                    "detail": "task data reaches \"restricted\" but policy caps at \"internal\" and model is not privacy-safe"
+                  }
+                ]
+              }
+            ],
+            "realized": {
