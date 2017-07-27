@@ -25,3 +25,11 @@ draft-legal-clause galleon-max        45   100.0%      0.921      1634    0.964
 draft-legal-clause harbor-mini        45    97.8%      0.884       417    0.819
 draft-legal-clause harbor-nano        45    84.4%      0.712       302    0.589
 draft-legal-clause lighthouse-lo…     45    97.8%      0.884       550    0.779
+extract-pii-redac… clipper-pro        50    98.0%      0.895       962    0.931
+extract-pii-redac… galleon-max        50   100.0%      0.929      1833    0.960
+extract-pii-redac… harbor-mini        50    96.0%      0.865       406    0.813
+extract-pii-redac… harbor-nano        50    98.0%      0.895       316    0.708
+extract-pii-redac… lighthouse-lo…     50    98.0%      0.895       620    0.852
+summarize-support… clipper-pro        60   100.0%      0.940      1077    0.917
+summarize-support… galleon-max        60   100.0%      0.940      1783    0.963
+summarize-support… harbor-mini        60   100.0%      0.940       422    0.821
