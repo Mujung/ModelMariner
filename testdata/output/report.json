@@ -1986,3 +1986,117 @@
               "lighthouse-local"
             ],
             "rejected": [
+              {
+                "model": "clipper-pro",
+                "violations": [
+                  {
+                    "constraint": "max_privacy",
+                    "detail": "task data reaches \"confidential\" but policy caps at \"internal\" and model is not privacy-safe"
+                  }
+                ]
+              },
+              {
+                "model": "galleon-max",
+                "violations": [
+                  {
+                    "constraint": "max_privacy",
+                    "detail": "task data reaches \"confidential\" but policy caps at \"internal\" and model is not privacy-safe"
+                  }
+                ]
+              },
+              {
+                "model": "harbor-mini",
+                "violations": [
+                  {
+                    "constraint": "max_privacy",
+                    "detail": "task data reaches \"confidential\" but policy caps at \"internal\" and model is not privacy-safe"
+                  }
+                ]
+              },
+              {
+                "model": "harbor-nano",
+                "violations": [
+                  {
+                    "constraint": "min_reliability",
+                    "detail": "reliability lower bound below floor",
+                    "limit": 0.75,
+                    "observed": 0.7121609112760374
+                  },
+                  {
+                    "constraint": "max_privacy",
+                    "detail": "task data reaches \"confidential\" but policy caps at \"internal\" and model is not privacy-safe"
+                  }
+                ]
+              }
+            ],
+            "evaluations": [
+              {
+                "model": "lighthouse-local",
+                "eligible": true,
+                "score": 0.6630042637105268,
+                "components": {
+                  "latency": 0.162643492623597,
+                  "quality": 0.2534450434105373,
+                  "reliability": 0.24691572767639247
+                }
+              },
+              {
+                "model": "clipper-pro",
+                "eligible": false,
+                "score": 0,
+                "violations": [
+                  {
+                    "constraint": "max_privacy",
+                    "detail": "task data reaches \"confidential\" but policy caps at \"internal\" and model is not privacy-safe"
+                  }
+                ]
+              },
+              {
+                "model": "galleon-max",
+                "eligible": false,
+                "score": 0,
+                "violations": [
+                  {
+                    "constraint": "max_privacy",
+                    "detail": "task data reaches \"confidential\" but policy caps at \"internal\" and model is not privacy-safe"
+                  }
+                ]
+              },
+              {
+                "model": "harbor-mini",
+                "eligible": false,
+                "score": 0,
+                "violations": [
+                  {
+                    "constraint": "max_privacy",
+                    "detail": "task data reaches \"confidential\" but policy caps at \"internal\" and model is not privacy-safe"
+                  }
+                ]
+              },
+              {
+                "model": "harbor-nano",
+                "eligible": false,
+                "score": 0,
+                "violations": [
+                  {
+                    "constraint": "min_reliability",
+                    "detail": "reliability lower bound below floor",
+                    "limit": 0.75,
+                    "observed": 0.7121609112760374
+                  },
+                  {
+                    "constraint": "max_privacy",
+                    "detail": "task data reaches \"confidential\" but policy caps at \"internal\" and model is not privacy-safe"
+                  }
+                ]
+              }
+            ],
+            "realized": {
+              "model": "lighthouse-local",
+              "calls": 45,
+              "successes": 44,
+              "success_rate": 0.9777777777777777,
+              "total_cost_usd": 4.95945,
+              "mean_latency_ms": 314.91590909090917,
+              "mean_quality": 0.7792613636363636
+            },
