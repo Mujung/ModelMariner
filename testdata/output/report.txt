@@ -1,0 +1,18 @@
+========================================================================
+ MODELMARINER — offline routing-policy compilation report
+========================================================================
+Schema: modelmariner/v1
+Ingested: 1400 line(s) — 1400 accepted, 0 rejected
+Models: clipper-pro, galleon-max, harbor-mini, harbor-nano, lighthouse-local
+Tasks:  classify-intent, code-review-comment, draft-legal-clause, extract-pii-redaction, summarize-support-ticket
+
+========================================================================
+ RELIABILITY (per model / task)
+========================================================================
+task               model               n  success  reliab.LB    p95 ms  quality
+classify-intent    clipper-pro        70    97.1%      0.902      1040    0.926
+classify-intent    galleon-max        70    98.6%      0.923      1696    0.953
+classify-intent    harbor-mini        70    97.1%      0.902       512    0.908
+classify-intent    harbor-nano        70    95.7%      0.881       309    0.778
+classify-intent    lighthouse-lo…     70    98.6%      0.923       584    0.784
+code-review-comme… clipper-pro        55    98.2%      0.904      1039    0.943
