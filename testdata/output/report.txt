@@ -16,3 +16,12 @@ classify-intent    harbor-mini        70    97.1%      0.902       512    0.908
 classify-intent    harbor-nano        70    95.7%      0.881       309    0.778
 classify-intent    lighthouse-lo…     70    98.6%      0.923       584    0.784
 code-review-comme… clipper-pro        55    98.2%      0.904      1039    0.943
+code-review-comme… galleon-max        55   100.0%      0.935      1750    0.963
+code-review-comme… harbor-mini        55    96.4%      0.877       360    0.831
+code-review-comme… harbor-nano        55    98.2%      0.904       331    0.718
+code-review-comme… lighthouse-lo…     55    94.5%      0.851       500    0.786
+draft-legal-clause clipper-pro        45   100.0%      0.921       925    0.939
+draft-legal-clause galleon-max        45   100.0%      0.921      1634    0.964
+draft-legal-clause harbor-mini        45    97.8%      0.884       417    0.819
+draft-legal-clause harbor-nano        45    84.4%      0.712       302    0.589
+draft-legal-clause lighthouse-lo…     45    97.8%      0.884       550    0.779
