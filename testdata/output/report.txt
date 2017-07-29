@@ -49,3 +49,11 @@ code-review-comme… frontier: harbor-nano, lighthouse-local, harbor-mini, clipp
     clipper-pro    cost $0.6799  p95 1039ms  q 0.943  rel 0.904  on-frontier
     galleon-max    cost $1.4606  p95 1750ms  q 0.963  rel 0.935  on-frontier
     harbor-mini    cost $0.1884  p95 360ms  q 0.831  rel 0.877  on-frontier
+    harbor-nano    cost $0.0822  p95 331ms  q 0.718  rel 0.904  on-frontier
+    lighthouse-lo… cost $0.1123  p95 500ms  q 0.786  rel 0.851  on-frontier
+draft-legal-clause frontier: harbor-nano, lighthouse-local, harbor-mini, clipper-pro, galleon-max
+    clipper-pro    cost $0.6152  p95 925ms  q 0.939  rel 0.921  on-frontier
+    galleon-max    cost $1.5442  p95 1634ms  q 0.964  rel 0.921  on-frontier
+    harbor-mini    cost $0.1923  p95 417ms  q 0.819  rel 0.884  on-frontier
+    harbor-nano    cost $0.0728  p95 302ms  q 0.589  rel 0.712  on-frontier
+    lighthouse-lo… cost $0.1099  p95 550ms  q 0.779  rel 0.884  on-frontier
