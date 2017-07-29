@@ -65,3 +65,11 @@ extract-pii-redac… frontier: harbor-nano, lighthouse-local, harbor-mini, clipp
     lighthouse-lo… cost $0.1166  p95 620ms  q 0.852  rel 0.895  on-frontier
 summarize-support… frontier: harbor-nano, lighthouse-local, harbor-mini, clipper-pro, galleon-max
     clipper-pro    cost $0.7181  p95 1077ms  q 0.917  rel 0.940  on-frontier
+    galleon-max    cost $1.4439  p95 1783ms  q 0.963  rel 0.940  on-frontier
+    harbor-mini    cost $0.1764  p95 422ms  q 0.821  rel 0.940  on-frontier
+    harbor-nano    cost $0.0724  p95 314ms  q 0.713  rel 0.911  on-frontier
+    lighthouse-lo… cost $0.1113  p95 495ms  q 0.774  rel 0.911  on-frontier
+
+========================================================================
+ POLICY: budget-guard
+========================================================================
