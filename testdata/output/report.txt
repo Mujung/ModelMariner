@@ -73,3 +73,12 @@ summarize-support… frontier: harbor-nano, lighthouse-local, harbor-mini, clipp
 ========================================================================
  POLICY: budget-guard
 ========================================================================
+Minimize spend while keeping quality acceptable across all tasks. Caps per-call cost and demands a modest quality floor, then ranks survivors mostly on cost with a light quality tie-breaker.
+
+Decided 5 task(s), 0 unrouted. Realized cost $44.6863 vs baseline $21.1913 (delta $+23.4950). Quality 0.838 vs 0.701.
+
+• route "classify-intent" to harbor-mini (score 0.8157)
+    - harbor-mini beat runner-up lighthouse-local by a margin of 0.0698 in weighted score
+    - score components: cost=0.5573, quality=0.1860, reliability=0.0724
+    evidence: replayed 70 recorded call(s): 97.1% success, mean quality 0.908, mean latency 259 ms, total cost $12.9234
+    evidence: versus cheapest-model baseline harbor-nano: $7.5293 more cost, 0.908 vs 0.778 mean quality
