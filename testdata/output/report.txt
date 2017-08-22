@@ -82,3 +82,11 @@ Decided 5 task(s), 0 unrouted. Realized cost $44.6863 vs baseline $21.1913 (delt
     - score components: cost=0.5573, quality=0.1860, reliability=0.0724
     evidence: replayed 70 recorded call(s): 97.1% success, mean quality 0.908, mean latency 259 ms, total cost $12.9234
     evidence: versus cheapest-model baseline harbor-nano: $7.5293 more cost, 0.908 vs 0.778 mean quality
+    rejected: clipper-pro — max_cost_usd (limit 0.35, observed 0.6692)
+    rejected: galleon-max — max_cost_usd (limit 0.35, observed 1.612)
+• route "code-review-comment" to harbor-mini (score 0.7144)
+    - harbor-mini beat runner-up harbor-nano by a margin of 0.0198 in weighted score
+    - score components: cost=0.5538, quality=0.1150, reliability=0.0456
+    evidence: replayed 55 recorded call(s): 96.4% success, mean quality 0.831, mean latency 205 ms, total cost $10.3834
+    evidence: versus cheapest-model baseline harbor-nano: $5.8508 more cost, 0.831 vs 0.718 mean quality
+    rejected: clipper-pro — max_cost_usd (limit 0.35, observed 0.6799)
