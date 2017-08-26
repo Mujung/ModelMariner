@@ -90,3 +90,11 @@ Decided 5 task(s), 0 unrouted. Realized cost $44.6863 vs baseline $21.1913 (delt
     evidence: replayed 55 recorded call(s): 96.4% success, mean quality 0.831, mean latency 205 ms, total cost $10.3834
     evidence: versus cheapest-model baseline harbor-nano: $5.8508 more cost, 0.831 vs 0.718 mean quality
     rejected: clipper-pro — max_cost_usd (limit 0.35, observed 0.6799)
+    rejected: galleon-max — max_cost_usd (limit 0.35, observed 1.461)
+• route "draft-legal-clause" to lighthouse-local (score 0.8351)
+    - lighthouse-local beat runner-up harbor-mini by a margin of 0.0071 in weighted score
+    - score components: cost=0.5849, quality=0.1267, reliability=0.1235
+    evidence: replayed 45 recorded call(s): 97.8% success, mean quality 0.779, mean latency 315 ms, total cost $4.9595
+    evidence: versus cheapest-model baseline harbor-nano: $1.5914 more cost, 0.779 vs 0.589 mean quality
+    rejected: clipper-pro — max_cost_usd (limit 0.35, observed 0.6152)
+    rejected: galleon-max — max_cost_usd (limit 0.35, observed 1.544)
