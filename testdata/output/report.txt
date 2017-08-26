@@ -114,3 +114,11 @@ Decided 5 task(s), 0 unrouted. Realized cost $44.6863 vs baseline $21.1913 (delt
     rejected: clipper-pro — max_cost_usd (limit 0.35, observed 0.7181)
     rejected: galleon-max — max_cost_usd (limit 0.35, observed 1.444)
 
+========================================================================
+ POLICY: latency-critical
+========================================================================
+Interactive workloads where p95 latency must stay under 500ms. Ranks primarily on speed, then reliability.
+
+Decided 2 task(s), 0 unrouted. Realized cost $15.9808 vs baseline $9.7636 (delta $+6.2171). Quality 0.799 vs 0.745.
+
+• route "classify-intent" to harbor-nano (score 0.5500)
