@@ -139,3 +139,11 @@ Decided 2 task(s), 0 unrouted. Realized cost $15.9808 vs baseline $9.7636 (delta
     rejected: harbor-nano — min_quality (limit 0.72, observed 0.7131)
 
 ========================================================================
+ POLICY: privacy-lockdown
+========================================================================
+Restricted data must never leave on-premise infrastructure. Caps privacy at internal and clears only the on-prem model to handle stricter tiers; ranks on quality then reliability.
+
+Decided 2 task(s), 0 unrouted. Realized cost $10.7927 vs baseline $6.8950 (delta $+3.8977). Quality 0.815 vs 0.649.
+
+• route "draft-legal-clause" to lighthouse-local (score 0.6630)
+    - lighthouse-local was the only model to satisfy every hard constraint
