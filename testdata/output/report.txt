@@ -122,3 +122,12 @@ Interactive workloads where p95 latency must stay under 500ms. Ranks primarily o
 Decided 2 task(s), 0 unrouted. Realized cost $15.9808 vs baseline $9.7636 (delta $+6.2171). Quality 0.799 vs 0.745.
 
 • route "classify-intent" to harbor-nano (score 0.5500)
+    - harbor-nano was the only model to satisfy every hard constraint
+    - score components: latency=0.5500, quality=0.0000, reliability=0.0000
+    evidence: replayed 70 recorded call(s): 95.7% success, mean quality 0.778, mean latency 170 ms, total cost $5.3941
+    rejected: clipper-pro — max_latency_ms (limit 500, observed 1040)
+    rejected: galleon-max — max_latency_ms (limit 500, observed 1696)
+    rejected: harbor-mini — max_latency_ms (limit 500, observed 512)
+    rejected: lighthouse-local — max_latency_ms (limit 500, observed 583.6)
+• route "summarize-support-ticket" to harbor-mini (score 0.8462)
+    - harbor-mini beat runner-up lighthouse-local by a margin of 0.3148 in weighted score
