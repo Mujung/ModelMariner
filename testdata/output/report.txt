@@ -131,3 +131,11 @@ Decided 2 task(s), 0 unrouted. Realized cost $15.9808 vs baseline $9.7636 (delta
     rejected: lighthouse-local — max_latency_ms (limit 500, observed 583.6)
 • route "summarize-support-ticket" to harbor-mini (score 0.8462)
     - harbor-mini beat runner-up lighthouse-local by a margin of 0.3148 in weighted score
+    - score components: latency=0.5096, quality=0.0866, reliability=0.2500
+    evidence: replayed 60 recorded call(s): 100.0% success, mean quality 0.821, mean latency 236 ms, total cost $10.5867
+    evidence: versus cheapest-model baseline harbor-nano: $6.2171 more cost, 0.821 vs 0.713 mean quality
+    rejected: clipper-pro — max_latency_ms (limit 500, observed 1077)
+    rejected: galleon-max — max_latency_ms (limit 500, observed 1783)
+    rejected: harbor-nano — min_quality (limit 0.72, observed 0.7131)
+
+========================================================================
