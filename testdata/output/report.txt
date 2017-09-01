@@ -147,3 +147,11 @@ Decided 2 task(s), 0 unrouted. Realized cost $10.7927 vs baseline $6.8950 (delta
 
 • route "draft-legal-clause" to lighthouse-local (score 0.6630)
     - lighthouse-local was the only model to satisfy every hard constraint
+    - score components: latency=0.1626, quality=0.2534, reliability=0.2469
+    evidence: replayed 45 recorded call(s): 97.8% success, mean quality 0.779, mean latency 315 ms, total cost $4.9595
+    evidence: versus cheapest-model baseline harbor-nano: $1.5914 more cost, 0.779 vs 0.589 mean quality
+    rejected: clipper-pro — max_privacy (task data reaches "confidential" but policy caps at "internal" and model is not privacy-safe)
+    rejected: galleon-max — max_privacy (task data reaches "confidential" but policy caps at "internal" and model is not privacy-safe)
+    rejected: harbor-mini — max_privacy (task data reaches "confidential" but policy caps at "internal" and model is not privacy-safe)
+    rejected: harbor-nano — min_reliability (limit 0.75, observed 0.7122); max_privacy (task data reaches "confidential" but policy caps at "internal" and model is not privacy-safe)
+• route "extract-pii-redaction" to lighthouse-local (score 0.5858)
