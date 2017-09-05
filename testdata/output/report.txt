@@ -155,3 +155,11 @@ Decided 2 task(s), 0 unrouted. Realized cost $10.7927 vs baseline $6.8950 (delta
     rejected: harbor-mini — max_privacy (task data reaches "confidential" but policy caps at "internal" and model is not privacy-safe)
     rejected: harbor-nano — min_reliability (limit 0.75, observed 0.7122); max_privacy (task data reaches "confidential" but policy caps at "internal" and model is not privacy-safe)
 • route "extract-pii-redaction" to lighthouse-local (score 0.5858)
+    - lighthouse-local was the only model to satisfy every hard constraint
+    - score components: latency=0.1599, quality=0.2852, reliability=0.1406
+    evidence: replayed 50 recorded call(s): 98.0% success, mean quality 0.852, mean latency 345 ms, total cost $5.8333
+    evidence: versus cheapest-model baseline harbor-nano: $2.3063 more cost, 0.852 vs 0.708 mean quality
+    rejected: clipper-pro — max_privacy (task data reaches "restricted" but policy caps at "internal" and model is not privacy-safe)
+    rejected: galleon-max — max_privacy (task data reaches "restricted" but policy caps at "internal" and model is not privacy-safe)
+    rejected: harbor-mini — max_privacy (task data reaches "restricted" but policy caps at "internal" and model is not privacy-safe)
+    rejected: harbor-nano — max_privacy (task data reaches "restricted" but policy caps at "internal" and model is not privacy-safe)
