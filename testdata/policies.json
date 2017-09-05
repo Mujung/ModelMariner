@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "policies": [
+    {
+      "name": "budget-guard",
+      "description": "Minimize spend while keeping quality acceptable across all tasks. Caps per-call cost and demands a modest quality floor, then ranks survivors mostly on cost with a light quality tie-breaker.",
+      "constraints": {
