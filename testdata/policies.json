@@ -13,3 +13,11 @@
         "weights": [
           { "objective": "cost", "weight": 0.6 },
           { "objective": "quality", "weight": 0.25 },
+          { "objective": "reliability", "weight": 0.15 }
+        ]
+      }
+    },
+    {
+      "name": "latency-critical",
+      "description": "Interactive workloads where p95 latency must stay under 500ms. Ranks primarily on speed, then reliability.",
+      "tasks": ["classify-intent", "summarize-support-ticket"],
