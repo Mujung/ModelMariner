@@ -46,3 +46,11 @@
         "weights": [
           { "objective": "quality", "weight": 0.5 },
           { "objective": "reliability", "weight": 0.3 },
+          { "objective": "latency", "weight": 0.2 }
+        ]
+      }
+    },
+    {
+      "name": "quality-first",
+      "description": "Accuracy-sensitive generative tasks. Demands a high quality floor and strong reliability, then ranks on quality with cost as a secondary consideration.",
+      "tasks": ["draft-legal-clause", "code-review-comment"],
