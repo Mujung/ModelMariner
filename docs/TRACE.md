@@ -25,3 +25,15 @@ the format honest as it evolves.
 | `latency_ms`  | number           | yes      | Wall-clock latency in milliseconds. Finite, `>= 0`.          |
 | `quality`     | number           | yes      | Recorded quality score. Clamped into `[0, 1]` on ingest.      |
 | `privacy`     | string or int    | yes      | Privacy tier of the data (see §1.2).                          |
+| `error`       | bool             | no       | `true` if the call failed. Defaults to `false`.              |
+| `error_kind`  | string           | cond.    | Failure category. **Required when `error` is `true`.**        |
+| `provider`    | string           | no       | Optional provider/label (e.g. `openseas`, `onprem`).         |
+| `region`      | string           | no       | Optional region (e.g. `eu-west`).                            |
+| `timestamp`   | string           | no       | Optional RFC 3339 timestamp; used only for deterministic sort.|
+
+### 1.2 Privacy tiers
+
+Privacy is an **ordered** enumeration. Higher tiers demand stricter routing.
+
+| Name           | Rank | Use                                                     |
+|----------------|------|---------------------------------------------------------|
