@@ -37,3 +37,14 @@ Privacy is an **ordered** enumeration. Higher tiers demand stricter routing.
 
 | Name           | Rank | Use                                                     |
 |----------------|------|---------------------------------------------------------|
+| `public`       | 0    | Safe for any destination.                               |
+| `internal`     | 1    | Must stay within the organization.                      |
+| `confidential` | 2    | Sensitive business data.                                |
+| `restricted`   | 3    | PII, secrets, regulated data.                           |
+
+A trace may carry the tier either as its name (`"restricted"`) or its integer
+rank (`3`). Reports always emit the name.
+
+### 1.3 Example lines
+
+```jsonl
