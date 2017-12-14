@@ -60,3 +60,15 @@ Ingestion is **strict per record but lenient per file** by default: an invalid
 line is collected as a `ValidationError` (with line number, field, and reason)
 and skipped, while valid lines still load. Pass `--strict` to make any invalid
 line abort the run. Normalization performs exactly one transform beyond
+validation: `quality` is clamped into `[0, 1]`. Traces are then sorted
+deterministically by `(model, task, timestamp, line)` so output never depends on
+input order.
+
+Only **successful** calls contribute to cost, latency, and quality
+distributions; a failed call's metrics are not representative of the service a
+model delivers. Failures still count toward the success rate and reliability
+bound.
+
+---
+
+## 2. Report output: `report.json`
