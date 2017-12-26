@@ -107,3 +107,15 @@ Passed via `--policy`. A policy set is `{ "version": 1, "policies": [ ... ] }`.
     "min_quality": 0.7,
     "min_reliability": 0.8,
     "max_privacy": "internal",
+    "deny_models": ["deprecated-galley"],
+    "allow_models": [],
+    "privacy_safe_models": ["lighthouse-local"]
+  },
+  "preference": {
+    "weights": [
+      { "objective": "cost", "weight": 0.6 },
+      { "objective": "quality", "weight": 0.25 },
+      { "objective": "reliability", "weight": 0.15 }
+    ]
+  }
+}
