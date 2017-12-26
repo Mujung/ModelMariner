@@ -16,3 +16,12 @@
     </radialGradient>
   </defs>
 
+  <rect width="800" height="340" fill="url(#sky)"/>
+  <circle cx="680" cy="70" r="34" fill="url(#moon)"/>
+
+  <!-- twinkling stars -->
+  <g fill="#e2e8f0">
+    <circle cx="90" cy="50" r="1.6"><animate attributeName="opacity" values="0.2;1;0.2" dur="3.5s" repeatCount="indefinite"/></circle>
+    <circle cx="220" cy="38" r="1.2"><animate attributeName="opacity" values="1;0.3;1" dur="4.2s" repeatCount="indefinite"/></circle>
+    <circle cx="330" cy="66" r="1.4"><animate attributeName="opacity" values="0.3;1;0.3" dur="2.9s" repeatCount="indefinite"/></circle>
+    <circle cx="470" cy="44" r="1.1"><animate attributeName="opacity" values="1;0.2;1" dur="3.8s" repeatCount="indefinite"/></circle>
