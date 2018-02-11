@@ -70,3 +70,12 @@
         values="0 0; 0 -7; 0 0" dur="3.9s" repeatCount="indefinite"/>
     </use>
     <text x="275" y="236" text-anchor="middle" font-family="monospace" font-size="12" fill="#7dd3fc">harbor-mini</text>
+  </g>
+  <g>
+    <use href="#ship" transform="translate(430 196) scale(1.1)">
+      <animateTransform attributeName="transform" type="translate" additive="sum"
+        values="0 0; 0 -8; 0 0" dur="4.5s" repeatCount="indefinite"/>
+    </use>
+    <text x="430" y="236" text-anchor="middle" font-family="monospace" font-size="12" fill="#fcd34d">clipper-pro</text>
+  </g>
+  <g>
