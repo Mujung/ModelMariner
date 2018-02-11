@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 480" width="620" height="480" role="img" aria-labelledby="compassTitle compassDesc">
+  <title id="compassTitle">Pareto Compass</title>
+  <desc id="compassDesc">A nautical compass whose needle sweeps across a cost-versus-quality scatter, tracing the Pareto frontier of non-dominated models.</desc>
+  <defs>
+    <radialGradient id="bg" cx="0.5" cy="0.42" r="0.7">
+      <stop offset="0" stop-color="#0f2942"/>
+      <stop offset="1" stop-color="#060f1c"/>
+    </radialGradient>
