@@ -35,3 +35,13 @@
 
     <!-- rotating compass needle sweeping the frontier -->
     <g>
+      <polygon points="0,-120 10,0 0,120 -10,0" fill="#ef4444" opacity="0.85"/>
+      <polygon points="0,-120 10,0 -10,0" fill="#fca5a5"/>
+      <circle r="8" fill="#f2d38a" stroke="#78350f" stroke-width="2"/>
+      <animateTransform attributeName="transform" type="rotate"
+        values="-55; 40; -55" dur="9s" repeatCount="indefinite"
+        calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+    </g>
+  </g>
+
+  <!-- scatter of models in cost(x) vs quality(y) space; frontier points pulse -->
