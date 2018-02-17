@@ -45,3 +45,12 @@
   </g>
 
   <!-- scatter of models in cost(x) vs quality(y) space; frontier points pulse -->
+  <!-- frontier (non-dominated) -->
+  <g font-family="monospace" font-size="10">
+    <!-- harbor-nano: cheapest, lower quality -->
+    <g transform="translate(210 360)">
+      <circle r="7" fill="#22d3ee"><animate attributeName="r" values="7;10;7" dur="2.6s" repeatCount="indefinite"/></circle>
+      <text x="10" y="4" fill="#67e8f9">harbor-nano</text>
+    </g>
+    <!-- harbor-mini -->
+    <g transform="translate(250 300)">
