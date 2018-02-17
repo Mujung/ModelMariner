@@ -24,3 +24,13 @@ jobs:
         run: go vet ./...
       - name: Test
         run: go test ./... -count=1 -cover
+      - name: Build
+        run: go build -trimpath -o bin/modelmariner ./cmd/modelmariner
+      - name: Smoke test (deterministic report)
+        run: |
+          ./bin/modelmariner analyze --traces testdata/fleet.jsonl \
+            --policy testdata/policies.json --out /tmp/out --format json > /tmp/run1.json
+          ./bin/modelmariner analyze --traces testdata/fleet.jsonl \
+            --policy testdata/policies.json --format json > /tmp/run2.json
+          diff /tmp/run1.json /tmp/run2.json && echo "report output is deterministic"
+
