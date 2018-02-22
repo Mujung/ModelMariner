@@ -40,3 +40,14 @@ fmt: ## Format all Go sources.
 
 .PHONY: fmt-check
 fmt-check: ## Fail if any Go source is unformatted.
+	@test -z "$$(gofmt -l .)" || (echo "unformatted files:"; gofmt -l .; exit 1)
+
+.PHONY: traces
+traces: ## Regenerate the synthetic trace corpus (deterministic).
+	go run testdata/gen_traces.go > $(TRACES)
+
+.PHONY: report
+report: build ## Analyze the sample corpus and write artifacts to testdata/output.
+	$(BIN_DIR)/$(BINARY) analyze --traces $(TRACES) --policy $(POLICIES) --out $(OUT_DIR) --format text
+
+.PHONY: validate
