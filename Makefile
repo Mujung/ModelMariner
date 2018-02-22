@@ -28,3 +28,15 @@ test: ## Run all Go unit tests.
 
 .PHONY: cover
 cover: ## Run tests with a coverage summary.
+	go test ./... -cover -count=1
+
+.PHONY: vet
+vet: ## Run go vet across the module.
+	go vet ./...
+
+.PHONY: fmt
+fmt: ## Format all Go sources.
+	gofmt -w .
+
+.PHONY: fmt-check
+fmt-check: ## Fail if any Go source is unformatted.
