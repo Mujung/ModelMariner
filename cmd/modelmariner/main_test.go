@@ -31,3 +31,16 @@ func TestRunAnalyzeWritesArtifacts(t *testing.T) {
 	}
 	for _, name := range []string{"report.json", "report.txt", "policies.json"} {
 		if _, err := os.Stat(filepath.Join(out, name)); err != nil {
+			t.Errorf("expected artifact %s: %v", name, err)
+		}
+	}
+}
+
+func TestRunValidateReportsCounts(t *testing.T) {
+	tp := writeTemp(t, "traces.jsonl", traceLines)
+	if err := run([]string{"validate", "--traces", tp}); err != nil {
+		t.Fatalf("validate failed: %v", err)
+	}
+}
+
+func TestRunValidateStrictFailsOnBadLine(t *testing.T) {
