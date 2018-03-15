@@ -44,3 +44,16 @@ func TestRunValidateReportsCounts(t *testing.T) {
 }
 
 func TestRunValidateStrictFailsOnBadLine(t *testing.T) {
+	tp := writeTemp(t, "bad.jsonl", `{"model":"","task":"t","tokens":{"prompt":1,"completion":1},"cost_usd":0,"latency_ms":1,"quality":0.5,"privacy":"public"}`)
+	if err := run([]string{"validate", "--traces", tp, "--strict"}); err == nil {
+		t.Fatal("expected strict validation to fail")
+	}
+}
+
+func TestRunUnknownCommand(t *testing.T) {
+	if err := run([]string{"bogus"}); err == nil {
+		t.Fatal("expected error for unknown command")
+	}
+}
+
+func TestRunRequiresTraces(t *testing.T) {
