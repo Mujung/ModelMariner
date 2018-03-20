@@ -14,3 +14,14 @@ func TestExplainWinner(t *testing.T) {
 		Score: 0.9, Margin: 0.2,
 		Evaluations: []policy.Evaluation{
 			{Model: "premium", Eligible: true, Score: 0.9, Components: map[string]float64{"quality": 0.9}},
+		},
+		Realized: routing.RealizedMetrics{Model: "premium", Calls: 10, Successes: 10, SuccessRate: 1, MeanQuality: 0.98, MeanLatencyMS: 400, TotalCostUSD: 6.0},
+		Baseline: routing.RealizedMetrics{Model: "cheap", Calls: 10, MeanQuality: 0.80, TotalCostUSD: 1.0},
+	}
+	e := For(d)
+	if !strings.Contains(e.Headline, "premium") {
+		t.Errorf("headline missing winner: %q", e.Headline)
+	}
+	if len(e.Reasons) == 0 || !strings.Contains(strings.Join(e.Reasons, " "), "margin") {
+		t.Errorf("reasons missing margin: %+v", e.Reasons)
+	}
