@@ -25,3 +25,13 @@ func TestExplainWinner(t *testing.T) {
 	if len(e.Reasons) == 0 || !strings.Contains(strings.Join(e.Reasons, " "), "margin") {
 		t.Errorf("reasons missing margin: %+v", e.Reasons)
 	}
+	if len(e.Evidence) < 2 {
+		t.Errorf("expected replay + baseline evidence: %+v", e.Evidence)
+	}
+	txt := e.Text()
+	if !strings.Contains(txt, "evidence:") {
+		t.Errorf("text missing evidence marker:\n%s", txt)
+	}
+}
+
+func TestExplainNoEligible(t *testing.T) {
