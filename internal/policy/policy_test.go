@@ -72,3 +72,19 @@ func TestBudgetConstraintDisqualifies(t *testing.T) {
 	}
 }
 
+func TestPrivacyConstraintAndSafeList(t *testing.T) {
+	restricted := trace.PrivacyRestricted
+	internal := trace.PrivacyInternal
+	p := Policy{
+		Name: "privacy",
+		Constraints: Constraints{
+			MaxPrivacy:        &internal,
+			PrivacySafeModels: []string{"onprem"},
+		},
+		Preference: Preference{Weights: []Weight{{ObjQuality, 1}}},
+	}
+	aggs := []reliability.Aggregate{
+		agg("cloud", 0.1, 100, 0.9, 0.9, restricted),  // exceeds cap, not safe
+		agg("onprem", 0.2, 200, 0.8, 0.9, restricted), // exceeds cap but cleared
+	}
+	evals := Evaluate(p, aggs)
