@@ -27,3 +27,18 @@ func TestLoadValidPolicy(t *testing.T) {
 	}
 }
 
+func TestLoadRejectsInvalid(t *testing.T) {
+	cases := map[string]string{
+		"no policies":         `{"policies":[]}`,
+		"empty name":          `{"policies":[{"name":"","preference":{"weights":[{"objective":"cost","weight":1}]}}]}`,
+		"bad objective":       `{"policies":[{"name":"p","preference":{"weights":[{"objective":"speed","weight":1}]}}]}`,
+		"zero weights":        `{"policies":[{"name":"p","preference":{"weights":[{"objective":"cost","weight":0}]}}]}`,
+		"quality range":       `{"policies":[{"name":"p","constraints":{"min_quality":2},"preference":{"weights":[{"objective":"cost","weight":1}]}}]}`,
+		"duplicate name":      `{"policies":[{"name":"p","preference":{"weights":[{"objective":"cost","weight":1}]}},{"name":"p","preference":{"weights":[{"objective":"cost","weight":1}]}}]}`,
+		"duplicate objective": `{"policies":[{"name":"p","preference":{"weights":[{"objective":"cost","weight":1},{"objective":"cost","weight":1}]}}]}`,
+	}
+	for name, js := range cases {
+		t.Run(name, func(t *testing.T) {
+			if _, err := Load(strings.NewReader(js)); err == nil {
+				t.Errorf("expected load error for %q", name)
+			}
