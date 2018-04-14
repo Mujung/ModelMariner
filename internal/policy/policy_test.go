@@ -57,3 +57,18 @@ func TestBudgetConstraintDisqualifies(t *testing.T) {
 		agg("pricey", 0.50, 100, 0.9, 0.95, 0),
 	}
 	evals := Evaluate(p, aggs)
+	byModel := map[string]Evaluation{}
+	for _, e := range evals {
+		byModel[e.Model] = e
+	}
+	if !byModel["cheap"].Eligible {
+		t.Error("cheap should be eligible")
+	}
+	if byModel["pricey"].Eligible {
+		t.Error("pricey should be disqualified by budget")
+	}
+	if len(byModel["pricey"].Violations) == 0 || byModel["pricey"].Violations[0].Constraint != "max_cost_usd" {
+		t.Errorf("expected max_cost_usd violation: %+v", byModel["pricey"].Violations)
+	}
+}
+
