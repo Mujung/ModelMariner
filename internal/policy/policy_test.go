@@ -88,3 +88,18 @@ func TestPrivacyConstraintAndSafeList(t *testing.T) {
 		agg("onprem", 0.2, 200, 0.8, 0.9, restricted), // exceeds cap but cleared
 	}
 	evals := Evaluate(p, aggs)
+	byModel := map[string]Evaluation{}
+	for _, e := range evals {
+		byModel[e.Model] = e
+	}
+	if byModel["cloud"].Eligible {
+		t.Error("cloud model must be disqualified on restricted data")
+	}
+	if !byModel["onprem"].Eligible {
+		t.Error("privacy-safe on-prem model must remain eligible")
+	}
+}
+
+func TestScoringPrefersHigherWeightedObjective(t *testing.T) {
+	// Weight quality entirely; the higher-quality model must win.
+	p := Policy{
