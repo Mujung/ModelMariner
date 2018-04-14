@@ -42,3 +42,18 @@ func TestLoadRejectsInvalid(t *testing.T) {
 			if _, err := Load(strings.NewReader(js)); err == nil {
 				t.Errorf("expected load error for %q", name)
 			}
+		})
+	}
+}
+
+func TestBudgetConstraintDisqualifies(t *testing.T) {
+	p := Policy{
+		Name:        "budget",
+		Constraints: Constraints{MaxCostUSD: 0.30},
+		Preference:  Preference{Weights: []Weight{{ObjCost, 1}}},
+	}
+	aggs := []reliability.Aggregate{
+		agg("cheap", 0.10, 100, 0.9, 0.95, 0),
+		agg("pricey", 0.50, 100, 0.9, 0.95, 0),
+	}
+	evals := Evaluate(p, aggs)
