@@ -36,3 +36,18 @@ func TestComputeBasic(t *testing.T) {
 	if math.Abs(a.MeanCostUSD-0.15) > 1e-9 {
 		t.Errorf("bad mean cost: %v", a.MeanCostUSD)
 	}
+	if a.HighestPrivacy != trace.PrivacyInternal {
+		t.Errorf("bad highest privacy: %v", a.HighestPrivacy)
+	}
+	if a.ErrorKinds["timeout"] != 1 {
+		t.Errorf("error kind not counted: %+v", a.ErrorKinds)
+	}
+}
+
+func TestWilsonLowerBoundRewardsEvidence(t *testing.T) {
+	small := wilsonLowerBound(9, 10)
+	large := wilsonLowerBound(90, 100)
+	if !(large > small) {
+		t.Errorf("more evidence should raise the lower bound: 9/10=%.4f 90/100=%.4f", small, large)
+	}
+	if wilsonLowerBound(0, 0) != 0 {
