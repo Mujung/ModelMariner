@@ -51,3 +51,18 @@ func TestWilsonLowerBoundRewardsEvidence(t *testing.T) {
 		t.Errorf("more evidence should raise the lower bound: 9/10=%.4f 90/100=%.4f", small, large)
 	}
 	if wilsonLowerBound(0, 0) != 0 {
+		t.Error("zero samples must yield 0")
+	}
+	if lb := wilsonLowerBound(10, 10); lb <= 0 || lb > 1 {
+		t.Errorf("perfect record out of range: %v", lb)
+	}
+}
+
+func TestPercentileInterpolation(t *testing.T) {
+	xs := []float64{10, 20, 30, 40}
+	if p := percentile(xs, 0.5); math.Abs(p-25) > 1e-9 {
+		t.Errorf("p50 want 25, got %v", p)
+	}
+	if p := percentile(xs, 0); p != 10 {
+		t.Errorf("p0 want 10, got %v", p)
+	}
