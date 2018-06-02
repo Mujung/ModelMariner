@@ -38,3 +38,18 @@ func buildReport(t *testing.T) Report {
 		Pareto: par, Policies: set, Simulations: sims, Deterministic: true,
 	})
 }
+
+func TestReportJSONIsDeterministic(t *testing.T) {
+	r1 := buildReport(t)
+	r2 := buildReport(t)
+	b1, err := r1.JSON()
+	if err != nil {
+		t.Fatal(err)
+	}
+	b2, err := r2.JSON()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(b1, b2) {
+		t.Fatal("report JSON is not deterministic across identical runs")
+	}
