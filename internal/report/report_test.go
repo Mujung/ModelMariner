@@ -53,3 +53,18 @@ func TestReportJSONIsDeterministic(t *testing.T) {
 	if !bytes.Equal(b1, b2) {
 		t.Fatal("report JSON is not deterministic across identical runs")
 	}
+}
+
+func TestReportJSONIsValidAndSchema(t *testing.T) {
+	r := buildReport(t)
+	b, err := r.JSON()
+	if err != nil {
+		t.Fatal(err)
+	}
+	var decoded map[string]any
+	if err := json.Unmarshal(b, &decoded); err != nil {
+		t.Fatalf("report is not valid JSON: %v", err)
+	}
+	if decoded["schema"] != SchemaVersion {
+		t.Errorf("bad schema: %v", decoded["schema"])
+	}
