@@ -37,3 +37,17 @@ func TestSimulatePicksWinnerAndReplays(t *testing.T) {
 		t.Errorf("quality-weighted policy should pick premium, got %s", d.Winner)
 	}
 	if d.Realized.Calls != 10 {
+		t.Errorf("should replay 10 recorded calls, got %d", d.Realized.Calls)
+	}
+	// Baseline is the cheapest model.
+	if d.Baseline.Model != "cheap" {
+		t.Errorf("baseline should be cheapest model, got %s", d.Baseline.Model)
+	}
+	if d.Realized.TotalCostUSD <= d.Baseline.TotalCostUSD {
+		t.Error("premium realized cost should exceed cheap baseline")
+	}
+}
+
+func TestSimulateBudgetForcesCheaperWinner(t *testing.T) {
+	traces := buildTraces()
+	sum := reliability.Compute(traces)
