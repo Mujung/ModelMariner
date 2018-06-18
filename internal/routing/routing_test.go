@@ -65,3 +65,18 @@ func TestSimulateBudgetForcesCheaperWinner(t *testing.T) {
 	found := false
 	for _, r := range d.Rejected {
 		if r.Model == "premium" {
+			found = true
+		}
+	}
+	if !found {
+		t.Error("premium should be listed as rejected under budget")
+	}
+}
+
+func TestNoEligibleWhenAllViolate(t *testing.T) {
+	traces := buildTraces()
+	sum := reliability.Compute(traces)
+	p := policy.Policy{
+		Name:        "impossible",
+		Constraints: policy.Constraints{MinQuality: 0.999},
+		Preference:  policy.Preference{Weights: []policy.Weight{{Objective: policy.ObjQuality, Weight: 1}}},
