@@ -71,3 +71,15 @@ func TestStrictModeAborts(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected error in strict mode")
 	}
+}
+
+func TestQualityClamp(t *testing.T) {
+	in := `{"model":"m","task":"t","tokens":{"prompt":1,"completion":1},"cost_usd":0,"latency_ms":1,"quality":1.5,"privacy":"public"}`
+	res, err := Ingest(strings.NewReader(in), DefaultOptions())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(res.Traces) != 1 || res.Traces[0].Quality != 1.0 {
+		t.Fatalf("quality not clamped to 1.0: %+v", res.Traces)
+	}
+}
