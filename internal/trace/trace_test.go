@@ -46,3 +46,16 @@ func TestValidationRejectsMissingFields(t *testing.T) {
 		"missing latency": `{"model":"m","task":"t","tokens":{"prompt":1,"completion":1},"cost_usd":0,"quality":0.5,"privacy":"public"}`,
 		"error no kind":   `{"model":"m","task":"t","tokens":{"prompt":1,"completion":1},"cost_usd":0,"latency_ms":1,"quality":0.5,"error":true,"privacy":"public"}`,
 		"unknown field":   `{"model":"m","task":"t","tokens":{"prompt":1,"completion":1},"cost_usd":0,"latency_ms":1,"quality":0.5,"privacy":"public","bogus":1}`,
+	}
+	for name, line := range cases {
+		t.Run(name, func(t *testing.T) {
+			res, err := Ingest(strings.NewReader(line), DefaultOptions())
+			if err != nil {
+				t.Fatalf("ingest should not hard-fail in skip mode: %v", err)
+			}
+			if len(res.Traces) != 0 {
+				t.Fatalf("expected rejection, got trace: %+v", res.Traces)
+			}
+			if res.Rejected != 1 {
+				t.Fatalf("expected 1 rejection, got %d", res.Rejected)
+			}
