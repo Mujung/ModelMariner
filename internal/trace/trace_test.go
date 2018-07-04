@@ -59,3 +59,15 @@ func TestValidationRejectsMissingFields(t *testing.T) {
 			if res.Rejected != 1 {
 				t.Fatalf("expected 1 rejection, got %d", res.Rejected)
 			}
+		})
+	}
+}
+
+func TestStrictModeAborts(t *testing.T) {
+	in := `{"model":"","task":"t","tokens":{"prompt":1,"completion":1},"cost_usd":0,"latency_ms":1,"quality":0.5,"privacy":"public"}`
+	opts := DefaultOptions()
+	opts.SkipInvalid = false
+	_, err := Ingest(strings.NewReader(in), opts)
+	if err == nil {
+		t.Fatal("expected error in strict mode")
+	}
