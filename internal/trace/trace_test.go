@@ -83,3 +83,16 @@ func TestQualityClamp(t *testing.T) {
 		t.Fatalf("quality not clamped to 1.0: %+v", res.Traces)
 	}
 }
+
+func TestPrivacyTierParsing(t *testing.T) {
+	for _, name := range []string{"public", "internal", "confidential", "restricted"} {
+		tier, err := ParsePrivacyTier(strings.ToUpper(name))
+		if err != nil {
+			t.Fatalf("parse %q: %v", name, err)
+		}
+		if tier.String() != name {
+			t.Errorf("round trip failed: %q -> %v -> %q", name, tier, tier.String())
+		}
+	}
+	if _, err := ParsePrivacyTier("nonsense"); err == nil {
+		t.Error("expected error for unknown tier")
