@@ -9,3 +9,4 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 The first stable release. modelmariner compiles routing policies against
 recorded LLM traces, entirely offline.
 
+### Added
