@@ -11,3 +11,4 @@ recorded LLM traces, entirely offline.
 
 ### Added
 
+- **Trace ingestion** (`internal/trace`): provider-neutral JSONL reader with
