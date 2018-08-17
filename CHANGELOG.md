@@ -16,3 +16,4 @@ recorded LLM traces, entirely offline.
   deterministic sorting, and an ordered `PrivacyTier` enum
   (public < internal < confidential < restricted) that accepts either the name
   or the integer rank in JSON.
+- **Reliability aggregation** (`internal/reliability`): per model/task success
