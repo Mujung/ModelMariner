@@ -17,3 +17,4 @@ recorded LLM traces, entirely offline.
   (public < internal < confidential < restricted) that accepts either the name
   or the integer rank in JSON.
 - **Reliability aggregation** (`internal/reliability`): per model/task success
+  rate, Wilson score lower bound (95%) so thinly-sampled models cannot dominate,
