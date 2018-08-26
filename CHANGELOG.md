@@ -18,3 +18,4 @@ recorded LLM traces, entirely offline.
   or the integer rank in JSON.
 - **Reliability aggregation** (`internal/reliability`): per model/task success
   rate, Wilson score lower bound (95%) so thinly-sampled models cannot dominate,
+  latency p50/p95/p99 via interpolation, mean cost/quality/tokens, and observed
