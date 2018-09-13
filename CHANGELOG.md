@@ -21,3 +21,4 @@ recorded LLM traces, entirely offline.
   latency p50/p95/p99 via interpolation, mean cost/quality/tokens, and observed
   error-kind histograms.
 - **Pareto frontiers** (`internal/pareto`): multi-objective dominance analysis
+  over cost, p95 latency, quality, and reliability, reporting both the frontier
