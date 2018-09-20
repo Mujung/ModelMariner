@@ -26,3 +26,4 @@ recorded LLM traces, entirely offline.
 - **Policy language & evaluator** (`internal/policy`): hard budget, latency,
   quality, reliability, and privacy constraints plus allow/deny and
   privacy-safe model lists; normalized weighted preferences for ranking
+  survivors, with per-objective score components exposed for explainability.
