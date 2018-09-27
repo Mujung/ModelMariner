@@ -27,3 +27,4 @@ recorded LLM traces, entirely offline.
   quality, reliability, and privacy constraints plus allow/deny and
   privacy-safe model lists; normalized weighted preferences for ranking
   survivors, with per-objective score components exposed for explainability.
+- **Routing simulation** (`internal/routing`): compiles a winner per task and
