@@ -30,3 +30,4 @@ recorded LLM traces, entirely offline.
 - **Routing simulation** (`internal/routing`): compiles a winner per task and
   replays every recorded trace through the choice to measure realized cost,
   latency, quality, and success rate, compared against a cheapest-model
+  baseline.
