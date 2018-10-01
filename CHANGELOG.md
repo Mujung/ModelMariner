@@ -32,3 +32,4 @@ recorded LLM traces, entirely offline.
   latency, quality, and success rate, compared against a cheapest-model
   baseline.
 - **Explanations** (`internal/explain`): human-readable rationale for every
+  selection, including margins over runners-up, score breakdowns, replayed
