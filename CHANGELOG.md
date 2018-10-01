@@ -31,3 +31,4 @@ recorded LLM traces, entirely offline.
   replays every recorded trace through the choice to measure realized cost,
   latency, quality, and success rate, compared against a cheapest-model
   baseline.
+- **Explanations** (`internal/explain`): human-readable rationale for every
