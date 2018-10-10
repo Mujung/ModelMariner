@@ -36,3 +36,4 @@ recorded LLM traces, entirely offline.
   evidence, and the specific constraint each rejected candidate violated.
 - **Deterministic reporting** (`internal/report`): byte-for-byte reproducible
   JSON and text reports plus standalone compiled routing-table artifacts
+  (`policies.json`).
