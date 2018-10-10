@@ -34,3 +34,4 @@ recorded LLM traces, entirely offline.
 - **Explanations** (`internal/explain`): human-readable rationale for every
   selection, including margins over runners-up, score breakdowns, replayed
   evidence, and the specific constraint each rejected candidate violated.
+- **Deterministic reporting** (`internal/report`): byte-for-byte reproducible
