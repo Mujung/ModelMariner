@@ -37,3 +37,4 @@ recorded LLM traces, entirely offline.
 - **Deterministic reporting** (`internal/report`): byte-for-byte reproducible
   JSON and text reports plus standalone compiled routing-table artifacts
   (`policies.json`).
+- **CLI** (`cmd/modelmariner`): `analyze`, `validate`, and `version` commands
