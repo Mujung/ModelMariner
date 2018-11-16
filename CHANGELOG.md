@@ -41,3 +41,4 @@ recorded LLM traces, entirely offline.
   with `--strict`, `--format`, `--out`, and `--with-timestamp` flags.
 - **TypeScript navigation dashboard** (`dashboard/`): strictly-typed,
   dependency-light terminal consumer with `overview`, `task`, `model`,
+  `policy`, and `routes` views; schema-guarded against incompatible reports.
