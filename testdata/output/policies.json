@@ -55,3 +55,22 @@
   },
   {
     "schema": "modelmariner/v1",
+    "policy": "privacy-lockdown",
+    "routes": [
+      {
+        "task": "draft-legal-clause",
+        "model": "lighthouse-local",
+        "score": 0.6630042637105268,
+        "margin": 0.6630042637105268
+      },
+      {
+        "task": "extract-pii-redaction",
+        "model": "lighthouse-local",
+        "score": 0.5857547463437147,
+        "margin": 0.5857547463437147
+      }
+    ]
+  },
+  {
+    "schema": "modelmariner/v1",
+    "policy": "quality-first",
