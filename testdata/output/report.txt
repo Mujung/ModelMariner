@@ -16,3 +16,43 @@ classify-intent    harbor-mini        70    97.1%      0.902       512    0.908
 classify-intent    harbor-nano        70    95.7%      0.881       309    0.778
 classify-intent    lighthouse-lo…     70    98.6%      0.923       584    0.784
 code-review-comme… clipper-pro        55    98.2%      0.904      1039    0.943
+code-review-comme… galleon-max        55   100.0%      0.935      1750    0.963
+code-review-comme… harbor-mini        55    96.4%      0.877       360    0.831
+code-review-comme… harbor-nano        55    98.2%      0.904       331    0.718
+code-review-comme… lighthouse-lo…     55    94.5%      0.851       500    0.786
+draft-legal-clause clipper-pro        45   100.0%      0.921       925    0.939
+draft-legal-clause galleon-max        45   100.0%      0.921      1634    0.964
+draft-legal-clause harbor-mini        45    97.8%      0.884       417    0.819
+draft-legal-clause harbor-nano        45    84.4%      0.712       302    0.589
+draft-legal-clause lighthouse-lo…     45    97.8%      0.884       550    0.779
+extract-pii-redac… clipper-pro        50    98.0%      0.895       962    0.931
+extract-pii-redac… galleon-max        50   100.0%      0.929      1833    0.960
+extract-pii-redac… harbor-mini        50    96.0%      0.865       406    0.813
+extract-pii-redac… harbor-nano        50    98.0%      0.895       316    0.708
+extract-pii-redac… lighthouse-lo…     50    98.0%      0.895       620    0.852
+summarize-support… clipper-pro        60   100.0%      0.940      1077    0.917
+summarize-support… galleon-max        60   100.0%      0.940      1783    0.963
+summarize-support… harbor-mini        60   100.0%      0.940       422    0.821
+summarize-support… harbor-nano        60    98.3%      0.911       314    0.713
+summarize-support… lighthouse-lo…     60    98.3%      0.911       495    0.774
+
+========================================================================
+ PARETO FRONTIERS (non-dominated models per task)
+========================================================================
+classify-intent    frontier: harbor-nano, lighthouse-local, harbor-mini, clipper-pro, galleon-max
+    clipper-pro    cost $0.6692  p95 1040ms  q 0.926  rel 0.902  on-frontier
+    galleon-max    cost $1.6117  p95 1696ms  q 0.953  rel 0.923  on-frontier
+    harbor-mini    cost $0.1867  p95 512ms  q 0.908  rel 0.902  on-frontier
+    harbor-nano    cost $0.0774  p95 309ms  q 0.778  rel 0.881  on-frontier
+    lighthouse-lo… cost $0.1127  p95 584ms  q 0.784  rel 0.923  on-frontier
+code-review-comme… frontier: harbor-nano, lighthouse-local, harbor-mini, clipper-pro, galleon-max
+    clipper-pro    cost $0.6799  p95 1039ms  q 0.943  rel 0.904  on-frontier
+    galleon-max    cost $1.4606  p95 1750ms  q 0.963  rel 0.935  on-frontier
+    harbor-mini    cost $0.1884  p95 360ms  q 0.831  rel 0.877  on-frontier
+    harbor-nano    cost $0.0822  p95 331ms  q 0.718  rel 0.904  on-frontier
+    lighthouse-lo… cost $0.1123  p95 500ms  q 0.786  rel 0.851  on-frontier
+draft-legal-clause frontier: harbor-nano, lighthouse-local, harbor-mini, clipper-pro, galleon-max
+    clipper-pro    cost $0.6152  p95 925ms  q 0.939  rel 0.921  on-frontier
+    galleon-max    cost $1.5442  p95 1634ms  q 0.964  rel 0.921  on-frontier
+    harbor-mini    cost $0.1923  p95 417ms  q 0.819  rel 0.884  on-frontier
+    harbor-nano    cost $0.0728  p95 302ms  q 0.589  rel 0.712  on-frontier
