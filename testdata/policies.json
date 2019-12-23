@@ -6,3 +6,18 @@
       "description": "Minimize spend while keeping quality acceptable across all tasks. Caps per-call cost and demands a modest quality floor, then ranks survivors mostly on cost with a light quality tie-breaker.",
       "constraints": {
         "max_cost_usd": 0.35,
+        "min_quality": 0.7,
+        "min_reliability": 0.8
+      },
+      "preference": {
+        "weights": [
+          { "objective": "cost", "weight": 0.6 },
+          { "objective": "quality", "weight": 0.25 },
+          { "objective": "reliability", "weight": 0.15 }
+        ]
+      }
+    },
+    {
+      "name": "latency-critical",
+      "description": "Interactive workloads where p95 latency must stay under 500ms. Ranks primarily on speed, then reliability.",
+      "tasks": ["classify-intent", "summarize-support-ticket"],
