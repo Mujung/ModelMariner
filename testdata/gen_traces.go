@@ -66,3 +66,34 @@ func main() {
 			switch task.name {
 			case "draft-legal-clause":
 				// Bigger models pull ahead on hard generative tasks.
+				if m.model == "harbor-nano" {
+					p.quality -= 0.12
+					p.errRate += 0.05
+				}
+				if m.model == "galleon-max" {
+					p.quality += 0.02
+				}
+			case "classify-intent":
+				// Small models are plenty good and dominate on cost/latency.
+				if m.model == "harbor-nano" || m.model == "harbor-mini" {
+					p.quality += 0.08
+				}
+			case "extract-pii-redaction":
+				// Only the on-prem model is privacy-safe; cloud models still
+				// appear in traces (they were tried) but score lower on quality.
+				if m.model == "lighthouse-local" {
+					p.quality += 0.06
+				}
+			case "code-review-comment":
+				if m.model == "clipper-pro" {
+					p.quality += 0.03
+				}
+			}
+
+			for i := 0; i < task.volume; i++ {
+				seq++
+				prompt := 200 + rng.Intn(1400)
+				completion := 40 + rng.Intn(600)
+				tokens := prompt + completion
+				cost := p.costPer1k * float64(tokens) / 1000.0
+				// Add mild lognormal-ish latency noise.
