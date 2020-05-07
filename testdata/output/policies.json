@@ -43,3 +43,23 @@
         "task": "classify-intent",
         "model": "harbor-nano",
         "score": 0.55,
+        "margin": 0.55
+      },
+      {
+        "task": "summarize-support-ticket",
+        "model": "harbor-mini",
+        "score": 0.8462249307835714,
+        "margin": 0.31476525081180806
+      }
+    ]
+  },
+  {
+    "schema": "modelmariner/v1",
+    "policy": "privacy-lockdown",
+    "routes": [
+      {
+        "task": "draft-legal-clause",
+        "model": "lighthouse-local",
+        "score": 0.6630042637105268,
+        "margin": 0.6630042637105268
+      },
