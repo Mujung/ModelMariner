@@ -241,3 +241,105 @@ reliability) point the other. The frontier is the coastline between them.
 ## Writing routing policies
 
 A policy set is JSON. Constraints are hard; the preference ranks whoever
+survives. Here is the bundled `budget-guard`:
+
+```json
+{
+  "name": "budget-guard",
+  "description": "Minimize spend while keeping quality acceptable across all tasks.",
+  "constraints": {
+    "max_cost_usd": 0.35,
+    "min_quality": 0.7,
+    "min_reliability": 0.8
+  },
+  "preference": {
+    "weights": [
+      { "objective": "cost", "weight": 0.6 },
+      { "objective": "quality", "weight": 0.25 },
+      { "objective": "reliability", "weight": 0.15 }
+    ]
+  }
+}
+```
+
+- **`constraints`** — any candidate that breaches `max_cost_usd`,
+  `max_latency_ms` (checked against p95), `min_quality`, `min_reliability`, or the
+  privacy cap is disqualified. Add `deny_models`, `allow_models`, and
+  `privacy_safe_models` to steer the fleet by name.
+- **`preference.weights`** — rank the survivors. Weights normalize to 1, so only
+  the *ratios* matter. Cost and latency are inverted (lower is better) and every
+  objective is scaled across the candidate set before weighting, so a policy
+  never accidentally compares dollars to milliseconds.
+- **`tasks`** (optional) — scope a policy to specific tasks; omit it to govern
+  the whole voyage.
+
+The full schema — input traces, policy language, and every output artifact —
+lives in [`docs/TRACE.md`](docs/TRACE.md).
+
+---
+
+## The navigation dashboard
+
+The `dashboard/` directory holds a strictly-typed TypeScript consumer of
+`report.json`. It has **zero runtime dependencies** (only the TypeScript
+compiler and Node's built-in test runner at dev time) and renders entirely in the
+terminal — no browser, no remote assets.
+
+```
+──────────────────────────────────────────────────────────────────────
+  MODELMARINER DASHBOARD — fleet overview
+──────────────────────────────────────────────────────────────────────
+  Traces: 1400 accepted / 1400 lines  |  5 models  |  5 tasks  |  4 policies
+
+  ROUTING WINNERS BY TASK
+  task                      budget-guard      latency-critical  privacy-lockdown  quality-first
+  classify-intent           harbor-mini       harbor-nano       —                 —
+  draft-legal-clause        lighthouse-local  —                 lighthouse-local  clipper-pro
+  extract-pii-redaction     lighthouse-local  —                 lighthouse-local  —
+
+  POLICY ECONOMICS (realized vs cheapest-model baseline)
+  budget-guard         spent $23.4950 for +0.137 quality (5 routed, 0 unrouted)
+  privacy-lockdown     spent $3.8977  for +0.167 quality (2 routed, 0 unrouted)
+  quality-first        spent $100.1142 for +0.297 quality (2 routed, 0 unrouted)
+```
+
+Views:
+
+| Command | Shows |
+|---------|-------|
+| `overview` | Fleet summary + winners-by-task grid + policy economics. |
+| `task <name>` | One task: reliability table, frontier, and each policy's pick. |
+| `model <name>` | One model across every task, and how often it is chosen. |
+| `policy <name>` | A policy's compiled decisions with full explanations. |
+| `routes <name>` | Just the compiled winner-per-task routing table. |
+
+```bash
+cd dashboard
+npm install && npm run build
+node dist/dashboard.js ../testdata/output/report.json task draft-legal-clause
+```
+
+---
+
+## Deckhand's manual: CLI reference
+
+```
+modelmariner analyze  --traces FILE [--policy FILE] [--out DIR]
+                      [--format json|text|both] [--strict] [--with-timestamp]
+modelmariner validate --traces FILE [--strict]
+modelmariner version
+```
+
+| Flag | Purpose |
+|------|---------|
+| `--traces, -t` | Path to the JSONL trace file (required). |
+| `--policy, -p` | Path to a JSON policy set. Omit for reliability + Pareto only. |
+| `--out, -o` | Directory for `report.json`, `report.txt`, `policies.json`. |
+| `--format` | What goes to stdout: `json`, `text`, or `both` (default `both`). |
+| `--strict` | Treat any invalid trace line as a fatal error. |
+| `--with-timestamp` | Stamp the report with wall-clock time (breaks determinism). |
+
+`validate` ingests and reports accepted/rejected counts without compiling —
+handy in a pre-commit hook to keep your trace logs seaworthy.
+
+---
