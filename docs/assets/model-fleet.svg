@@ -63,3 +63,24 @@
         values="0 0; 0 -6; 0 0" dur="3.2s" repeatCount="indefinite"/>
     </use>
     <text x="120" y="238" text-anchor="middle" font-family="monospace" font-size="12" fill="#7dd3fc">harbor-nano</text>
+  </g>
+  <g>
+    <use href="#ship" transform="translate(275 200) scale(0.95)">
+      <animateTransform attributeName="transform" type="translate" additive="sum"
+        values="0 0; 0 -7; 0 0" dur="3.9s" repeatCount="indefinite"/>
+    </use>
+    <text x="275" y="236" text-anchor="middle" font-family="monospace" font-size="12" fill="#7dd3fc">harbor-mini</text>
+  </g>
+  <g>
+    <use href="#ship" transform="translate(430 196) scale(1.1)">
+      <animateTransform attributeName="transform" type="translate" additive="sum"
+        values="0 0; 0 -8; 0 0" dur="4.5s" repeatCount="indefinite"/>
+    </use>
+    <text x="430" y="236" text-anchor="middle" font-family="monospace" font-size="12" fill="#fcd34d">clipper-pro</text>
+  </g>
+  <g>
+    <use href="#ship" transform="translate(600 192) scale(1.25)">
+      <animateTransform attributeName="transform" type="translate" additive="sum"
+        values="0 0; 0 -9; 0 0" dur="5.1s" repeatCount="indefinite"/>
+    </use>
+    <text x="600" y="236" text-anchor="middle" font-family="monospace" font-size="12" fill="#fca5a5">galleon-max</text>
