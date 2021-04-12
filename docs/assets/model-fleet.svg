@@ -44,3 +44,24 @@
                 M0 250 Q 50 240 100 250 T 200 250 T 300 250 T 400 250 T 500 250 T 600 250 T 700 250 T 800 250;
                 M0 250 Q 50 260 100 250 T 200 250 T 300 250 T 400 250 T 500 250 T 600 250 T 700 250 T 800 250"/>
     </path>
+  </g>
+
+  <!-- reusable ship symbol -->
+  <defs>
+    <g id="ship">
+      <path d="M-26 0 L26 0 L18 16 L-18 16 Z" fill="#e2e8f0"/>
+      <rect x="-2" y="-40" width="3" height="40" fill="#cbd5e1"/>
+      <path d="M1 -38 L22 -10 L1 -10 Z" fill="#f8fafc"/>
+      <path d="M-2 -30 L-20 -8 L-2 -8 Z" fill="#bae6fd"/>
+    </g>
+  </defs>
+
+  <!-- fleet: five vessels bobbing at different phases -->
+  <g>
+    <use href="#ship" x="0" y="0" transform="translate(120 205) scale(0.85)">
+      <animateTransform attributeName="transform" type="translate" additive="sum"
+        values="0 0; 0 -6; 0 0" dur="3.2s" repeatCount="indefinite"/>
+    </use>
+    <text x="120" y="238" text-anchor="middle" font-family="monospace" font-size="12" fill="#7dd3fc">harbor-nano</text>
+  </g>
+  <g>
