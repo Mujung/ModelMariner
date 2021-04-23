@@ -102,3 +102,36 @@ Passed via `--policy`. A policy set is `{ "version": 1, "policies": [ ... ] }`.
   "description": "Minimize spend while keeping quality acceptable.",
   "tasks": ["classify-intent"],
   "constraints": {
+    "max_cost_usd": 0.35,
+    "max_latency_ms": 500,
+    "min_quality": 0.7,
+    "min_reliability": 0.8,
+    "max_privacy": "internal",
+    "deny_models": ["deprecated-galley"],
+    "allow_models": [],
+    "privacy_safe_models": ["lighthouse-local"]
+  },
+  "preference": {
+    "weights": [
+      { "objective": "cost", "weight": 0.6 },
+      { "objective": "quality", "weight": 0.25 },
+      { "objective": "reliability", "weight": 0.15 }
+    ]
+  }
+}
+```
+
+- **Constraints are hard.** A candidate violating any constraint is
+  *disqualified*, never merely penalized. Omitting a numeric constraint (or
+  setting it to zero) disables it.
+- `tasks` scopes a policy; omit it to apply to every task.
+- `max_privacy` caps the tier a model may handle. A model is disqualified if the
+  task's observed privacy exceeds the cap **unless** it appears in
+  `privacy_safe_models` (e.g. an on-prem deployment that never egresses data).
+- `allow_models`, when non-empty, restricts routing to exactly those models;
+  `deny_models` forbids models outright.
+- `preference.weights` rank survivors. Objectives are `cost`, `latency`,
+  `quality`, `reliability`. Weights are normalized to sum to 1, so only their
+  ratios matter. Cost and latency are inverted (lower is better) during scoring;
+  quality and reliability are used directly. All contributions are normalized
+  across the candidate set to `[0, 1]` before weighting.
