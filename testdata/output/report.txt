@@ -40,3 +40,43 @@ summarize-support… lighthouse-lo…     60    98.3%      0.911       495    0.
  PARETO FRONTIERS (non-dominated models per task)
 ========================================================================
 classify-intent    frontier: harbor-nano, lighthouse-local, harbor-mini, clipper-pro, galleon-max
+    clipper-pro    cost $0.6692  p95 1040ms  q 0.926  rel 0.902  on-frontier
+    galleon-max    cost $1.6117  p95 1696ms  q 0.953  rel 0.923  on-frontier
+    harbor-mini    cost $0.1867  p95 512ms  q 0.908  rel 0.902  on-frontier
+    harbor-nano    cost $0.0774  p95 309ms  q 0.778  rel 0.881  on-frontier
+    lighthouse-lo… cost $0.1127  p95 584ms  q 0.784  rel 0.923  on-frontier
+code-review-comme… frontier: harbor-nano, lighthouse-local, harbor-mini, clipper-pro, galleon-max
+    clipper-pro    cost $0.6799  p95 1039ms  q 0.943  rel 0.904  on-frontier
+    galleon-max    cost $1.4606  p95 1750ms  q 0.963  rel 0.935  on-frontier
+    harbor-mini    cost $0.1884  p95 360ms  q 0.831  rel 0.877  on-frontier
+    harbor-nano    cost $0.0822  p95 331ms  q 0.718  rel 0.904  on-frontier
+    lighthouse-lo… cost $0.1123  p95 500ms  q 0.786  rel 0.851  on-frontier
+draft-legal-clause frontier: harbor-nano, lighthouse-local, harbor-mini, clipper-pro, galleon-max
+    clipper-pro    cost $0.6152  p95 925ms  q 0.939  rel 0.921  on-frontier
+    galleon-max    cost $1.5442  p95 1634ms  q 0.964  rel 0.921  on-frontier
+    harbor-mini    cost $0.1923  p95 417ms  q 0.819  rel 0.884  on-frontier
+    harbor-nano    cost $0.0728  p95 302ms  q 0.589  rel 0.712  on-frontier
+    lighthouse-lo… cost $0.1099  p95 550ms  q 0.779  rel 0.884  on-frontier
+extract-pii-redac… frontier: harbor-nano, lighthouse-local, harbor-mini, clipper-pro, galleon-max
+    clipper-pro    cost $0.7319  p95 962ms  q 0.931  rel 0.895  on-frontier
+    galleon-max    cost $1.5338  p95 1833ms  q 0.960  rel 0.929  on-frontier
+    harbor-mini    cost $0.1975  p95 406ms  q 0.813  rel 0.865  on-frontier
+    harbor-nano    cost $0.0699  p95 316ms  q 0.708  rel 0.895  on-frontier
+    lighthouse-lo… cost $0.1166  p95 620ms  q 0.852  rel 0.895  on-frontier
+summarize-support… frontier: harbor-nano, lighthouse-local, harbor-mini, clipper-pro, galleon-max
+    clipper-pro    cost $0.7181  p95 1077ms  q 0.917  rel 0.940  on-frontier
+    galleon-max    cost $1.4439  p95 1783ms  q 0.963  rel 0.940  on-frontier
+    harbor-mini    cost $0.1764  p95 422ms  q 0.821  rel 0.940  on-frontier
+    harbor-nano    cost $0.0724  p95 314ms  q 0.713  rel 0.911  on-frontier
+    lighthouse-lo… cost $0.1113  p95 495ms  q 0.774  rel 0.911  on-frontier
+
+========================================================================
+ POLICY: budget-guard
+========================================================================
+Minimize spend while keeping quality acceptable across all tasks. Caps per-call cost and demands a modest quality floor, then ranks survivors mostly on cost with a light quality tie-breaker.
+
+Decided 5 task(s), 0 unrouted. Realized cost $44.6863 vs baseline $21.1913 (delta $+23.4950). Quality 0.838 vs 0.701.
+
+• route "classify-intent" to harbor-mini (score 0.8157)
+    - harbor-mini beat runner-up lighthouse-local by a margin of 0.0698 in weighted score
+    - score components: cost=0.5573, quality=0.1860, reliability=0.0724
