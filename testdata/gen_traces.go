@@ -51,3 +51,34 @@ func main() {
 		{"galleon-max", "openseas", "us-east", 1.20, 1150, 400, 0.965, 0.01, ""},
 		{"lighthouse-local", "onprem", "on-prem", 0.09, 320, 140, 0.78, 0.04, ""},
 	}
+
+	baseTime := time.Date(2026, 8, 25, 8, 0, 0, 0, time.UTC)
+	var seq int
+
+	emit := func(rec string) { fmt.Fprintln(os.Stdout, rec) }
+	emit("# modelmariner synthetic trace corpus — provider-neutral JSONL")
+	emit("# deterministic seed 20260831; each line is one recorded observation")
+
+	for _, task := range tasks {
+		for _, m := range models {
+			// Task-specific perturbations so no single model wins everywhere.
+			p := m
+			switch task.name {
+			case "draft-legal-clause":
+				// Bigger models pull ahead on hard generative tasks.
+				if m.model == "harbor-nano" {
+					p.quality -= 0.12
+					p.errRate += 0.05
+				}
+				if m.model == "galleon-max" {
+					p.quality += 0.02
+				}
+			case "classify-intent":
+				// Small models are plenty good and dominate on cost/latency.
+				if m.model == "harbor-nano" || m.model == "harbor-mini" {
+					p.quality += 0.08
+				}
+			case "extract-pii-redaction":
+				// Only the on-prem model is privacy-safe; cloud models still
+				// appear in traces (they were tried) but score lower on quality.
+				if m.model == "lighthouse-local" {
