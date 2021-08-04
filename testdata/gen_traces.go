@@ -82,3 +82,33 @@ func main() {
 				// Only the on-prem model is privacy-safe; cloud models still
 				// appear in traces (they were tried) but score lower on quality.
 				if m.model == "lighthouse-local" {
+					p.quality += 0.06
+				}
+			case "code-review-comment":
+				if m.model == "clipper-pro" {
+					p.quality += 0.03
+				}
+			}
+
+			for i := 0; i < task.volume; i++ {
+				seq++
+				prompt := 200 + rng.Intn(1400)
+				completion := 40 + rng.Intn(600)
+				tokens := prompt + completion
+				cost := p.costPer1k * float64(tokens) / 1000.0
+				// Add mild lognormal-ish latency noise.
+				lat := p.baseLatMS + rng.NormFloat64()*p.jitterMS
+				if lat < 20 {
+					lat = 20
+				}
+				isErr := rng.Float64() < p.errRate
+				quality := 0.0
+				errKind := ""
+				if isErr {
+					errKind = pickError(rng)
+				} else {
+					quality = clamp01(p.quality + rng.NormFloat64()*0.05)
+				}
+				ts := baseTime.Add(time.Duration(seq) * 137 * time.Second).Format(time.RFC3339)
+
+				var line string
