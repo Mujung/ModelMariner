@@ -18,3 +18,23 @@
       {
         "task": "draft-legal-clause",
         "model": "lighthouse-local",
+        "score": 0.8350613635191895,
+        "margin": 0.007091747499459289
+      },
+      {
+        "task": "extract-pii-redaction",
+        "model": "lighthouse-local",
+        "score": 0.7937876584279551,
+        "margin": 0.12348349876309483
+      },
+      {
+        "task": "summarize-support-ticket",
+        "model": "harbor-mini",
+        "score": 0.8127904290292911,
+        "margin": 0.1684144261284155
+      }
+    ]
+  },
+  {
+    "schema": "modelmariner/v1",
+    "policy": "latency-critical",
