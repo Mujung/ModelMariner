@@ -9,3 +9,21 @@
     <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#b08d57"/>
       <stop offset="0.5" stop-color="#f2d38a"/>
+      <stop offset="1" stop-color="#8a6d3b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="620" height="480" fill="url(#bg)"/>
+
+  <!-- axis labels -->
+  <text x="310" y="30" text-anchor="middle" font-family="monospace" font-size="16" fill="#f2d38a" letter-spacing="2">PARETO COMPASS</text>
+  <text x="310" y="466" text-anchor="middle" font-family="monospace" font-size="12" fill="#7dd3fc">→ increasing cost per call</text>
+  <text x="20" y="240" text-anchor="middle" font-family="monospace" font-size="12" fill="#7dd3fc" transform="rotate(-90 20 240)">→ increasing quality</text>
+
+  <!-- compass rose ring -->
+  <g transform="translate(310 240)">
+    <circle r="150" fill="none" stroke="url(#ring)" stroke-width="6"/>
+    <circle r="132" fill="none" stroke="#334155" stroke-width="1" stroke-dasharray="4 6"/>
+    <!-- cardinal ticks -->
+    <g stroke="#f2d38a" stroke-width="2">
+      <line x1="0" y1="-150" x2="0" y2="-130"/>
