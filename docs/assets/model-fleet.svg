@@ -30,3 +30,24 @@
 
   <!-- sea -->
   <rect y="210" width="800" height="130" fill="url(#sea)"/>
+  <!-- animated swell -->
+  <g opacity="0.35" stroke="#67e8f9" stroke-width="2" fill="none">
+    <path d="M0 226 Q 50 216 100 226 T 200 226 T 300 226 T 400 226 T 500 226 T 600 226 T 700 226 T 800 226">
+      <animate attributeName="d" dur="6s" repeatCount="indefinite"
+        values="M0 226 Q 50 216 100 226 T 200 226 T 300 226 T 400 226 T 500 226 T 600 226 T 700 226 T 800 226;
+                M0 226 Q 50 236 100 226 T 200 226 T 300 226 T 400 226 T 500 226 T 600 226 T 700 226 T 800 226;
+                M0 226 Q 50 216 100 226 T 200 226 T 300 226 T 400 226 T 500 226 T 600 226 T 700 226 T 800 226"/>
+    </path>
+    <path d="M0 250 Q 50 240 100 250 T 200 250 T 300 250 T 400 250 T 500 250 T 600 250 T 700 250 T 800 250">
+      <animate attributeName="d" dur="7.5s" repeatCount="indefinite"
+        values="M0 250 Q 50 260 100 250 T 200 250 T 300 250 T 400 250 T 500 250 T 600 250 T 700 250 T 800 250;
+                M0 250 Q 50 240 100 250 T 200 250 T 300 250 T 400 250 T 500 250 T 600 250 T 700 250 T 800 250;
+                M0 250 Q 50 260 100 250 T 200 250 T 300 250 T 400 250 T 500 250 T 600 250 T 700 250 T 800 250"/>
+    </path>
+  </g>
+
+  <!-- reusable ship symbol -->
+  <defs>
+    <g id="ship">
+      <path d="M-26 0 L26 0 L18 16 L-18 16 Z" fill="#e2e8f0"/>
+      <rect x="-2" y="-40" width="3" height="40" fill="#cbd5e1"/>
