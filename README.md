@@ -282,3 +282,105 @@ lives in [`docs/TRACE.md`](docs/TRACE.md).
 
 The `dashboard/` directory holds a strictly-typed TypeScript consumer of
 `report.json`. It has **zero runtime dependencies** (only the TypeScript
+compiler and Node's built-in test runner at dev time) and renders entirely in the
+terminal — no browser, no remote assets.
+
+```
+──────────────────────────────────────────────────────────────────────
+  MODELMARINER DASHBOARD — fleet overview
+──────────────────────────────────────────────────────────────────────
+  Traces: 1400 accepted / 1400 lines  |  5 models  |  5 tasks  |  4 policies
+
+  ROUTING WINNERS BY TASK
+  task                      budget-guard      latency-critical  privacy-lockdown  quality-first
+  classify-intent           harbor-mini       harbor-nano       —                 —
+  draft-legal-clause        lighthouse-local  —                 lighthouse-local  clipper-pro
+  extract-pii-redaction     lighthouse-local  —                 lighthouse-local  —
+
+  POLICY ECONOMICS (realized vs cheapest-model baseline)
+  budget-guard         spent $23.4950 for +0.137 quality (5 routed, 0 unrouted)
+  privacy-lockdown     spent $3.8977  for +0.167 quality (2 routed, 0 unrouted)
+  quality-first        spent $100.1142 for +0.297 quality (2 routed, 0 unrouted)
+```
+
+Views:
+
+| Command | Shows |
+|---------|-------|
+| `overview` | Fleet summary + winners-by-task grid + policy economics. |
+| `task <name>` | One task: reliability table, frontier, and each policy's pick. |
+| `model <name>` | One model across every task, and how often it is chosen. |
+| `policy <name>` | A policy's compiled decisions with full explanations. |
+| `routes <name>` | Just the compiled winner-per-task routing table. |
+
+```bash
+cd dashboard
+npm install && npm run build
+node dist/dashboard.js ../testdata/output/report.json task draft-legal-clause
+```
+
+---
+
+## Deckhand's manual: CLI reference
+
+```
+modelmariner analyze  --traces FILE [--policy FILE] [--out DIR]
+                      [--format json|text|both] [--strict] [--with-timestamp]
+modelmariner validate --traces FILE [--strict]
+modelmariner version
+```
+
+| Flag | Purpose |
+|------|---------|
+| `--traces, -t` | Path to the JSONL trace file (required). |
+| `--policy, -p` | Path to a JSON policy set. Omit for reliability + Pareto only. |
+| `--out, -o` | Directory for `report.json`, `report.txt`, `policies.json`. |
+| `--format` | What goes to stdout: `json`, `text`, or `both` (default `both`). |
+| `--strict` | Treat any invalid trace line as a fatal error. |
+| `--with-timestamp` | Stamp the report with wall-clock time (breaks determinism). |
+
+`validate` ingests and reports accepted/rejected counts without compiling —
+handy in a pre-commit hook to keep your trace logs seaworthy.
+
+---
+
+## How the hull is built
+
+ModelMariner is **pure Go standard library** — not a single third-party import.
+Each plank of the hull is an internal package with a single responsibility:
+
+| Package | Responsibility |
+|---------|----------------|
+| `internal/trace` | JSONL ingestion, validation, normalization, privacy tiers. |
+| `internal/reliability` | Success rates, Wilson bounds, latency percentiles. |
+| `internal/pareto` | Multi-objective dominance and frontier extraction. |
+| `internal/policy` | Policy language, hard-constraint evaluation, scoring. |
+| `internal/routing` | Winner selection + trace replay + baseline economics. |
+| `internal/explain` | Human-readable rationale for every decision. |
+| `internal/report` | Deterministic JSON/text assembly + compiled artifacts. |
+| `cmd/modelmariner` | The CLI that wires the voyage together. |
+
+---
+
+## Determinism: the ship's chronometer
+
+A router you cannot reproduce is a router you cannot trust. ModelMariner's report
+JSON is **byte-for-byte identical** across runs on identical inputs:
+
+- Traces are sorted by `(model, task, timestamp, line)` after ingestion.
+- Every map is emitted through sorted keys.
+- The frontier, evaluations, decisions, and policies all carry stable ordering.
+- HTML escaping is disabled so `<`, `>`, and `&` survive diffs unmangled.
+- The generation timestamp is **omitted by default** (opt in with
+  `--with-timestamp`).
+
+The CI smoke test runs `analyze` twice and `diff`s the output; a mismatch fails
+the build. Determinism is not an aspiration here — it is enforced.
+
+---
+
+## Testing the rigging
+
+```bash
+make test        # Go unit + integration tests
+make cover       # with per-package coverage
