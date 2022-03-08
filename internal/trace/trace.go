@@ -269,3 +269,43 @@ func normalize(rec Record, line int, opts Options) (Trace, []ValidationError) {
 	} else if math.IsNaN(*rec.LatencyMS) || math.IsInf(*rec.LatencyMS, 0) {
 		add("latency_ms", "must be a finite number")
 	}
+	if rec.Quality == nil {
+		add("quality", "required numeric field in [0,1]")
+	} else if math.IsNaN(*rec.Quality) || math.IsInf(*rec.Quality, 0) {
+		add("quality", "must be a finite number")
+	}
+	if rec.Error && strings.TrimSpace(rec.ErrorKind) == "" {
+		add("error_kind", "must be set when error is true")
+	}
+
+	if len(errs) > 0 {
+		return Trace{}, errs
+	}
+
+	quality := *rec.Quality
+	// Normalize quality into [0, MaxQuality] by clamping. Recorded scorers can
+	// occasionally overshoot; clamping keeps Pareto math well-behaved.
+	if quality < 0 {
+		quality = 0
+	}
+	if quality > opts.MaxQuality {
+		quality = opts.MaxQuality
+	}
+
+	return Trace{
+		Model:      model,
+		Task:       task,
+		Provider:   strings.TrimSpace(rec.Provider),
+		Region:     strings.TrimSpace(rec.Region),
+		Prompt:     rec.Tokens.Prompt,
+		Completion: rec.Tokens.Completion,
+		CostUSD:    *rec.CostUSD,
+		LatencyMS:  *rec.LatencyMS,
+		Quality:    quality,
+		Error:      rec.Error,
+		ErrorKind:  strings.TrimSpace(rec.ErrorKind),
+		Privacy:    rec.Privacy,
+		Timestamp:  strings.TrimSpace(rec.Timestamp),
+		Line:       line,
+	}, nil
+// review note
