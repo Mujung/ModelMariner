@@ -83,3 +83,36 @@ bound.
 - `pareto` — per task, every point in objective space plus the non-dominated
   `frontier`; each dominated point lists the models that dominate it.
 - `policies` — per policy, the full `simulation` (decisions + realized/baseline
+  economics) and structured `explanations`.
+
+The document is **deterministic**: identical inputs produce byte-for-byte
+identical JSON (HTML escaping disabled, stable key and slice ordering). The
+optional generation timestamp is omitted unless `--with-timestamp` is passed, so
+reports are safe to commit and diff.
+
+---
+
+## 3. Policy input: policy set JSON
+
+Passed via `--policy`. A policy set is `{ "version": 1, "policies": [ ... ] }`.
+
+```json
+{
+  "name": "budget-guard",
+  "description": "Minimize spend while keeping quality acceptable.",
+  "tasks": ["classify-intent"],
+  "constraints": {
+    "max_cost_usd": 0.35,
+    "max_latency_ms": 500,
+    "min_quality": 0.7,
+    "min_reliability": 0.8,
+    "max_privacy": "internal",
+    "deny_models": ["deprecated-galley"],
+    "allow_models": [],
+    "privacy_safe_models": ["lighthouse-local"]
+  },
+  "preference": {
+    "weights": [
+      { "objective": "cost", "weight": 0.6 },
+      { "objective": "quality", "weight": 0.25 },
+      { "objective": "reliability", "weight": 0.15 }
