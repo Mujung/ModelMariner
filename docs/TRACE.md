@@ -56,3 +56,36 @@ rank (`3`). Reports always emit the name.
 
 ### 1.4 Validation & normalization
 
+Ingestion is **strict per record but lenient per file** by default: an invalid
+line is collected as a `ValidationError` (with line number, field, and reason)
+and skipped, while valid lines still load. Pass `--strict` to make any invalid
+line abort the run. Normalization performs exactly one transform beyond
+validation: `quality` is clamped into `[0, 1]`. Traces are then sorted
+deterministically by `(model, task, timestamp, line)` so output never depends on
+input order.
+
+Only **successful** calls contribute to cost, latency, and quality
+distributions; a failed call's metrics are not representative of the service a
+model delivers. Failures still count toward the success rate and reliability
+bound.
+
+---
+
+## 2. Report output: `report.json`
+
+`analyze --out DIR` writes three files. `report.json` is the complete document
+(schema `modelmariner/v1`) with these top-level sections:
+
+- `input` — line counts, discovered models/tasks, and any rejection warnings.
+- `reliability` — one entry per model/task with success rate, `reliability_lower`
+  (Wilson 95% lower bound), latency `p50/p95/p99`, mean cost/quality/tokens,
+  the `highest_privacy` tier observed, and an `error_kinds` histogram.
+- `pareto` — per task, every point in objective space plus the non-dominated
+  `frontier`; each dominated point lists the models that dominate it.
+- `policies` — per policy, the full `simulation` (decisions + realized/baseline
+  economics) and structured `explanations`.
+
+The document is **deterministic**: identical inputs produce byte-for-byte
+identical JSON (HTML escaping disabled, stable key and slice ordering). The
+optional generation timestamp is omitted unless `--with-timestamp` is passed, so
+reports are safe to commit and diff.
