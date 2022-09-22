@@ -37,3 +37,18 @@
       "name": "privacy-lockdown",
       "description": "Restricted data must never leave on-premise infrastructure. Caps privacy at internal and clears only the on-prem model to handle stricter tiers; ranks on quality then reliability.",
       "tasks": ["extract-pii-redaction", "draft-legal-clause"],
+      "constraints": {
+        "max_privacy": "internal",
+        "privacy_safe_models": ["lighthouse-local"],
+        "min_reliability": 0.75
+      },
+      "preference": {
+        "weights": [
+          { "objective": "quality", "weight": 0.5 },
+          { "objective": "reliability", "weight": 0.3 },
+          { "objective": "latency", "weight": 0.2 }
+        ]
+      }
+    },
+    {
+      "name": "quality-first",
