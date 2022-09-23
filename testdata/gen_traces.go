@@ -97,3 +97,33 @@ func main() {
 				tokens := prompt + completion
 				cost := p.costPer1k * float64(tokens) / 1000.0
 				// Add mild lognormal-ish latency noise.
+				lat := p.baseLatMS + rng.NormFloat64()*p.jitterMS
+				if lat < 20 {
+					lat = 20
+				}
+				isErr := rng.Float64() < p.errRate
+				quality := 0.0
+				errKind := ""
+				if isErr {
+					errKind = pickError(rng)
+				} else {
+					quality = clamp01(p.quality + rng.NormFloat64()*0.05)
+				}
+				ts := baseTime.Add(time.Duration(seq) * 137 * time.Second).Format(time.RFC3339)
+
+				var line string
+				if isErr {
+					line = fmt.Sprintf(
+						`{"model":%q,"task":%q,"provider":%q,"region":%q,"tokens":{"prompt":%d,"completion":%d},"cost_usd":%.6f,"latency_ms":%.1f,"quality":0,"error":true,"error_kind":%q,"privacy":%q,"timestamp":%q}`,
+						p.model, task.name, p.provider, p.region, prompt, completion, cost, lat, errKind, task.privacy, ts)
+				} else {
+					line = fmt.Sprintf(
+						`{"model":%q,"task":%q,"provider":%q,"region":%q,"tokens":{"prompt":%d,"completion":%d},"cost_usd":%.6f,"latency_ms":%.1f,"quality":%.4f,"error":false,"privacy":%q,"timestamp":%q}`,
+						p.model, task.name, p.provider, p.region, prompt, completion, cost, lat, quality, task.privacy, ts)
+				}
+				emit(line)
+			}
+		}
+	}
+	_ = math.Pi
+}
