@@ -9,3 +9,22 @@
         "score": 0.8156742821122855,
         "margin": 0.06975620938332328
       },
+      {
+        "task": "code-review-comment",
+        "model": "harbor-mini",
+        "score": 0.7143787278703492,
+        "margin": 0.019828182748470202
+      },
+      {
+        "task": "draft-legal-clause",
+        "model": "lighthouse-local",
+        "score": 0.8350613635191895,
+        "margin": 0.007091747499459289
+      },
+      {
+        "task": "extract-pii-redaction",
+        "model": "lighthouse-local",
+        "score": 0.7937876584279551,
+        "margin": 0.12348349876309483
+      },
+      {
