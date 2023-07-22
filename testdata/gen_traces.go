@@ -18,3 +18,33 @@ type profile struct {
 	provider string
 	region   string
 	// per-task behavior: cost per 1k tokens, base latency, latency jitter,
+	// base quality, error rate.
+	costPer1k float64
+	baseLatMS float64
+	jitterMS  float64
+	quality   float64
+	errRate   float64
+	privacy   string
+}
+
+func main() {
+	rng := rand.New(rand.NewSource(20260831))
+
+	tasks := []struct {
+		name    string
+		privacy string
+		volume  int
+	}{
+		{"summarize-support-ticket", "internal", 60},
+		{"classify-intent", "public", 70},
+		{"extract-pii-redaction", "restricted", 50},
+		{"draft-legal-clause", "confidential", 45},
+		{"code-review-comment", "internal", 55},
+	}
+
+	// Each model behaves differently per task class. We describe base profiles
+	// then perturb per task to create realistic, non-trivial trade-offs.
+	models := []profile{
+		{"harbor-nano", "coastal", "eu-west", 0.06, 180, 90, 0.71, 0.03, ""},
+		{"harbor-mini", "coastal", "eu-west", 0.15, 240, 120, 0.82, 0.02, ""},
+		{"clipper-pro", "openseas", "us-east", 0.55, 620, 260, 0.93, 0.015, ""},
