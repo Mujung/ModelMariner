@@ -7,3 +7,24 @@
       <stop offset="1" stop-color="#123a63"/>
     </linearGradient>
     <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#155e75"/>
+      <stop offset="1" stop-color="#083344"/>
+    </linearGradient>
+    <radialGradient id="moon" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#fef9c3"/>
+      <stop offset="1" stop-color="#fde68a" stop-opacity="0.2"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="340" fill="url(#sky)"/>
+  <circle cx="680" cy="70" r="34" fill="url(#moon)"/>
+
+  <!-- twinkling stars -->
+  <g fill="#e2e8f0">
+    <circle cx="90" cy="50" r="1.6"><animate attributeName="opacity" values="0.2;1;0.2" dur="3.5s" repeatCount="indefinite"/></circle>
+    <circle cx="220" cy="38" r="1.2"><animate attributeName="opacity" values="1;0.3;1" dur="4.2s" repeatCount="indefinite"/></circle>
+    <circle cx="330" cy="66" r="1.4"><animate attributeName="opacity" values="0.3;1;0.3" dur="2.9s" repeatCount="indefinite"/></circle>
+    <circle cx="470" cy="44" r="1.1"><animate attributeName="opacity" values="1;0.2;1" dur="3.8s" repeatCount="indefinite"/></circle>
+    <circle cx="560" cy="80" r="1.5"><animate attributeName="opacity" values="0.4;1;0.4" dur="4.6s" repeatCount="indefinite"/></circle>
+  </g>
+
