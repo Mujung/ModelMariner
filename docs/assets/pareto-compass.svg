@@ -42,3 +42,21 @@
         values="-55; 40; -55" dur="9s" repeatCount="indefinite"
         calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
     </g>
+  </g>
+
+  <!-- scatter of models in cost(x) vs quality(y) space; frontier points pulse -->
+  <!-- frontier (non-dominated) -->
+  <g font-family="monospace" font-size="10">
+    <!-- harbor-nano: cheapest, lower quality -->
+    <g transform="translate(210 360)">
+      <circle r="7" fill="#22d3ee"><animate attributeName="r" values="7;10;7" dur="2.6s" repeatCount="indefinite"/></circle>
+      <text x="10" y="4" fill="#67e8f9">harbor-nano</text>
+    </g>
+    <!-- harbor-mini -->
+    <g transform="translate(250 300)">
+      <circle r="7" fill="#22d3ee"><animate attributeName="r" values="7;10;7" dur="2.9s" repeatCount="indefinite"/></circle>
+      <text x="10" y="4" fill="#67e8f9">harbor-mini</text>
+    </g>
+    <!-- clipper-pro -->
+    <g transform="translate(360 210)">
+      <circle r="7" fill="#22d3ee"><animate attributeName="r" values="7;10;7" dur="3.2s" repeatCount="indefinite"/></circle>
