@@ -77,3 +77,105 @@ ModelMariner never opens a socket to a provider. It cannot. That is the point.
                                                     │
         policy.json ──▶ hard-constraint evaluation ─┤
                                                     ▼
+                                    routing simulation (replay traces)
+                                                    │
+                                                    ▼
+                              explanations  ◀──  deterministic report
+                                                    │
+                        report.json + report.txt + policies.json
+                                                    │
+                                                    ▼
+                              TypeScript navigation dashboard
+```
+
+Every arrow is a package with tests. Every box is a decision you can inspect.
+
+---
+
+## Chart room: core concepts
+
+| Term | What it means aboard ModelMariner |
+|------|------------------------------------|
+| **Trace** | One recorded observation: a model handling a task, with its cost/latency/quality/error/privacy. The atom of everything. |
+| **Reliability** | Per model/task success rate plus a **Wilson score lower bound** so a lucky 9/10 never outranks a proven 90/100. |
+| **Pareto frontier** | The set of *non-dominated* models for a task — the only candidates a rational router should even consider. |
+| **Policy** | A bundle of **hard constraints** (budget, latency, quality, reliability, privacy) plus a weighted **preference** for ranking survivors. |
+| **Compilation** | Applying a policy to the frontier to pick one winner per task, then replaying recorded traces to measure what that choice actually delivers. |
+| **Explanation** | The human-readable "why": margins, score components, replayed evidence, and the exact constraint each rejected model tripped over. |
+
+### The fleet
+
+The bundled synthetic corpus sails five vessels, each a caricature of a real
+trade-off you will recognize:
+
+- **`harbor-nano`** — the dinghy. Cheapest and fastest, but its quality founders
+  on hard generative work.
+- **`harbor-mini`** — the sloop. A superb all-rounder that wins most
+  cost-sensitive routes.
+- **`clipper-pro`** — the clipper. Fast *and* accurate, at a real price.
+- **`galleon-max`** — the galleon. Top quality, heaviest cost and latency.
+- **`lighthouse-local`** — the on-prem lighthouse. Modest metrics, but the *only*
+  vessel cleared to carry restricted cargo without leaving harbor.
+
+No single vessel wins everywhere. That is by design — a router with an obvious
+answer is not worth compiling.
+
+---
+
+## Setting sail: quick start
+
+You need **Go 1.24+** and (for the dashboard) **Node 20+**. Nothing else.
+
+```bash
+# 1. Build the compiler
+make build            # produces ./bin/modelmariner
+
+# 2. Compile a report + routing tables from the sample fleet
+make report           # writes testdata/output/{report.json,report.txt,policies.json}
+
+# 3. Explore it in the dashboard
+make demo             # builds the TS dashboard and prints the fleet overview
+```
+
+Or drive the binary directly:
+
+```bash
+./bin/modelmariner analyze \
+  --traces testdata/fleet.jsonl \
+  --policy testdata/policies.json \
+  --out    testdata/output \
+  --format both
+```
+
+---
+
+## Reading the log: real output
+
+This is **actual output** from `modelmariner analyze` over the 1,400-line sample
+corpus — not a mock-up.
+
+### Reliability, per model and task
+
+```
+========================================================================
+ RELIABILITY (per model / task)
+========================================================================
+task               model               n  success  reliab.LB    p95 ms  quality
+classify-intent    clipper-pro        70    97.1%      0.902      1040    0.926
+classify-intent    galleon-max        70    98.6%      0.923      1696    0.953
+classify-intent    harbor-mini        70    97.1%      0.902       512    0.908
+classify-intent    harbor-nano        70    95.7%      0.881       309    0.778
+classify-intent    lighthouse-lo.     70    98.6%      0.923       584    0.784
+draft-legal-clause clipper-pro        45   100.0%      0.921       925    0.939
+draft-legal-clause galleon-max        45   100.0%      0.921      1634    0.964
+draft-legal-clause harbor-mini        45    97.8%      0.884       417    0.819
+draft-legal-clause harbor-nano        45    84.4%      0.712       302    0.589
+draft-legal-clause lighthouse-lo.     45    97.8%      0.884       550    0.779
+```
+
+Notice `harbor-nano` on `draft-legal-clause`: only **84.4%** success and a
+reliability lower bound of **0.712**. The dinghy is out of its depth on legal
+drafting, and the numbers say so before any policy is applied.
+
+### A compiled routing decision, fully explained
+
