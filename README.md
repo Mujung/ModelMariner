@@ -179,3 +179,106 @@ drafting, and the numbers say so before any policy is applied.
 
 ### A compiled routing decision, fully explained
 
+```
+• route "classify-intent" to harbor-mini (score 0.8157)
+    - harbor-mini beat runner-up lighthouse-local by a margin of 0.0698 in weighted score
+    - score components: cost=0.5573, quality=0.1860, reliability=0.0724
+    evidence: replayed 70 recorded call(s): 97.1% success, mean quality 0.908, mean latency 259 ms, total cost $12.9234
+    evidence: versus cheapest-model baseline harbor-nano: $7.5293 more cost, 0.908 vs 0.778 mean quality
+    rejected: clipper-pro — max_cost_usd (limit 0.35, observed 0.6692)
+    rejected: galleon-max — max_cost_usd (limit 0.35, observed 1.612)
+```
+
+Every line is defensible. The winner, the runner-up and the margin between them,
+the weighted breakdown, the replayed evidence, the baseline comparison, and the
+precise reason each disqualified vessel was left at the dock.
+
+### Privacy that actually holds the line
+
+```
+• route "draft-legal-clause" to lighthouse-local (score 0.6630)
+    - lighthouse-local was the only model to satisfy every hard constraint
+    rejected: clipper-pro — max_privacy (task data reaches "confidential"
+              but policy caps at "internal" and model is not privacy-safe)
+    rejected: galleon-max — max_privacy (task data reaches "confidential"
+              but policy caps at "internal" and model is not privacy-safe)
+```
+
+Under the `privacy-lockdown` policy, confidential data cannot leave on-prem
+infrastructure. The cloud vessels are disqualified outright — not down-weighted,
+**disqualified** — and the only privacy-safe model wins by default.
+
+---
+
+## The Pareto compass
+
+<p align="center">
+  <img src="docs/assets/pareto-compass.svg" alt="Animated compass needle sweeping a cost-versus-quality Pareto frontier" width="520">
+</p>
+
+Before any policy is applied, ModelMariner draws the **Pareto frontier** for each
+task. A model is *dominated* when some other model is at least as good on every
+objective — cheaper-or-equal, faster-or-equal, higher-or-equal quality,
+more-reliable-or-equal — and strictly better on at least one. Dominated models
+are vessels no rational captain would ever choose, so they are flagged and
+explained:
+
+```
+ PARETO FRONTIERS (non-dominated models per task)
+classify-intent    frontier: harbor-nano, lighthouse-local, harbor-mini, clipper-pro, galleon-max
+    harbor-nano    cost $0.0774  p95 309ms  q 0.778  rel 0.881  on-frontier
+    harbor-mini    cost $0.1867  p95 512ms  q 0.908  rel 0.902  on-frontier
+    galleon-max    cost $1.6117  p95 1696ms q 0.953  rel 0.923  on-frontier
+```
+
+The compass needle in the image above sweeps exactly this space: cyan vessels
+ride the frontier; a dominated vessel drifts grey and is never chosen. Objectives
+minimized (cost, latency) point one way; objectives maximized (quality,
+reliability) point the other. The frontier is the coastline between them.
+
+---
+
+## Writing routing policies
+
+A policy set is JSON. Constraints are hard; the preference ranks whoever
+survives. Here is the bundled `budget-guard`:
+
+```json
+{
+  "name": "budget-guard",
+  "description": "Minimize spend while keeping quality acceptable across all tasks.",
+  "constraints": {
+    "max_cost_usd": 0.35,
+    "min_quality": 0.7,
+    "min_reliability": 0.8
+  },
+  "preference": {
+    "weights": [
+      { "objective": "cost", "weight": 0.6 },
+      { "objective": "quality", "weight": 0.25 },
+      { "objective": "reliability", "weight": 0.15 }
+    ]
+  }
+}
+```
+
+- **`constraints`** — any candidate that breaches `max_cost_usd`,
+  `max_latency_ms` (checked against p95), `min_quality`, `min_reliability`, or the
+  privacy cap is disqualified. Add `deny_models`, `allow_models`, and
+  `privacy_safe_models` to steer the fleet by name.
+- **`preference.weights`** — rank the survivors. Weights normalize to 1, so only
+  the *ratios* matter. Cost and latency are inverted (lower is better) and every
+  objective is scaled across the candidate set before weighting, so a policy
+  never accidentally compares dollars to milliseconds.
+- **`tasks`** (optional) — scope a policy to specific tasks; omit it to govern
+  the whole voyage.
+
+The full schema — input traces, policy language, and every output artifact —
+lives in [`docs/TRACE.md`](docs/TRACE.md).
+
+---
+
+## The navigation dashboard
+
+The `dashboard/` directory holds a strictly-typed TypeScript consumer of
+`report.json`. It has **zero runtime dependencies** (only the TypeScript
