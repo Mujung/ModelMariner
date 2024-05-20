@@ -52,3 +52,43 @@ code-review-comme… frontier: harbor-nano, lighthouse-local, harbor-mini, clipp
     harbor-nano    cost $0.0822  p95 331ms  q 0.718  rel 0.904  on-frontier
     lighthouse-lo… cost $0.1123  p95 500ms  q 0.786  rel 0.851  on-frontier
 draft-legal-clause frontier: harbor-nano, lighthouse-local, harbor-mini, clipper-pro, galleon-max
+    clipper-pro    cost $0.6152  p95 925ms  q 0.939  rel 0.921  on-frontier
+    galleon-max    cost $1.5442  p95 1634ms  q 0.964  rel 0.921  on-frontier
+    harbor-mini    cost $0.1923  p95 417ms  q 0.819  rel 0.884  on-frontier
+    harbor-nano    cost $0.0728  p95 302ms  q 0.589  rel 0.712  on-frontier
+    lighthouse-lo… cost $0.1099  p95 550ms  q 0.779  rel 0.884  on-frontier
+extract-pii-redac… frontier: harbor-nano, lighthouse-local, harbor-mini, clipper-pro, galleon-max
+    clipper-pro    cost $0.7319  p95 962ms  q 0.931  rel 0.895  on-frontier
+    galleon-max    cost $1.5338  p95 1833ms  q 0.960  rel 0.929  on-frontier
+    harbor-mini    cost $0.1975  p95 406ms  q 0.813  rel 0.865  on-frontier
+    harbor-nano    cost $0.0699  p95 316ms  q 0.708  rel 0.895  on-frontier
+    lighthouse-lo… cost $0.1166  p95 620ms  q 0.852  rel 0.895  on-frontier
+summarize-support… frontier: harbor-nano, lighthouse-local, harbor-mini, clipper-pro, galleon-max
+    clipper-pro    cost $0.7181  p95 1077ms  q 0.917  rel 0.940  on-frontier
+    galleon-max    cost $1.4439  p95 1783ms  q 0.963  rel 0.940  on-frontier
+    harbor-mini    cost $0.1764  p95 422ms  q 0.821  rel 0.940  on-frontier
+    harbor-nano    cost $0.0724  p95 314ms  q 0.713  rel 0.911  on-frontier
+    lighthouse-lo… cost $0.1113  p95 495ms  q 0.774  rel 0.911  on-frontier
+
+========================================================================
+ POLICY: budget-guard
+========================================================================
+Minimize spend while keeping quality acceptable across all tasks. Caps per-call cost and demands a modest quality floor, then ranks survivors mostly on cost with a light quality tie-breaker.
+
+Decided 5 task(s), 0 unrouted. Realized cost $44.6863 vs baseline $21.1913 (delta $+23.4950). Quality 0.838 vs 0.701.
+
+• route "classify-intent" to harbor-mini (score 0.8157)
+    - harbor-mini beat runner-up lighthouse-local by a margin of 0.0698 in weighted score
+    - score components: cost=0.5573, quality=0.1860, reliability=0.0724
+    evidence: replayed 70 recorded call(s): 97.1% success, mean quality 0.908, mean latency 259 ms, total cost $12.9234
+    evidence: versus cheapest-model baseline harbor-nano: $7.5293 more cost, 0.908 vs 0.778 mean quality
+    rejected: clipper-pro — max_cost_usd (limit 0.35, observed 0.6692)
+    rejected: galleon-max — max_cost_usd (limit 0.35, observed 1.612)
+• route "code-review-comment" to harbor-mini (score 0.7144)
+    - harbor-mini beat runner-up harbor-nano by a margin of 0.0198 in weighted score
+    - score components: cost=0.5538, quality=0.1150, reliability=0.0456
+    evidence: replayed 55 recorded call(s): 96.4% success, mean quality 0.831, mean latency 205 ms, total cost $10.3834
+    evidence: versus cheapest-model baseline harbor-nano: $5.8508 more cost, 0.831 vs 0.718 mean quality
+    rejected: clipper-pro — max_cost_usd (limit 0.35, observed 0.6799)
+    rejected: galleon-max — max_cost_usd (limit 0.35, observed 1.461)
+• route "draft-legal-clause" to lighthouse-local (score 0.8351)
