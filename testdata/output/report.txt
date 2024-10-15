@@ -96,3 +96,43 @@ Decided 5 task(s), 0 unrouted. Realized cost $44.6863 vs baseline $21.1913 (delt
     - score components: cost=0.5849, quality=0.1267, reliability=0.1235
     evidence: replayed 45 recorded call(s): 97.8% success, mean quality 0.779, mean latency 315 ms, total cost $4.9595
     evidence: versus cheapest-model baseline harbor-nano: $1.5914 more cost, 0.779 vs 0.589 mean quality
+    rejected: clipper-pro — max_cost_usd (limit 0.35, observed 0.6152)
+    rejected: galleon-max — max_cost_usd (limit 0.35, observed 1.544)
+    rejected: harbor-nano — min_quality (limit 0.7, observed 0.5894); min_reliability (limit 0.8, observed 0.7122)
+• route "extract-pii-redaction" to lighthouse-local (score 0.7938)
+    - lighthouse-local beat runner-up harbor-nano by a margin of 0.1235 in weighted score
+    - score components: cost=0.5809, quality=0.1426, reliability=0.0703
+    evidence: replayed 50 recorded call(s): 98.0% success, mean quality 0.852, mean latency 345 ms, total cost $5.8333
+    evidence: versus cheapest-model baseline harbor-nano: $2.3063 more cost, 0.852 vs 0.708 mean quality
+    rejected: clipper-pro — max_cost_usd (limit 0.35, observed 0.7319)
+    rejected: galleon-max — max_cost_usd (limit 0.35, observed 1.534)
+• route "summarize-support-ticket" to harbor-mini (score 0.8128)
+    - harbor-mini beat runner-up lighthouse-local by a margin of 0.1684 in weighted score
+    - score components: cost=0.5545, quality=0.1083, reliability=0.1500
+    evidence: replayed 60 recorded call(s): 100.0% success, mean quality 0.821, mean latency 236 ms, total cost $10.5867
+    evidence: versus cheapest-model baseline harbor-nano: $6.2171 more cost, 0.821 vs 0.713 mean quality
+    rejected: clipper-pro — max_cost_usd (limit 0.35, observed 0.7181)
+    rejected: galleon-max — max_cost_usd (limit 0.35, observed 1.444)
+
+========================================================================
+ POLICY: latency-critical
+========================================================================
+Interactive workloads where p95 latency must stay under 500ms. Ranks primarily on speed, then reliability.
+
+Decided 2 task(s), 0 unrouted. Realized cost $15.9808 vs baseline $9.7636 (delta $+6.2171). Quality 0.799 vs 0.745.
+
+• route "classify-intent" to harbor-nano (score 0.5500)
+    - harbor-nano was the only model to satisfy every hard constraint
+    - score components: latency=0.5500, quality=0.0000, reliability=0.0000
+    evidence: replayed 70 recorded call(s): 95.7% success, mean quality 0.778, mean latency 170 ms, total cost $5.3941
+    rejected: clipper-pro — max_latency_ms (limit 500, observed 1040)
+    rejected: galleon-max — max_latency_ms (limit 500, observed 1696)
+    rejected: harbor-mini — max_latency_ms (limit 500, observed 512)
+    rejected: lighthouse-local — max_latency_ms (limit 500, observed 583.6)
+• route "summarize-support-ticket" to harbor-mini (score 0.8462)
+    - harbor-mini beat runner-up lighthouse-local by a margin of 0.3148 in weighted score
+    - score components: latency=0.5096, quality=0.0866, reliability=0.2500
+    evidence: replayed 60 recorded call(s): 100.0% success, mean quality 0.821, mean latency 236 ms, total cost $10.5867
+    evidence: versus cheapest-model baseline harbor-nano: $6.2171 more cost, 0.821 vs 0.713 mean quality
+    rejected: clipper-pro — max_latency_ms (limit 500, observed 1077)
+    rejected: galleon-max — max_latency_ms (limit 500, observed 1783)
