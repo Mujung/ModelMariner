@@ -51,3 +51,21 @@
     <g transform="translate(210 360)">
       <circle r="7" fill="#22d3ee"><animate attributeName="r" values="7;10;7" dur="2.6s" repeatCount="indefinite"/></circle>
       <text x="10" y="4" fill="#67e8f9">harbor-nano</text>
+    </g>
+    <!-- harbor-mini -->
+    <g transform="translate(250 300)">
+      <circle r="7" fill="#22d3ee"><animate attributeName="r" values="7;10;7" dur="2.9s" repeatCount="indefinite"/></circle>
+      <text x="10" y="4" fill="#67e8f9">harbor-mini</text>
+    </g>
+    <!-- clipper-pro -->
+    <g transform="translate(360 210)">
+      <circle r="7" fill="#22d3ee"><animate attributeName="r" values="7;10;7" dur="3.2s" repeatCount="indefinite"/></circle>
+      <text x="10" y="4" fill="#67e8f9">clipper-pro</text>
+    </g>
+    <!-- galleon-max: priciest, top quality -->
+    <g transform="translate(470 170)">
+      <circle r="7" fill="#22d3ee"><animate attributeName="r" values="7;10;7" dur="3.5s" repeatCount="indefinite"/></circle>
+      <text x="10" y="4" fill="#67e8f9">galleon-max</text>
+    </g>
+    <!-- frontier polyline -->
+    <polyline points="210,360 250,300 360,210 470,170" fill="none" stroke="#22d3ee" stroke-width="2" stroke-dasharray="6 5" opacity="0.6">
