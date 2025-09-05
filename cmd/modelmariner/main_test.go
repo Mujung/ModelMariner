@@ -57,3 +57,23 @@ func TestRunUnknownCommand(t *testing.T) {
 }
 
 func TestRunRequiresTraces(t *testing.T) {
+	if err := run([]string{"analyze"}); err == nil {
+		t.Fatal("expected error when --traces missing")
+	}
+}
+
+func TestParseAnalyzeFlags(t *testing.T) {
+	f, err := parseAnalyzeFlags([]string{"--traces=a.jsonl", "--policy=p.json", "--format=text", "--strict"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if f.traces != "a.jsonl" || f.policy != "p.json" || f.format != "text" || !f.strict {
+		t.Errorf("bad flag parse: %+v", f)
+	}
+	if !f.deterministic {
+		t.Error("determinism should default on")
+	}
+	if _, err := parseAnalyzeFlags([]string{"--traces", "a", "--format", "xml"}); err == nil {
+		t.Error("expected bad format rejection")
+	}
+}
