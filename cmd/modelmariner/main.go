@@ -254,3 +254,45 @@ func cmdValidate(args []string) error {
 func loadTraces(path string, strict bool) (trace.IngestResult, error) {
 	fh, err := os.Open(path)
 	if err != nil {
+		return trace.IngestResult{}, fmt.Errorf("opening traces: %w", err)
+	}
+	defer fh.Close()
+	opts := trace.DefaultOptions()
+	opts.SkipInvalid = !strict
+	res, err := trace.Ingest(fh, opts)
+	if err != nil {
+		return res, err
+	}
+	if strict && res.Rejected > 0 {
+		return res, fmt.Errorf("%d invalid line(s) under --strict mode", res.Rejected)
+	}
+	return res, nil
+}
+
+func printUsage(w *os.File) {
+	fmt.Fprint(w, `modelmariner — offline LLM trace evaluation & routing-policy compiler
+
+USAGE
+  modelmariner analyze  --traces FILE [--policy FILE] [--out DIR] [--format json|text|both] [--strict] [--with-timestamp]
+  modelmariner validate --traces FILE [--strict]
+  modelmariner version
+
+COMMANDS
+  analyze   Ingest traces, compute reliability & Pareto frontiers, evaluate
+            policies, simulate routing, and emit report/policy artifacts.
+  validate  Ingest and validate traces only; report accepted/rejected counts.
+  version   Print the compiler version.
+
+FLAGS (analyze)
+  --traces, -t   Path to a JSONL trace file (required).
+  --policy, -p   Path to a JSON policy set. When omitted, only reliability and
+                 Pareto analysis are produced.
+  --out, -o      Directory to write report.json, report.txt, and policies.json.
+  --format       Output written to stdout: json, text, or both (default both).
+  --strict       Treat any invalid trace line as a fatal error.
+  --with-timestamp  Include a wall-clock generation time (breaks determinism).
+
+modelmariner is fully offline: it reasons only over recorded traces and never
+contacts a model provider.
+`)
+// review note
