@@ -308,4 +308,4 @@ func normalize(rec Record, line int, opts Options) (Trace, []ValidationError) {
 		Timestamp:  strings.TrimSpace(rec.Timestamp),
 		Line:       line,
 	}, nil
-// review note
+}
