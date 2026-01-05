@@ -46,3 +46,19 @@ func TestExplainNoEligible(t *testing.T) {
 		t.Errorf("headline should flag no eligible: %q", e.Headline)
 	}
 	if len(e.Rejections) != 1 || !strings.Contains(e.Rejections[0], "min_quality") {
+		t.Errorf("rejection detail missing: %+v", e.Rejections)
+	}
+}
+
+func TestExplainSoleSurvivor(t *testing.T) {
+	d := routing.Decision{
+		Task: "t", Policy: "p", Winner: "only", Score: 0.5,
+		Evaluations: []policy.Evaluation{{Model: "only", Eligible: true, Score: 0.5}},
+		Realized:    routing.RealizedMetrics{Model: "only", Calls: 5, MeanQuality: 0.7},
+	}
+	e := For(d)
+	joined := strings.Join(e.Reasons, " ")
+	if !strings.Contains(joined, "only model") {
+		t.Errorf("expected sole-survivor reasoning: %+v", e.Reasons)
+	}
+}
