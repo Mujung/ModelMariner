@@ -51,3 +51,21 @@ report: build ## Analyze the sample corpus and write artifacts to testdata/outpu
 	$(BIN_DIR)/$(BINARY) analyze --traces $(TRACES) --policy $(POLICIES) --out $(OUT_DIR) --format text
 
 .PHONY: validate
+validate: build ## Validate the sample corpus.
+	$(BIN_DIR)/$(BINARY) validate --traces $(TRACES)
+
+.PHONY: dashboard
+dashboard: ## Build and test the TypeScript dashboard.
+	cd dashboard && npm install && npm test
+
+.PHONY: demo
+demo: report ## Run the full pipeline then render the dashboard overview.
+	cd dashboard && npm install --silent && npm run build --silent && \
+		node dist/dashboard.js ../$(OUT_DIR)/report.json overview
+
+.PHONY: ci
+ci: fmt-check vet test dashboard ## Everything CI runs.
+
+.PHONY: clean
+clean: ## Remove build artifacts (keeps committed testdata).
+	rm -rf $(BIN_DIR) dashboard/dist dashboard/node_modules
