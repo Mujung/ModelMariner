@@ -96,3 +96,25 @@ func TestPrivacyTierParsing(t *testing.T) {
 	}
 	if _, err := ParsePrivacyTier("nonsense"); err == nil {
 		t.Error("expected error for unknown tier")
+	}
+}
+
+func TestPrivacyOrdering(t *testing.T) {
+	if !(PrivacyPublic < PrivacyInternal && PrivacyInternal < PrivacyConfidential && PrivacyConfidential < PrivacyRestricted) {
+		t.Fatal("privacy tiers are not strictly ordered")
+	}
+}
+
+func TestDeterministicSort(t *testing.T) {
+	in := strings.Join([]string{
+		`{"model":"zzz","task":"b","tokens":{"prompt":1,"completion":1},"cost_usd":0,"latency_ms":1,"quality":0.5,"privacy":"public","timestamp":"2026-01-01T00:00:02Z"}`,
+		`{"model":"aaa","task":"a","tokens":{"prompt":1,"completion":1},"cost_usd":0,"latency_ms":1,"quality":0.5,"privacy":"public","timestamp":"2026-01-01T00:00:01Z"}`,
+	}, "\n")
+	res, err := Ingest(strings.NewReader(in), DefaultOptions())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if res.Traces[0].Model != "aaa" {
+		t.Fatalf("traces not sorted deterministically: %+v", res.Traces)
+	}
+}
