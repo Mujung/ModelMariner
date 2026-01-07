@@ -139,3 +139,33 @@ export class ReportNavigator {
         return {
           policy: p.name,
           winner: d.no_eligible ? null : d.winner,
+          score: d.score,
+        };
+      })
+      .filter((x): x is NonNullable<typeof x> => x !== null);
+    return {
+      task,
+      frontierModels: frontier ? frontier.frontier.map((p) => p.model) : [],
+      winnersByPolicy,
+    };
+  }
+
+  /**
+   * Total net savings (or cost) a policy realized versus the naive baseline,
+   * summed across all decided tasks. Negative means the policy saved money.
+   */
+  policyCostDelta(policy: string): number {
+    const pr = this.policy(policy);
+    return pr ? pr.simulation.totals.cost_delta_usd : 0;
+  }
+
+  /** Rank models for a task by their mean quality (descending). */
+  qualityRanking(task: string): { model: string; quality: number }[] {
+    return this.reliabilityForTask(task)
+      .filter((a) => a.successes > 0)
+      .map((a) => ({ model: a.model, quality: a.mean_quality }))
+      .sort((a, b) => b.quality - a.quality);
+  }
+}
+
+// draft note 5
