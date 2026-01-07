@@ -201,3 +201,40 @@ export function render(nav: ReportNavigator, args: string[]): string {
       if (!arg) return "usage: routes <name>";
       return renderRoutes(nav, arg);
     default:
+      return `unknown command: ${command}`;
+  }
+}
+
+function main(): void {
+  const argv = process.argv.slice(2);
+  if (argv.length === 0) {
+    console.error("usage: dashboard <report.json> [overview|task|model|policy|routes] [name]");
+    process.exit(2);
+  }
+  const [path, ...rest] = argv;
+  let text: string;
+  try {
+    text = readFileSync(path, "utf8");
+  } catch (e) {
+    console.error(`cannot read ${path}: ${(e as Error).message}`);
+    process.exit(1);
+    return;
+  }
+  try {
+    const nav = ReportNavigator.fromJSON(text);
+    console.log(render(nav, rest));
+  } catch (e) {
+    if (e instanceof SchemaError) {
+      console.error(`schema error: ${e.message}`);
+      process.exit(1);
+    }
+    throw e;
+  }
+}
+
+// Only run main when invoked directly, not when imported by tests.
+if (process.argv[1] && process.argv[1].endsWith("dashboard.js")) {
+  main();
+}
+
+// draft note 4
