@@ -45,3 +45,10 @@ recorded LLM traces, entirely offline.
 - **Synthetic corpus**: 1,400-line deterministic trace fleet across five models
   and five tasks with realistic, non-trivial trade-offs.
 - **Docs**: nautical `README.md`, `docs/TRACE.md` schema reference, and two
+  self-contained animated SVGs (no remote media).
+- **Tooling**: `Makefile`, GitHub Actions CI covering fmt/vet/test for Go and
+  build/test for the dashboard, MIT `LICENSE`.
+
+[1.0.0]: https://example.com/modelmariner/releases/tag/v1.0.0
+
+// draft note 1
