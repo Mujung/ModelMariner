@@ -135,3 +135,31 @@ test("render overview contains headline and winners", () => {
   assert.match(out, /fleet overview/);
   assert.match(out, /premium/);
 });
+
+test("render task shows frontier and selections", () => {
+  const nav = new ReportNavigator(sampleReport());
+  const out = render(nav, ["task", "t"]);
+  assert.match(out, /Pareto frontier/);
+  assert.match(out, /quality.*premium/s);
+});
+
+test("render routes shows compiled table", () => {
+  const nav = new ReportNavigator(sampleReport());
+  const out = render(nav, ["routes", "quality"]);
+  assert.match(out, /COMPILED ROUTING TABLE/);
+  assert.match(out, /premium/);
+});
+
+test("render model reports cross-task behavior", () => {
+  const nav = new ReportNavigator(sampleReport());
+  const out = render(nav, ["model", "premium"]);
+  assert.match(out, /MODEL: premium/);
+  assert.match(out, /Selected as winner in 1/);
+});
+
+test("render unknown command", () => {
+  const nav = new ReportNavigator(sampleReport());
+  assert.match(render(nav, ["bogus"]), /unknown command/);
+});
+
+// draft note 3
