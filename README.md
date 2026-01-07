@@ -261,3 +261,229 @@ survives. Here is the bundled `budget-guard`:
   }
 }
 ```
+
+- **`constraints`** — any candidate that breaches `max_cost_usd`,
+  `max_latency_ms` (checked against p95), `min_quality`, `min_reliability`, or the
+  privacy cap is disqualified. Add `deny_models`, `allow_models`, and
+  `privacy_safe_models` to steer the fleet by name.
+- **`preference.weights`** — rank the survivors. Weights normalize to 1, so only
+  the *ratios* matter. Cost and latency are inverted (lower is better) and every
+  objective is scaled across the candidate set before weighting, so a policy
+  never accidentally compares dollars to milliseconds.
+- **`tasks`** (optional) — scope a policy to specific tasks; omit it to govern
+  the whole voyage.
+
+The full schema — input traces, policy language, and every output artifact —
+lives in [`docs/TRACE.md`](docs/TRACE.md).
+
+---
+
+## The navigation dashboard
+
+The `dashboard/` directory holds a strictly-typed TypeScript consumer of
+`report.json`. It has **zero runtime dependencies** (only the TypeScript
+compiler and Node's built-in test runner at dev time) and renders entirely in the
+terminal — no browser, no remote assets.
+
+```
+──────────────────────────────────────────────────────────────────────
+  MODELMARINER DASHBOARD — fleet overview
+──────────────────────────────────────────────────────────────────────
+  Traces: 1400 accepted / 1400 lines  |  5 models  |  5 tasks  |  4 policies
+
+  ROUTING WINNERS BY TASK
+  task                      budget-guard      latency-critical  privacy-lockdown  quality-first
+  classify-intent           harbor-mini       harbor-nano       —                 —
+  draft-legal-clause        lighthouse-local  —                 lighthouse-local  clipper-pro
+  extract-pii-redaction     lighthouse-local  —                 lighthouse-local  —
+
+  POLICY ECONOMICS (realized vs cheapest-model baseline)
+  budget-guard         spent $23.4950 for +0.137 quality (5 routed, 0 unrouted)
+  privacy-lockdown     spent $3.8977  for +0.167 quality (2 routed, 0 unrouted)
+  quality-first        spent $100.1142 for +0.297 quality (2 routed, 0 unrouted)
+```
+
+Views:
+
+| Command | Shows |
+|---------|-------|
+| `overview` | Fleet summary + winners-by-task grid + policy economics. |
+| `task <name>` | One task: reliability table, frontier, and each policy's pick. |
+| `model <name>` | One model across every task, and how often it is chosen. |
+| `policy <name>` | A policy's compiled decisions with full explanations. |
+| `routes <name>` | Just the compiled winner-per-task routing table. |
+
+```bash
+cd dashboard
+npm install && npm run build
+node dist/dashboard.js ../testdata/output/report.json task draft-legal-clause
+```
+
+---
+
+## Deckhand's manual: CLI reference
+
+```
+modelmariner analyze  --traces FILE [--policy FILE] [--out DIR]
+                      [--format json|text|both] [--strict] [--with-timestamp]
+modelmariner validate --traces FILE [--strict]
+modelmariner version
+```
+
+| Flag | Purpose |
+|------|---------|
+| `--traces, -t` | Path to the JSONL trace file (required). |
+| `--policy, -p` | Path to a JSON policy set. Omit for reliability + Pareto only. |
+| `--out, -o` | Directory for `report.json`, `report.txt`, `policies.json`. |
+| `--format` | What goes to stdout: `json`, `text`, or `both` (default `both`). |
+| `--strict` | Treat any invalid trace line as a fatal error. |
+| `--with-timestamp` | Stamp the report with wall-clock time (breaks determinism). |
+
+`validate` ingests and reports accepted/rejected counts without compiling —
+handy in a pre-commit hook to keep your trace logs seaworthy.
+
+---
+
+## How the hull is built
+
+ModelMariner is **pure Go standard library** — not a single third-party import.
+Each plank of the hull is an internal package with a single responsibility:
+
+| Package | Responsibility |
+|---------|----------------|
+| `internal/trace` | JSONL ingestion, validation, normalization, privacy tiers. |
+| `internal/reliability` | Success rates, Wilson bounds, latency percentiles. |
+| `internal/pareto` | Multi-objective dominance and frontier extraction. |
+| `internal/policy` | Policy language, hard-constraint evaluation, scoring. |
+| `internal/routing` | Winner selection + trace replay + baseline economics. |
+| `internal/explain` | Human-readable rationale for every decision. |
+| `internal/report` | Deterministic JSON/text assembly + compiled artifacts. |
+| `cmd/modelmariner` | The CLI that wires the voyage together. |
+
+---
+
+## Determinism: the ship's chronometer
+
+A router you cannot reproduce is a router you cannot trust. ModelMariner's report
+JSON is **byte-for-byte identical** across runs on identical inputs:
+
+- Traces are sorted by `(model, task, timestamp, line)` after ingestion.
+- Every map is emitted through sorted keys.
+- The frontier, evaluations, decisions, and policies all carry stable ordering.
+- HTML escaping is disabled so `<`, `>`, and `&` survive diffs unmangled.
+- The generation timestamp is **omitted by default** (opt in with
+  `--with-timestamp`).
+
+The CI smoke test runs `analyze` twice and `diff`s the output; a mismatch fails
+the build. Determinism is not an aspiration here — it is enforced.
+
+---
+
+## Testing the rigging
+
+```bash
+make test        # Go unit + integration tests
+make cover       # with per-package coverage
+make dashboard   # TypeScript type-check + build + node:test
+make ci          # fmt-check + vet + test + dashboard (what CI runs)
+```
+
+Go coverage sits comfortably above the waterline across every engine package
+(Pareto and reliability above 96%), and the dashboard ships twelve `node:test`
+cases covering the navigator and every render view. Tests assert the *behavior*
+that matters: budgets disqualify, privacy caps hold, dominated models drop off
+the frontier, Wilson bounds reward evidence, and reports stay deterministic.
+
+---
+
+## Project layout
+
+```
+modelmariner/
+├── cmd/modelmariner/        # CLI entrypoint + integration tests
+├── internal/
+│   ├── trace/               # ingestion, validation, privacy tiers
+│   ├── reliability/         # aggregation, Wilson bounds, percentiles
+│   ├── pareto/              # dominance & frontier analysis
+│   ├── policy/              # policy language + hard-constraint evaluator
+│   ├── routing/             # winner selection + trace replay
+│   ├── explain/             # decision rationale
+│   └── report/              # deterministic JSON/text + artifacts
+├── dashboard/               # TypeScript navigation dashboard
+│   ├── src/                 # types, navigator, renderer, tests
+│   ├── package.json
+│   └── tsconfig.json
+├── docs/
+│   ├── TRACE.md             # authoritative format reference
+│   └── assets/              # two animated SVGs (no remote media)
+├── testdata/
+│   ├── fleet.jsonl          # 1,400-line synthetic corpus
+│   ├── gen_traces.go        # deterministic corpus generator
+│   ├── policies.json        # four example policies
+│   └── output/              # committed sample report artifacts
+├── .github/workflows/ci.yml
+├── Makefile
+├── go.mod
+├── LICENSE
+├── CHANGELOG.md
+└── README.md
+```
+
+---
+
+## Design decisions worth defending
+
+**Why the Wilson lower bound instead of raw success rate?**
+Because a model that succeeded 9 out of 10 times has *not* proven itself the way
+one that succeeded 90 out of 100 has. The Wilson score interval's lower bound
+folds sample size into the estimate, so thinly-sampled vessels cannot bluff their
+way onto the frontier. `wilsonLowerBound(9,10) < wilsonLowerBound(90,100)`, and a
+test pins exactly that.
+
+**Why replay traces instead of trusting the aggregates?**
+Aggregates answer "how does this model behave on average?" Replay answers "what
+would this specific routing decision have delivered against the record we hold?"
+The second is the honest question. Simulation never invents a data point; it only
+re-reads observations already in hand, which is why it stays deterministic.
+
+**Why are constraints hard rather than weighted?**
+Because a budget is a budget and a privacy tier is the law. A soft-penalty router
+will, given a high enough quality score, quietly route restricted data to a cloud
+model. ModelMariner structurally cannot. Constraints disqualify; preferences only
+rank the survivors.
+
+**Why only the standard library?**
+Fewer dependencies mean fewer surprises, a smaller supply-chain surface, and a
+binary that compiles anywhere Go does. For a tool whose whole value proposition is
+*trustworthy, reproducible decisions*, that discipline is the point.
+
+---
+
+## FAQ from the crow's nest
+
+**Does ModelMariner call any model provider?**
+No. It has no networking code in the decision path and needs none. It reasons
+purely over recorded traces.
+
+**Can it route in real time?**
+It is a *compiler*. It produces a routing table (`policies.json`) that a runtime
+can load and apply. ModelMariner itself makes the decision offline, once, so you
+can review it before it ever touches production traffic.
+
+**What happens when no model satisfies a policy?**
+The task is reported as `unrouted` with the reason, both in the report and in the
+compiled artifact. Silence would be a bug; a loud, explained non-decision is a
+feature.
+
+**How do I bring my own traces?**
+Emit newline-delimited JSON matching the schema in
+[`docs/TRACE.md`](docs/TRACE.md) and point `--traces` at it. Run `validate` first
+to catch malformed lines.
+
+---
+
+## License
+
+Released under the [MIT License](LICENSE). Fair winds and following seas. ⚓
+
+// draft note 2
