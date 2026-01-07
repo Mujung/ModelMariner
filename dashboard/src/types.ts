@@ -114,3 +114,32 @@ export interface Simulation {
   decisions: Decision[];
   totals: Totals;
 }
+
+export interface Explanation {
+  task: string;
+  policy: string;
+  headline: string;
+  reasons: string[];
+  evidence: string[];
+  rejections?: string[];
+}
+
+export interface PolicyReport {
+  name: string;
+  description?: string;
+  simulation: Simulation;
+  explanations: Explanation[];
+}
+
+export interface Report {
+  schema: string;
+  generated?: string;
+  input: InputSummary;
+  reliability: ReliabilityAggregate[];
+  pareto: ParetoFrontier[];
+  policies: PolicyReport[];
+}
+
+export const SCHEMA_VERSION = "modelmariner/v1";
+
+// draft note 6
