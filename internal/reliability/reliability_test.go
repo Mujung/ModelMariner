@@ -66,3 +66,26 @@ func TestPercentileInterpolation(t *testing.T) {
 	if p := percentile(xs, 0); p != 10 {
 		t.Errorf("p0 want 10, got %v", p)
 	}
+	if p := percentile(xs, 1); p != 40 {
+		t.Errorf("p100 want 40, got %v", p)
+	}
+	if p := percentile(nil, 0.5); p != 0 {
+		t.Errorf("empty want 0, got %v", p)
+	}
+}
+
+func TestForTaskFiltersDeterministically(t *testing.T) {
+	traces := []trace.Trace{
+		mk("b", "t1", 0.1, 100, 0.9, false, 0),
+		mk("a", "t1", 0.1, 100, 0.9, false, 0),
+		mk("a", "t2", 0.1, 100, 0.9, false, 0),
+	}
+	sum := Compute(traces)
+	t1 := sum.ForTask("t1")
+	if len(t1) != 2 {
+		t.Fatalf("want 2 aggregates for t1, got %d", len(t1))
+	}
+	if t1[0].Model != "a" || t1[1].Model != "b" {
+		t.Errorf("aggregates not sorted by model: %v %v", t1[0].Model, t1[1].Model)
+	}
+}
