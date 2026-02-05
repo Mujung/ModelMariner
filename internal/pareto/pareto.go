@@ -149,4 +149,4 @@ func almostEqual(a, b float64) bool     { return math.Abs(a-b) <= epsilon }
 func lessEqualCost(a, b float64) bool   { return a <= b+epsilon }
 func greaterEqual(a, b float64) bool    { return a >= b-epsilon }
 func strictlyLess(a, b float64) bool    { return a < b-epsilon }
-// review note
+func strictlyGreater(a, b float64) bool { return a > b+epsilon }
