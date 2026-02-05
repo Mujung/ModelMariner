@@ -118,3 +118,30 @@ func TestScoringPrefersHigherWeightedObjective(t *testing.T) {
 
 func TestNormalizedWeightsSumToOne(t *testing.T) {
 	pref := Preference{Weights: []Weight{{ObjCost, 3}, {ObjQuality, 1}}}
+	w := pref.NormalizedWeights()
+	sum := w[ObjCost] + w[ObjQuality]
+	if sum < 0.999999 || sum > 1.000001 {
+		t.Errorf("weights should normalize to 1, got %v", sum)
+	}
+}
+
+func TestAppliesToScoping(t *testing.T) {
+	global := Policy{Name: "g"}
+	scoped := Policy{Name: "s", Tasks: []string{"only"}}
+	if !global.AppliesTo("anything") {
+		t.Error("global policy should apply to all tasks")
+	}
+	if scoped.AppliesTo("other") || !scoped.AppliesTo("only") {
+		t.Error("scoped policy applies incorrectly")
+	}
+}
+
+func TestZeroSampleModelIneligible(t *testing.T) {
+	a := agg("dead", 0.1, 100, 0.9, 0.9, 0)
+	a.Successes = 0
+	p := Policy{Name: "p", Preference: Preference{Weights: []Weight{{ObjCost, 1}}}}
+	evals := Evaluate(p, []reliability.Aggregate{a})
+	if evals[0].Eligible {
+		t.Error("model with no successes must be ineligible")
+	}
+}
