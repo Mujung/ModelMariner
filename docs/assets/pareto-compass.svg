@@ -41,3 +41,45 @@
       <animateTransform attributeName="transform" type="rotate"
         values="-55; 40; -55" dur="9s" repeatCount="indefinite"
         calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+    </g>
+  </g>
+
+  <!-- scatter of models in cost(x) vs quality(y) space; frontier points pulse -->
+  <!-- frontier (non-dominated) -->
+  <g font-family="monospace" font-size="10">
+    <!-- harbor-nano: cheapest, lower quality -->
+    <g transform="translate(210 360)">
+      <circle r="7" fill="#22d3ee"><animate attributeName="r" values="7;10;7" dur="2.6s" repeatCount="indefinite"/></circle>
+      <text x="10" y="4" fill="#67e8f9">harbor-nano</text>
+    </g>
+    <!-- harbor-mini -->
+    <g transform="translate(250 300)">
+      <circle r="7" fill="#22d3ee"><animate attributeName="r" values="7;10;7" dur="2.9s" repeatCount="indefinite"/></circle>
+      <text x="10" y="4" fill="#67e8f9">harbor-mini</text>
+    </g>
+    <!-- clipper-pro -->
+    <g transform="translate(360 210)">
+      <circle r="7" fill="#22d3ee"><animate attributeName="r" values="7;10;7" dur="3.2s" repeatCount="indefinite"/></circle>
+      <text x="10" y="4" fill="#67e8f9">clipper-pro</text>
+    </g>
+    <!-- galleon-max: priciest, top quality -->
+    <g transform="translate(470 170)">
+      <circle r="7" fill="#22d3ee"><animate attributeName="r" values="7;10;7" dur="3.5s" repeatCount="indefinite"/></circle>
+      <text x="10" y="4" fill="#67e8f9">galleon-max</text>
+    </g>
+    <!-- frontier polyline -->
+    <polyline points="210,360 250,300 360,210 470,170" fill="none" stroke="#22d3ee" stroke-width="2" stroke-dasharray="6 5" opacity="0.6">
+      <animate attributeName="stroke-dashoffset" values="0;22" dur="1.5s" repeatCount="indefinite"/>
+    </polyline>
+
+    <!-- dominated point (dimmed, no pulse) -->
+    <g transform="translate(320 330)" opacity="0.5">
+      <circle r="6" fill="#64748b"/>
+      <text x="10" y="4" fill="#64748b">dominated</text>
+    </g>
+  </g>
+
+  <text x="310" y="440" text-anchor="middle" font-family="monospace" font-size="11" fill="#94a3b8">cyan vessels ride the frontier · grey vessel is dominated and never chosen</text>
+</svg>
+
+// draft note 15
