@@ -46,3 +46,55 @@
     </path>
   </g>
 
+  <!-- reusable ship symbol -->
+  <defs>
+    <g id="ship">
+      <path d="M-26 0 L26 0 L18 16 L-18 16 Z" fill="#e2e8f0"/>
+      <rect x="-2" y="-40" width="3" height="40" fill="#cbd5e1"/>
+      <path d="M1 -38 L22 -10 L1 -10 Z" fill="#f8fafc"/>
+      <path d="M-2 -30 L-20 -8 L-2 -8 Z" fill="#bae6fd"/>
+    </g>
+  </defs>
+
+  <!-- fleet: five vessels bobbing at different phases -->
+  <g>
+    <use href="#ship" x="0" y="0" transform="translate(120 205) scale(0.85)">
+      <animateTransform attributeName="transform" type="translate" additive="sum"
+        values="0 0; 0 -6; 0 0" dur="3.2s" repeatCount="indefinite"/>
+    </use>
+    <text x="120" y="238" text-anchor="middle" font-family="monospace" font-size="12" fill="#7dd3fc">harbor-nano</text>
+  </g>
+  <g>
+    <use href="#ship" transform="translate(275 200) scale(0.95)">
+      <animateTransform attributeName="transform" type="translate" additive="sum"
+        values="0 0; 0 -7; 0 0" dur="3.9s" repeatCount="indefinite"/>
+    </use>
+    <text x="275" y="236" text-anchor="middle" font-family="monospace" font-size="12" fill="#7dd3fc">harbor-mini</text>
+  </g>
+  <g>
+    <use href="#ship" transform="translate(430 196) scale(1.1)">
+      <animateTransform attributeName="transform" type="translate" additive="sum"
+        values="0 0; 0 -8; 0 0" dur="4.5s" repeatCount="indefinite"/>
+    </use>
+    <text x="430" y="236" text-anchor="middle" font-family="monospace" font-size="12" fill="#fcd34d">clipper-pro</text>
+  </g>
+  <g>
+    <use href="#ship" transform="translate(600 192) scale(1.25)">
+      <animateTransform attributeName="transform" type="translate" additive="sum"
+        values="0 0; 0 -9; 0 0" dur="5.1s" repeatCount="indefinite"/>
+    </use>
+    <text x="600" y="236" text-anchor="middle" font-family="monospace" font-size="12" fill="#fca5a5">galleon-max</text>
+  </g>
+  <g>
+    <use href="#ship" transform="translate(720 204) scale(0.9)">
+      <animateTransform attributeName="transform" type="translate" additive="sum"
+        values="0 0; 0 -6; 0 0" dur="3.6s" repeatCount="indefinite"/>
+    </use>
+    <text x="720" y="238" text-anchor="middle" font-family="monospace" font-size="11" fill="#86efac">lighthouse</text>
+  </g>
+
+  <text x="400" y="30" text-anchor="middle" font-family="monospace" font-size="20" fill="#f8fafc" letter-spacing="3">M O D E L M A R I N E R</text>
+  <text x="400" y="320" text-anchor="middle" font-family="monospace" font-size="12" fill="#94a3b8">offline trace evaluation &amp; routing-policy compiler</text>
+</svg>
+
+// draft note 14
