@@ -80,3 +80,112 @@ Decided 5 task(s), 0 unrouted. Realized cost $44.6863 vs baseline $21.1913 (delt
 • route "classify-intent" to harbor-mini (score 0.8157)
     - harbor-mini beat runner-up lighthouse-local by a margin of 0.0698 in weighted score
     - score components: cost=0.5573, quality=0.1860, reliability=0.0724
+    evidence: replayed 70 recorded call(s): 97.1% success, mean quality 0.908, mean latency 259 ms, total cost $12.9234
+    evidence: versus cheapest-model baseline harbor-nano: $7.5293 more cost, 0.908 vs 0.778 mean quality
+    rejected: clipper-pro — max_cost_usd (limit 0.35, observed 0.6692)
+    rejected: galleon-max — max_cost_usd (limit 0.35, observed 1.612)
+• route "code-review-comment" to harbor-mini (score 0.7144)
+    - harbor-mini beat runner-up harbor-nano by a margin of 0.0198 in weighted score
+    - score components: cost=0.5538, quality=0.1150, reliability=0.0456
+    evidence: replayed 55 recorded call(s): 96.4% success, mean quality 0.831, mean latency 205 ms, total cost $10.3834
+    evidence: versus cheapest-model baseline harbor-nano: $5.8508 more cost, 0.831 vs 0.718 mean quality
+    rejected: clipper-pro — max_cost_usd (limit 0.35, observed 0.6799)
+    rejected: galleon-max — max_cost_usd (limit 0.35, observed 1.461)
+• route "draft-legal-clause" to lighthouse-local (score 0.8351)
+    - lighthouse-local beat runner-up harbor-mini by a margin of 0.0071 in weighted score
+    - score components: cost=0.5849, quality=0.1267, reliability=0.1235
+    evidence: replayed 45 recorded call(s): 97.8% success, mean quality 0.779, mean latency 315 ms, total cost $4.9595
+    evidence: versus cheapest-model baseline harbor-nano: $1.5914 more cost, 0.779 vs 0.589 mean quality
+    rejected: clipper-pro — max_cost_usd (limit 0.35, observed 0.6152)
+    rejected: galleon-max — max_cost_usd (limit 0.35, observed 1.544)
+    rejected: harbor-nano — min_quality (limit 0.7, observed 0.5894); min_reliability (limit 0.8, observed 0.7122)
+• route "extract-pii-redaction" to lighthouse-local (score 0.7938)
+    - lighthouse-local beat runner-up harbor-nano by a margin of 0.1235 in weighted score
+    - score components: cost=0.5809, quality=0.1426, reliability=0.0703
+    evidence: replayed 50 recorded call(s): 98.0% success, mean quality 0.852, mean latency 345 ms, total cost $5.8333
+    evidence: versus cheapest-model baseline harbor-nano: $2.3063 more cost, 0.852 vs 0.708 mean quality
+    rejected: clipper-pro — max_cost_usd (limit 0.35, observed 0.7319)
+    rejected: galleon-max — max_cost_usd (limit 0.35, observed 1.534)
+• route "summarize-support-ticket" to harbor-mini (score 0.8128)
+    - harbor-mini beat runner-up lighthouse-local by a margin of 0.1684 in weighted score
+    - score components: cost=0.5545, quality=0.1083, reliability=0.1500
+    evidence: replayed 60 recorded call(s): 100.0% success, mean quality 0.821, mean latency 236 ms, total cost $10.5867
+    evidence: versus cheapest-model baseline harbor-nano: $6.2171 more cost, 0.821 vs 0.713 mean quality
+    rejected: clipper-pro — max_cost_usd (limit 0.35, observed 0.7181)
+    rejected: galleon-max — max_cost_usd (limit 0.35, observed 1.444)
+
+========================================================================
+ POLICY: latency-critical
+========================================================================
+Interactive workloads where p95 latency must stay under 500ms. Ranks primarily on speed, then reliability.
+
+Decided 2 task(s), 0 unrouted. Realized cost $15.9808 vs baseline $9.7636 (delta $+6.2171). Quality 0.799 vs 0.745.
+
+• route "classify-intent" to harbor-nano (score 0.5500)
+    - harbor-nano was the only model to satisfy every hard constraint
+    - score components: latency=0.5500, quality=0.0000, reliability=0.0000
+    evidence: replayed 70 recorded call(s): 95.7% success, mean quality 0.778, mean latency 170 ms, total cost $5.3941
+    rejected: clipper-pro — max_latency_ms (limit 500, observed 1040)
+    rejected: galleon-max — max_latency_ms (limit 500, observed 1696)
+    rejected: harbor-mini — max_latency_ms (limit 500, observed 512)
+    rejected: lighthouse-local — max_latency_ms (limit 500, observed 583.6)
+• route "summarize-support-ticket" to harbor-mini (score 0.8462)
+    - harbor-mini beat runner-up lighthouse-local by a margin of 0.3148 in weighted score
+    - score components: latency=0.5096, quality=0.0866, reliability=0.2500
+    evidence: replayed 60 recorded call(s): 100.0% success, mean quality 0.821, mean latency 236 ms, total cost $10.5867
+    evidence: versus cheapest-model baseline harbor-nano: $6.2171 more cost, 0.821 vs 0.713 mean quality
+    rejected: clipper-pro — max_latency_ms (limit 500, observed 1077)
+    rejected: galleon-max — max_latency_ms (limit 500, observed 1783)
+    rejected: harbor-nano — min_quality (limit 0.72, observed 0.7131)
+
+========================================================================
+ POLICY: privacy-lockdown
+========================================================================
+Restricted data must never leave on-premise infrastructure. Caps privacy at internal and clears only the on-prem model to handle stricter tiers; ranks on quality then reliability.
+
+Decided 2 task(s), 0 unrouted. Realized cost $10.7927 vs baseline $6.8950 (delta $+3.8977). Quality 0.815 vs 0.649.
+
+• route "draft-legal-clause" to lighthouse-local (score 0.6630)
+    - lighthouse-local was the only model to satisfy every hard constraint
+    - score components: latency=0.1626, quality=0.2534, reliability=0.2469
+    evidence: replayed 45 recorded call(s): 97.8% success, mean quality 0.779, mean latency 315 ms, total cost $4.9595
+    evidence: versus cheapest-model baseline harbor-nano: $1.5914 more cost, 0.779 vs 0.589 mean quality
+    rejected: clipper-pro — max_privacy (task data reaches "confidential" but policy caps at "internal" and model is not privacy-safe)
+    rejected: galleon-max — max_privacy (task data reaches "confidential" but policy caps at "internal" and model is not privacy-safe)
+    rejected: harbor-mini — max_privacy (task data reaches "confidential" but policy caps at "internal" and model is not privacy-safe)
+    rejected: harbor-nano — min_reliability (limit 0.75, observed 0.7122); max_privacy (task data reaches "confidential" but policy caps at "internal" and model is not privacy-safe)
+• route "extract-pii-redaction" to lighthouse-local (score 0.5858)
+    - lighthouse-local was the only model to satisfy every hard constraint
+    - score components: latency=0.1599, quality=0.2852, reliability=0.1406
+    evidence: replayed 50 recorded call(s): 98.0% success, mean quality 0.852, mean latency 345 ms, total cost $5.8333
+    evidence: versus cheapest-model baseline harbor-nano: $2.3063 more cost, 0.852 vs 0.708 mean quality
+    rejected: clipper-pro — max_privacy (task data reaches "restricted" but policy caps at "internal" and model is not privacy-safe)
+    rejected: galleon-max — max_privacy (task data reaches "restricted" but policy caps at "internal" and model is not privacy-safe)
+    rejected: harbor-mini — max_privacy (task data reaches "restricted" but policy caps at "internal" and model is not privacy-safe)
+    rejected: harbor-nano — max_privacy (task data reaches "restricted" but policy caps at "internal" and model is not privacy-safe)
+
+========================================================================
+ POLICY: quality-first
+========================================================================
+Accuracy-sensitive generative tasks. Demands a high quality floor and strong reliability, then ranks on quality with cost as a secondary consideration.
+
+Decided 2 task(s), 0 unrouted. Realized cost $108.0148 vs baseline $7.9007 (delta $+100.1142). Quality 0.951 vs 0.654.
+
+• route "code-review-comment" to galleon-max (score 0.8500)
+    - galleon-max beat runner-up clipper-pro by a margin of 0.0579 in weighted score
+    - score components: cost=0.0000, quality=0.6000, reliability=0.2500
+    evidence: replayed 55 recorded call(s): 100.0% success, mean quality 0.963, mean latency 1083 ms, total cost $80.3328
+    evidence: versus cheapest-model baseline harbor-nano: $75.8002 more cost, 0.963 vs 0.718 mean quality
+    rejected: harbor-mini — min_quality (limit 0.85, observed 0.831); min_reliability (limit 0.9, observed 0.8768)
+    rejected: harbor-nano — min_quality (limit 0.85, observed 0.7181)
+    rejected: lighthouse-local — min_quality (limit 0.85, observed 0.7862); min_reliability (limit 0.9, observed 0.8515)
+• route "draft-legal-clause" to clipper-pro (score 0.9048)
+    - clipper-pro beat runner-up galleon-max by a margin of 0.0548 in weighted score
+    - score components: cost=0.0947, quality=0.5601, reliability=0.2500
+    evidence: replayed 45 recorded call(s): 100.0% success, mean quality 0.939, mean latency 628 ms, total cost $27.6820
+    evidence: versus cheapest-model baseline harbor-nano: $24.3140 more cost, 0.939 vs 0.589 mean quality
+    rejected: harbor-mini — min_quality (limit 0.85, observed 0.819); min_reliability (limit 0.9, observed 0.8843)
+    rejected: harbor-nano — min_quality (limit 0.85, observed 0.5894); min_reliability (limit 0.9, observed 0.7122)
+    rejected: lighthouse-local — min_quality (limit 0.85, observed 0.7793); min_reliability (limit 0.9, observed 0.8843)
+
+// draft note 11
