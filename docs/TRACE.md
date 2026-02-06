@@ -73,3 +73,87 @@ bound.
 
 ## 2. Report output: `report.json`
 
+`analyze --out DIR` writes three files. `report.json` is the complete document
+(schema `modelmariner/v1`) with these top-level sections:
+
+- `input` — line counts, discovered models/tasks, and any rejection warnings.
+- `reliability` — one entry per model/task with success rate, `reliability_lower`
+  (Wilson 95% lower bound), latency `p50/p95/p99`, mean cost/quality/tokens,
+  the `highest_privacy` tier observed, and an `error_kinds` histogram.
+- `pareto` — per task, every point in objective space plus the non-dominated
+  `frontier`; each dominated point lists the models that dominate it.
+- `policies` — per policy, the full `simulation` (decisions + realized/baseline
+  economics) and structured `explanations`.
+
+The document is **deterministic**: identical inputs produce byte-for-byte
+identical JSON (HTML escaping disabled, stable key and slice ordering). The
+optional generation timestamp is omitted unless `--with-timestamp` is passed, so
+reports are safe to commit and diff.
+
+---
+
+## 3. Policy input: policy set JSON
+
+Passed via `--policy`. A policy set is `{ "version": 1, "policies": [ ... ] }`.
+
+```json
+{
+  "name": "budget-guard",
+  "description": "Minimize spend while keeping quality acceptable.",
+  "tasks": ["classify-intent"],
+  "constraints": {
+    "max_cost_usd": 0.35,
+    "max_latency_ms": 500,
+    "min_quality": 0.7,
+    "min_reliability": 0.8,
+    "max_privacy": "internal",
+    "deny_models": ["deprecated-galley"],
+    "allow_models": [],
+    "privacy_safe_models": ["lighthouse-local"]
+  },
+  "preference": {
+    "weights": [
+      { "objective": "cost", "weight": 0.6 },
+      { "objective": "quality", "weight": 0.25 },
+      { "objective": "reliability", "weight": 0.15 }
+    ]
+  }
+}
+```
+
+- **Constraints are hard.** A candidate violating any constraint is
+  *disqualified*, never merely penalized. Omitting a numeric constraint (or
+  setting it to zero) disables it.
+- `tasks` scopes a policy; omit it to apply to every task.
+- `max_privacy` caps the tier a model may handle. A model is disqualified if the
+  task's observed privacy exceeds the cap **unless** it appears in
+  `privacy_safe_models` (e.g. an on-prem deployment that never egresses data).
+- `allow_models`, when non-empty, restricts routing to exactly those models;
+  `deny_models` forbids models outright.
+- `preference.weights` rank survivors. Objectives are `cost`, `latency`,
+  `quality`, `reliability`. Weights are normalized to sum to 1, so only their
+  ratios matter. Cost and latency are inverted (lower is better) during scoring;
+  quality and reliability are used directly. All contributions are normalized
+  across the candidate set to `[0, 1]` before weighting.
+
+---
+
+## 4. Compiled artifact: `policies.json`
+
+A standalone, minimal routing table per policy — the winner model for each task
+plus its score and margin — suitable for a runtime to load directly. Tasks with
+no eligible candidate appear under `unrouted` with the reason.
+
+```json
+[
+  {
+    "schema": "modelmariner/v1",
+    "policy": "budget-guard",
+    "routes": [
+      { "task": "classify-intent", "model": "harbor-mini", "score": 0.8157, "margin": 0.0698 }
+    ]
+  }
+]
+```
+
+// draft note 13
