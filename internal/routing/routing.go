@@ -216,4 +216,4 @@ func (s Simulation) Validate() error {
 		return fmt.Errorf("policy %q produced no decisions (no matching tasks)", s.Policy)
 	}
 	return nil
-// review note
+}
