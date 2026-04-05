@@ -209,3 +209,36 @@ func CompilePolicyArtifacts(sims []routing.Simulation) []PolicyArtifact {
 			}
 			art.Routes = append(art.Routes, Route{
 				Task:   d.Task,
+				Model:  d.Winner,
+				Score:  d.Score,
+				Margin: d.Margin,
+			})
+		}
+		sort.Slice(art.Routes, func(i, j int) bool { return art.Routes[i].Task < art.Routes[j].Task })
+		out = append(out, art)
+	}
+	sort.Slice(out, func(i, j int) bool { return out[i].Policy < out[j].Policy })
+	return out
+}
+
+// ArtifactsJSON renders compiled policy artifacts as deterministic JSON.
+func ArtifactsJSON(arts []PolicyArtifact) ([]byte, error) {
+	var buf bytes.Buffer
+	enc := json.NewEncoder(&buf)
+	enc.SetEscapeHTML(false)
+	enc.SetIndent("", "  ")
+	if err := enc.Encode(arts); err != nil {
+		return nil, fmt.Errorf("encoding artifacts: %w", err)
+	}
+	return buf.Bytes(), nil
+}
+
+func trunc(s string, n int) string {
+	if len(s) <= n {
+		return s
+	}
+	if n <= 1 {
+		return s[:n]
+	}
+	return s[:n-1] + "…"
+}
