@@ -83,3 +83,27 @@ func TestReportTextContainsSelection(t *testing.T) {
 		t.Error("text report missing pareto section")
 	}
 }
+
+func TestCompilePolicyArtifacts(t *testing.T) {
+	r := buildReport(t)
+	// Rebuild simulations to compile artifacts.
+	ing, _ := trace.Ingest(strings.NewReader(corpus), trace.DefaultOptions())
+	sum := reliability.Compute(ing.Traces)
+	set, _ := policy.Load(strings.NewReader(policyJSON))
+	sims := routing.SimulateAll(set, sum, ing.Traces)
+	arts := CompilePolicyArtifacts(sims)
+	if len(arts) != 1 || len(arts[0].Routes) != 1 {
+		t.Fatalf("unexpected artifacts: %+v", arts)
+	}
+	if arts[0].Routes[0].Model != "premium" {
+		t.Errorf("compiled route should target premium, got %s", arts[0].Routes[0].Model)
+	}
+	b, err := ArtifactsJSON(arts)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !json.Valid(b) {
+		t.Error("artifacts JSON invalid")
+	}
+	_ = r
+}
