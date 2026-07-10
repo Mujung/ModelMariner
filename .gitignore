@@ -13,3 +13,4 @@ dashboard/package-lock.json
 .DS_Store
 *.swp
 .idea/
+.vscode/
