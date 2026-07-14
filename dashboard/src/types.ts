@@ -141,5 +141,3 @@ export interface Report {
 }
 
 export const SCHEMA_VERSION = "modelmariner/v1";
-
-// draft note 6
