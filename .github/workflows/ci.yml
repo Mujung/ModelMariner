@@ -49,5 +49,3 @@ jobs:
         run: npm install
       - name: Type-check, build & test
         run: npm test
-
-// draft note 16
