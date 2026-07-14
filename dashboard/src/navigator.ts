@@ -167,5 +167,3 @@ export class ReportNavigator {
       .sort((a, b) => b.quality - a.quality);
   }
 }
-
-// draft note 5
