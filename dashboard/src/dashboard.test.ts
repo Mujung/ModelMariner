@@ -161,5 +161,3 @@ test("render unknown command", () => {
   const nav = new ReportNavigator(sampleReport());
   assert.match(render(nav, ["bogus"]), /unknown command/);
 });
-
-// draft note 19
