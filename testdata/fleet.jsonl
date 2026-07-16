@@ -1401,4 +1401,4 @@
 {"model":"lighthouse-local","task":"code-review-comment","provider":"onprem","region":"on-prem","tokens":{"prompt":879,"completion":298},"cost_usd":0.105930,"latency_ms":206.6,"quality":0.7823,"error":false,"privacy":"internal","timestamp":"2026-08-27T13:14:23Z"}
 {"model":"lighthouse-local","task":"code-review-comment","provider":"onprem","region":"on-prem","tokens":{"prompt":747,"completion":442},"cost_usd":0.107010,"latency_ms":432.5,"quality":0.6592,"error":false,"privacy":"internal","timestamp":"2026-08-27T13:16:40Z"}
 
-// draft note 7
+// draft note 23
