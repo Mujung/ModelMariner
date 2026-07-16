@@ -143,4 +143,4 @@ func clamp01(x float64) float64 {
 	return x
 }
 
-// draft note 8
+// draft note 24
