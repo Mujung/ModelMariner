@@ -188,4 +188,4 @@ Decided 2 task(s), 0 unrouted. Realized cost $108.0148 vs baseline $7.9007 (delt
     rejected: harbor-nano — min_quality (limit 0.85, observed 0.5894); min_reliability (limit 0.9, observed 0.7122)
     rejected: lighthouse-local — min_quality (limit 0.85, observed 0.7793); min_reliability (limit 0.9, observed 0.8843)
 
-// draft note 11
+// draft note 27
