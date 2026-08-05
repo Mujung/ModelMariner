@@ -155,5 +155,3 @@ no eligible candidate appear under `unrouted` with the reason.
   }
 ]
 ```
-
-// draft note 29
