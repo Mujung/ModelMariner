@@ -50,5 +50,3 @@ recorded LLM traces, entirely offline.
   build/test for the dashboard, MIT `LICENSE`.
 
 [1.0.0]: https://example.com/modelmariner/releases/tag/v1.0.0
-
-// draft note 33
