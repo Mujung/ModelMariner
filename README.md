@@ -485,5 +485,3 @@ to catch malformed lines.
 ## License
 
 Released under the [MIT License](LICENSE). Fair winds and following seas. ⚓
-
-// draft note 34
