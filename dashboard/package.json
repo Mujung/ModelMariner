@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "test": "tsc -p tsconfig.json && node --test \"dist/**/*.test.js\"",
+    "test": "tsc -p tsconfig.json && node --test dist/",
     "demo": "npm run build && node dist/dashboard.js ../testdata/output/report.json overview"
   },
   "engines": {
